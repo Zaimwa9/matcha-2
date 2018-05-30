@@ -51,6 +51,8 @@ module.exports = {
   },
 
   getCourses : function(args) {
+    console.log('hit');
+    console.log(args);
     if (args.topic) {
         var topic = args.topic;
         return coursesData.filter(course => course.topic === topic);
