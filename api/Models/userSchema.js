@@ -58,3 +58,10 @@ module.exports = {
     },
   }
 }
+
+// Tweet(id: ID!): Tweet
+// Tweets(limit: Int, sortField: String, sortOrder: String): [Tweet]
+// TweetsMeta: Meta
+// User: User
+// Notifications(limit: Int): [Notification]
+// NotificationsMeta: Meta

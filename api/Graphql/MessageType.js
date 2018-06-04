@@ -5,4 +5,5 @@ const Message = `
     content: String
   }
 `
+
 module.exports = Message;

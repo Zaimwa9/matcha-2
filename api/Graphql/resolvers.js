@@ -34,31 +34,41 @@ const Messages = [
   { id: 4, author: 3, content: 'Launchpad is Cool'},
 ];
 
+const Birthdays = [
+    { id: 1, author: 1, date: 'Monday'},
+    { id: 2, author: 2, date: 'Tuesday'},
+    { id: 3, author: 4, date: 'Wednesday'},
+    { id: 4, author: 3, date: 'Saturday'},
+]
+
 
 const resolvers = {
   Query: {
-    Users : () => Users,
     User: function (_, args) {
       return Users.find(user => user.id == args.id)
-    }
-    // (id) => console.log(id)//_.find(Users, {'id': id})
+    },
+    Users : () => Users
   },
   User: {
     messages: (User) => {
-      // console.log(User);
       var myArray = [];
       Messages.find(message => {
         if (message.author === User.id)
-          myArray.push(message)
+        myArray.push(message)
       })
       return myArray
-    }//Messages.find(Message => Messages.author === User.id)
+    },
+    birthday: (User) => {
+      var myObj;
+      Birthdays.find(birthday => {
+        if (birthday.author === User.id) {
+          // console.log(birthday.date);
+          myObj = birthday;
+        }
+      })
+      return myObj;
+    },
   }
 }
 
 module.exports = resolvers;
-
-// Tweet: {
-//   Author: (tweet) => authors.find(author => author.id == tweet.author_id),
-//   Stats: (tweet) => stats.find(stat => stat.tweet_id == tweet.id),
-// },
