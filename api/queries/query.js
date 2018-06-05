@@ -1,4 +1,5 @@
 const userType = require('../defTypes/userType');
+const psql = require('../db/dbconnect.js');
 
 const {
   GraphQLInt,
@@ -10,33 +11,6 @@ const {
   GraphQLSchema,
 } = require('graphql');
 
-const Users = [
-  {
-      "id": 1,
-      "first_name": "diwadoo",
-      "last_name": "diwadoo",
-      "email": "diwadoo",
-      "gender": "Male",
-      "password": "diwadoo",
-  },
-  {
-    "id": 2,
-    "first_name": "wadii",
-    "last_name": "wadii",
-    "email": "wadii",
-    "gender": "Male",
-    "password": "wadii",
-  },
-  {
-    "id": 3,
-    "first_name": "jean",
-    "last_name": "jean",
-    "email": "jean",
-    "gender": "Male",
-    "password": "jean",
-  }
-];
-
 var queryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
@@ -44,16 +18,19 @@ var queryType = new GraphQLObjectType({
       type: userType,
       // `args` describes the arguments that the `user` query accepts
       args: {
-        id: { type: GraphQLInt }
+        uid: { type: GraphQLInt }
       },
-      resolve: function (_, args) {
-        return Users.find(user => user.id == args.id);
+      resolve: async function (_, args) {
+        textQuery = `SELECT * FROM users where uid=${args.id}`
+        return await psql.query(textQuery).rows;
       }
     },
     users: {
       type: new GraphQLList(userType),
-      resolve: function () {
-        return Users;
+      resolve: async function () {
+        textQuery = `SELECT * FROM users`
+        const data = await psql.query(textQuery);
+        return data.rows;
       }
     }
   }

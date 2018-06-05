@@ -1,4 +1,5 @@
 const commentType = require('../defTypes/commentType')
+const psql = require('../db/dbconnect.js');
 
 const {
   GraphQLInt,
