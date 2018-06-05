@@ -21,16 +21,25 @@ var queryType = new GraphQLObjectType({
         uid: { type: GraphQLInt }
       },
       resolve: async function (_, args) {
-        textQuery = `SELECT * FROM users where uid=${args.id}`
-        return await psql.query(textQuery).rows;
+        textQuery = `SELECT * FROM users where uid=${args.uid}`;
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows[0];
+        } catch (e) {
+          return new Error('Database error: ' + e);
+        }
       }
     },
     users: {
       type: new GraphQLList(userType),
       resolve: async function () {
-        textQuery = `SELECT * FROM users`
-        const data = await psql.query(textQuery);
-        return data.rows;
+        textQuery = `SELECT * FROM users`;
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows;
+        } catch (e) {
+          return new Error('Database error: ' + e);
+        }
       }
     }
   }
