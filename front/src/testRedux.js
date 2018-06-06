@@ -7,7 +7,8 @@ import React from 'react';
 
 class usersList extends React.Component {
 
-  componentWillMount() { // HERE WE ARE TRIGGERING THE ACTION
+  componentWillMount() {
+    // HERE WE ARE TRIGGERING THE ACTION
     this.props.actions.fetchUsers();
   }
 
@@ -46,6 +47,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch)
+    // en bindant actions, on pourra directement passer aux props les actions creators sans avoir a les reimporter
   };
 }
 
