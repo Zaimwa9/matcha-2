@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const userType = require('../defTypes/userType');
 const psql = require('../db/dbconnect.js');
 
@@ -18,10 +19,11 @@ var queryType = new GraphQLObjectType({
       type: userType,
       // `args` describes the arguments that the `user` query accepts
       args: {
-        uid: { type: GraphQLInt }
+        id: { type: GraphQLInt },
+        password: { type: GraphQLInt }
       },
-      resolve: async function (_, args) {
-        textQuery = `SELECT * FROM users where uid=${args.uid}`;
+      resolve: async function (root, args) {
+        textQuery = `SELECT * FROM users where id=${args.id}`;
         try {
           const data = await psql.query(textQuery);
           return data.rows[0];

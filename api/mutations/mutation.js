@@ -1,5 +1,8 @@
 const commentType = require('../defTypes/commentType')
+const userType = require('../defTypes/userType')
 const psql = require('../db/dbconnect.js');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const {
   GraphQLInt,
@@ -11,54 +14,60 @@ const {
   GraphQLSchema,
 } = require('graphql');
 
-const Users = [
-  {
-      "id": 1,
-      "first_name": "diwadoo",
-      "last_name": "diwadoo",
-      "email": "diwadoo",
-      "gender": "Male",
-      "password": "diwadoo",
-  },
-  {
-    "id": 2,
-    "first_name": "wadii",
-    "last_name": "wadii",
-    "email": "wadii",
-    "gender": "Male",
-    "password": "wadii",
-  },
-  {
-    "id": 3,
-    "first_name": "jean",
-    "last_name": "jean",
-    "email": "jean",
-    "gender": "Male",
-    "password": "jean",
-  }
-];
-
-const Messages = [
-  { id: 1, author: 1, content: 'Introduction to GraphQL'},
-  { id: 2, author: 2, content: 'Welcome to Meteor'},
-  { id: 3, author: 2, content: 'Advanced GraphQL'},
-  { id: 4, author: 3, content: 'Launchpad is Cool'},
-];
-
 var mutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    postComment: {
-      type: commentType,
+    userAdd: {
+      type: userType,
       args: {
-        author: { type: GraphQLInt },
-        content: { type: GraphQLString },
+        email: { type: GraphQLString },
+        first_name: { type: GraphQLString },
+        last_name: { type: GraphQLString },
+        password: { type: GraphQLString },
+        age: { type: GraphQLInt },
       },
-      resolve: function(_, args) {
-        args.id = 7;
-        Messages.push(args);
-        console.log(Messages);
-        return Messages[args.id];
+      resolve: async function(root, args) {
+        // args.password = await bcrypt.hash(args.password, 10);
+        textQuery = `INSERT INTO users (
+                      email,
+                      first_name,
+                      last_name,
+                      password,
+                      gender,
+                      age
+                    ) VALUES (
+                      '${args.email}', '${args.first_name}', '${args.last_name}', '${args.password}', '${args.gender}', '${args.age}'
+                    ) RETURNING *`;
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows[0];
+        } catch (e) {
+          return new Error('Database error: ' + e);
+        }
+      }
+    },
+
+    login: {
+      type: userType,
+      args: {
+        email: {type: GraphQLString},
+        password: { type: GraphQLString }
+      },
+      resolve: async function(root, args) {
+        textQuery = `SELECT * FROM users WHERE email='${args.email}' AND password='${args.password}'`
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('No such user found');
+          } else {
+            // User existant; delivrement du token
+            data = data.rows[0];
+            data.token = jwt.sign({'uuid' : data.uuid}, 'quentinbaltringue');
+            return data;
+          }
+        } catch (e) {
+          return new Error('Error: ' + e);
+        }
       }
     }
   }
