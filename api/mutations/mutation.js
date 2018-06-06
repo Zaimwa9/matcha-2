@@ -17,7 +17,7 @@ const {
 var mutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    userAdd: {
+    signup: {
       type: userType,
       args: {
         email: { type: GraphQLString },
@@ -39,8 +39,10 @@ var mutationType = new GraphQLObjectType({
                       '${args.email}', '${args.first_name}', '${args.last_name}', '${args.password}', '${args.gender}', '${args.age}'
                     ) RETURNING *`;
         try {
-          const data = await psql.query(textQuery);
-          return data.rows[0];
+          var data = await psql.query(textQuery);
+          data = data.rows[0];
+          data.token = jwt.sign({'uuid' : data.uuid}, 'quentinbaltringue');
+          return data;
         } catch (e) {
           return new Error('Database error: ' + e);
         }
