@@ -11,6 +11,10 @@ const psql = require('./db/dbconnect');
 
 const { GraphQLSchema } = require('graphql');
 
+app.get('/test', (req, res) => {
+  console.log('received request on test');
+  res.json({name: 'quentin', occupation: 'suceurdebitecoloreesmaispasbasanees'})
+})
 app.use(cors());
 
 // const schema = require('./Graphql/Schema')
