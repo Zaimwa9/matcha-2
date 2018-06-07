@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Grid, Form, Image, Header, Segment, Icon, Button, Message, Divider } from 'semantic-ui-react';
 
-import LogSign from '../components/LogSign';
-import LoginForm from '../components/Login';
-import SignupForm from '../components/Signup';
+import LogSign from '../containers/LogSign';
+import LoginForm from '../containers/Login';
+import SignupForm from '../containers/Signup';
 
 class LogBox extends Component {
 

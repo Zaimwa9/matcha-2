@@ -6,40 +6,36 @@ import * as actions from '../actions/actions';
 
 import _ from 'lodash';
 
-import { Grid, Form, Button, Segment, Icon, Message} from 'semantic-ui-react';
+import { Grid, Form, Button, Segment, Icon} from 'semantic-ui-react';
 
-import LoginForm from './LoginForm'
+import SignupForm from '../components/SignupForm';
 
-class Login extends Component {
+class Signup extends Component {
 
   state = {
-    info: {email: '', password: ''},
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    cpassword: '',
     submitted: false,
-    error: false,
+    errEmail: false,
   }
+  // A garder et update store a la toute fin
 
   handleChange = (event, {name, value}) => {
-    event.preventDefault();
-    const info = this.state.info;
-    info[name] = value;
-    this.setState({ info: info })
+    this.setState({[name]: value});
   }
 
-  renderError = () => {
-    if (this.state.error)
-      return (
-        <Message
-          error={this.state.error}
-          content='The email and password given do not match any account'
-        />
-      )
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.signup(this.state);
   }
 
   render () {
-    const { email, password } = this.state.info;
-
+    const { first_name, last_name, email, password, cpassword, submitted} = this.state;
     return (
-      <LoginForm />
+      <SignupForm myHeader={this.props.myHeader}/>
     )
   }
 }
@@ -59,4 +55,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Signup);
