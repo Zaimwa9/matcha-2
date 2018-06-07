@@ -25,16 +25,18 @@ export function fetchUsers() {
       method: 'post',
       data: {
         query: `
-          query user {
-            user(id: 5) {
+          query users {
+            users {
               first_name,
-              last_name
+              last_name,
+              password
               }
             }
           `
       }
     }).then((result) => {
-      console.log(result.data)
+      console.log(result);
+      dispatch(receiveUsers(result.data.data.users))
     });
   };
 }

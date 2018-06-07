@@ -20,10 +20,10 @@ var queryType = new GraphQLObjectType({
       // `args` describes the arguments that the `user` query accepts
       args: {
         id: { type: GraphQLInt },
-        password: { type: GraphQLInt }
+        // password: { type: GraphQLInt }
       },
       resolve: async function (root, args) {
-        textQuery = `SELECT * FROM users where id=${args.id}`;
+        textQuery = `SELECT * FROM users WHERE id=${args.id}`;
         try {
           const data = await psql.query(textQuery);
           return data.rows[0];

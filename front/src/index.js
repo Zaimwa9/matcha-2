@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import UsersList from './testRedux';
 import App from './App';
+import LogBox from './components/LogBox';
 
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
@@ -12,22 +12,25 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 
+import 'semantic-ui-css/semantic.min.css';
+
 const store = configureStore();
 
 const Root = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path='/' component={App}></Route>
-        {/* <Route exact path='/courses' component={Courses}></Route> */}
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/' component={LogBox}></Route>
+          <Route exact path='/login' component={LogBox}></Route>
+          <Route exact path='/signup' component={LogBox}></Route>
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
 ReactDOM.render(
-  <Provider store={store}>
-    <UsersList />
-  </Provider>,
+  <Root />,
   document.getElementById('root'));
 registerServiceWorker();
