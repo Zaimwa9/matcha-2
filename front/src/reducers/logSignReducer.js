@@ -21,6 +21,8 @@ const initialState = {
     first_name: 'test',
     last_name: 'test',
     // password: 'test',
+  },
+  signupForm: {
     submitted: false,
     error: null
   }
@@ -32,7 +34,7 @@ export default function users(state = initialState, action) {
   switch (action.type) {
     case SIGNUP_REQUEST:
       newState = {... state};
-      newState.user.submitted = true;
+      newState.signupForm.submitted = true;
       console.log(newState);
       return newState;
     case SIGNUP_SUCCESS:
