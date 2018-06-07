@@ -16,23 +16,24 @@ import {
 */
 
 const initialState = {
-    users : {
+  user : {
     email: 'test',
-    password: 'test',
     first_name: 'test',
     last_name: 'test',
-    isSubmitted: false,
+    // password: 'test',
+    submitted: false,
     error: null
   }
 }
 
 export default function users(state = initialState, action) {
   let newState = action.data;
+
   switch (action.type) {
     case SIGNUP_REQUEST:
-      console.log(action);
-      newState = action.data;
-      newState.isSigning = true;
+      newState = {... state};
+      newState.user.submitted = true;
+      console.log(newState);
       return newState;
     case SIGNUP_SUCCESS:
       return action;

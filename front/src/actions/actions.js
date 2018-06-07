@@ -14,13 +14,9 @@ export function receiveUsers(users) {
   };
 }
 
-export function signupRequest(data) {
-  return dispatch => {
-    console.log('hello');
-    dispatch({
-      data: data,
+export function signupRequest() {
+  return {
       type: types.SIGNUP_REQUEST
-    })
   }
 }
 
@@ -29,7 +25,7 @@ export function signup(data) {
     // dispatch Request et mode submitted
     // => 
     dispatch(signupRequest(data));
-    console.log(data);
+    // console.log(data);
     //axios.faistavie
     //
     // ==> En fonction de la reponse ==> dispatch Success soit erreur

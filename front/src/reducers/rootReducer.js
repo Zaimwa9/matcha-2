@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import users from './usersReducer';
+import logSign from './logSignReducer';
 
 const rootReducer = combineReducers({
-  users
+  logSign
 });
 
 export default rootReducer;

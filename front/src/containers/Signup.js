@@ -35,7 +35,7 @@ class Signup extends Component {
   render () {
     const { first_name, last_name, email, password, cpassword, submitted} = this.state;
     return (
-      <SignupForm myHeader={this.props.myHeader}/>
+      <SignupForm myHeader={this.props.myHeader} signup={this.props.actions.signup} />
     )
   }
 }
