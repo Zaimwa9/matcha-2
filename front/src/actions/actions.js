@@ -2,8 +2,11 @@ import * as types from './actionTypes.js';
 import axios from 'axios';
 
 
-// receiveUsers est un 'action creator' au sens ou un action creator se contente de creer une action (ici de type receive users avec data comme objet)
-export function receiveUsers(users) {
+/*
+  * receiveUsers est un 'action creator' au sens ou un action creator se contente de creer une action.
+  * Ici de type receive users avec data comme objet
+*/
+  export function receiveUsers(users) {
   console.log(users);
   return {
     type: types.RECEIVE_USERS,
@@ -12,17 +15,27 @@ export function receiveUsers(users) {
 }
 
 export function fetchUsers() {
-  // Une action de call a l'api sera plus verbeuse. A son issue elle fait appelle a l'action qui recoit la donnee et qui mettra a jour le state
-  return dispatch => {
-    return axios.get('http://localhost:3000/test', {
-      mode: 'cors',
-      // credentials: 'include',
-      headers: {
-        'Accept': 'application/json',
+  /*
+    * Une action de call a l'api sera plus verbeuse. 
+    * A son issue elle fait appelle a l'action qui recoit la donnee et qui mettra a jour le state
+  */
+    return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      data: {
+        query: `
+          query user {
+            user(id: 5) {
+              first_name,
+              last_name
+              }
+            }
+          `
       }
-    })
-    .then(response => response.data)
-    .then(json => dispatch(receiveUsers(json))); // receiveUsers cree l'action, dispatch prend une action et la dispatch vers le store
+    }).then((result) => {
+      console.log(result.data)
+    });
   };
 }
 
