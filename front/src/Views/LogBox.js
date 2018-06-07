@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actions from '../actions/actions';
 import PropTypes from 'prop-types';
 
 import { Grid, Form, Image, Header, Segment, Icon, Button, Message, Divider } from 'semantic-ui-react';
 
-import LogSign from './LogSign';
-import LoginForm from './LoginForm';
-import SignupForm from './SignupForm';
+import LogSign from '../components/LogSign';
+import LoginForm from '../components/Login';
+import SignupForm from '../components/Signup';
 
 class LogBox extends Component {
 
   componentWillMount() {
     // HERE WE ARE TRIGGERING THE ACTION
-    this.props.actions.fetchUsers();
+    // this.props.actions.fetchUsers();
+    // console.log(this.props.users);
+    // this.props.actions.signup(this.props.users)
   }
 
   myHeader = () => {
@@ -37,16 +36,19 @@ class LogBox extends Component {
   formRender = () => {
     if (this.props.match.url === '/signup') {
       return <SignupForm myHeader={this.myHeader} />;
-    } else if (this.props.match.url === '/login')
+    } else if (this.props.match.url === '/login') {
       return <LoginForm myHeader={this.myHeader} />;
-    return <LogSign myHeader={this.myHeader} {... this.props.users} />;
+    }
+    return <LogSign myHeader={this.myHeader} />;
   };
 
   render() {
     return (
       <div className='logBox'>
+
         <Grid verticalAlign='middle' textAlign='center' style={{ height: '100%' }}>
           <Grid.Column style={{ maxWidth: 450, textAlign: 'start' }}>
+
             {this.formRender()}
 
           </Grid.Column>
@@ -55,24 +57,9 @@ class LogBox extends Component {
     )
   }
 
-  static propTypes = {
-    match: PropTypes.object.isRequired
+static propTypes = {
+  match: PropTypes.object.isRequired
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    users: state.users
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LogBox);
+export default LogBox;

@@ -15,14 +15,19 @@ class SignupForm extends Component {
     submitted: false,
     errEmail: false,
   }
+  // A garder et update store a la toute fin
 
   handleChange = (event, {name, value}) => {
     this.setState({[name]: value});
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.signup(this.state);
+  }
+
   render () {
     const { first_name, last_name, email, password, cpassword, submitted} = this.state;
-
     return (
       <Form size='large' onSubmit={this.handleSubmit}>
         <Segment padded>

@@ -3,6 +3,7 @@ const userType = require('../defTypes/userType')
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const uuidv4 = require('uuid/v4');
 
 const {
   GraphQLInt,
@@ -27,17 +28,19 @@ var mutationType = new GraphQLObjectType({
         age: { type: GraphQLInt },
       },
       resolve: async function(root, args) {
+        console.log('signup api');
+        args.uuid = uuidv4();
         // args.password = await bcrypt.hash(args.password, 10);
         textQuery = `INSERT INTO users (
                       email,
                       first_name,
                       last_name,
-                      password,
-                      gender,
-                      age
+                      uuid,
+                      password
                     ) VALUES (
-                      '${args.email}', '${args.first_name}', '${args.last_name}', '${args.password}', '${args.gender}', '${args.age}'
+                      '${args.email}', '${args.first_name}', '${args.last_name}', '${args.uuid}', '${args.password}'
                     ) RETURNING *`;
+        console.log(textQuery);
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];

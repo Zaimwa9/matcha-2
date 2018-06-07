@@ -1,2 +1,5 @@
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const FETCH_USERS = 'FETCH_USERS';
 export const RECEIVE_USERS = 'RECEIVE_USERS';

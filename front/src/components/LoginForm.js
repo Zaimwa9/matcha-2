@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 import _ from 'lodash';
 
 import { Grid, Form, Button, Segment, Icon, Message} from 'semantic-ui-react';
@@ -79,4 +80,5 @@ class LoginForm extends Component {
     )
   }
 }
+
 export default LoginForm;

@@ -11,8 +11,6 @@ import { Grid, Form, Image, Header, Segment, Icon, Button, Message, Divider } fr
 class LogSign extends Component {
 
   render () {
-
-    console.log(this.props)
     return (
       <Segment padded>
         {this.props.myHeader()}
