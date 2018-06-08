@@ -40,7 +40,6 @@ var mutationType = new GraphQLObjectType({
                     ) VALUES (
                       '${args.email}', '${args.first_name}', '${args.last_name}', '${args.uuid}', '${args.password}'
                     ) RETURNING *`;
-        console.log(textQuery);
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];

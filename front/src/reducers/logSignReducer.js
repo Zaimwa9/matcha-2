@@ -16,31 +16,40 @@ import {
 */
 
 const initialState = {
-  user : {
-    email: 'test',
-    first_name: 'test',
-    last_name: 'test',
+  user: {
+    email: '',
+    first_name: '',
+    last_name: '',
     // password: 'test',
   },
   signupForm: {
     submitted: false,
-    error: null
+    error: {
+      status: false,
+      message: 'salutatiosn'
+    }
   }
 }
 
 export default function users(state = initialState, action) {
-  let newState = action.data;
+  let newState;
 
   switch (action.type) {
     case SIGNUP_REQUEST:
       newState = {... state};
       newState.signupForm.submitted = true;
-      console.log(newState);
+      newState.signupForm.error.status = false;
       return newState;
     case SIGNUP_SUCCESS:
-      return action;
+      localStorage.setItem('token', action.data.token);
+      newState = {... state};
+      newState.signupForm.submitted = false;
+      newState.user = {... action.data};
+      return newState;
     case SIGNUP_FAILURE:
-      return action;
+      newState = {... state};
+      newState.signupForm.error = {... action.error}
+      return newState;
     case FETCH_USERS:
       return action;
     case RECEIVE_USERS:

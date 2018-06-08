@@ -1,6 +1,6 @@
 import * as types from './actionTypes.js';
 import axios from 'axios';
-import { SIGNUP_REQUEST } from './actionTypes.js';
+import { SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS } from './actionTypes.js';
 
 /*
   * receiveUsers est un 'action creator' au sens ou un action creator se contente de creer une action.
@@ -16,20 +16,63 @@ export function receiveUsers(users) {
 
 export function signupRequest() {
   return {
-      type: types.SIGNUP_REQUEST
+    type: types.SIGNUP_REQUEST
+  }
+}
+
+export function signupFailure(error) {
+  return {
+    error: {
+      status: true,
+      message: error.message
+    },
+    type: types.SIGNUP_FAILURE
+  }
+}
+
+export function signupSuccess(data) {
+  return {
+    data: data,
+    type: types.SIGNUP_SUCCESS
   }
 }
 
 export function signup(data) {
   return dispatch => {
     // dispatch Request et mode submitted
-    // => 
-    dispatch(signupRequest(data));
+    // =>
+    dispatch(signupRequest());
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      data: {
+        query: `
+          mutation signup {
+            signup(email: "${data.email}", password: "${data.password}", first_name: "${data.first_name}", last_name: "${data.last_name}") {
+              uuid,
+              first_name,
+              last_name,
+              email,
+              token
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(signupSuccess(result.data.data.signup));
+        // localStorage.setItem('token', result.data.data.signup.token);
+      } else {
+        dispatch(signupFailure(result.data.errors[0]))
+        // console.log(result.data.errors[0].message);
+      }
+    })
+
     // console.log(data);
     //axios.faistavie
     //
     // ==> En fonction de la reponse ==> dispatch Success soit erreur
-    console.log('yoyo')
   }
 }
 // export function postSignup(data) {
