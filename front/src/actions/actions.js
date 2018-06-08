@@ -20,11 +20,11 @@ export function signupRequest() {
   }
 }
 
-export function signupFailure(error) {
+export function signupFailure() {
   return {
     error: {
       status: true,
-      message: error.message
+      message: 'Email already in use'
     },
     type: types.SIGNUP_FAILURE
   }

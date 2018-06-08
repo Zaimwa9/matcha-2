@@ -26,7 +26,7 @@ const initialState = {
     submitted: false,
     error: {
       status: false,
-      message: 'salutatiosn'
+      message: null
     }
   }
 }
@@ -48,6 +48,7 @@ export default function users(state = initialState, action) {
       return newState;
     case SIGNUP_FAILURE:
       newState = {... state};
+      newState.signupForm.submitted = false;
       newState.signupForm.error = {... action.error}
       return newState;
     case FETCH_USERS:
