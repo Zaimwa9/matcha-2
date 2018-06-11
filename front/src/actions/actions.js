@@ -45,6 +45,10 @@ export function updateField(name, value) {
 }
 
 export function signup(data) {
+  /*
+    * Une action de call a l'api sera plus verbeuse.
+    * A son issue elle fait appelle a l'action qui recoit la donnee et qui mettra a jour le state
+  */
   return dispatch => {
     dispatch(signupRequest());
     axios({
@@ -79,10 +83,6 @@ export function signup(data) {
 }
 
 export function fetchUsers() {
-  /*
-    * Une action de call a l'api sera plus verbeuse.
-    * A son issue elle fait appelle a l'action qui recoit la donnee et qui mettra a jour le state
-  */
     return dispatch => {
     axios({
       url: 'http://localhost:3000/graphql/',
@@ -99,23 +99,7 @@ export function fetchUsers() {
           `
       }
     }).then(result => {
-      // console.log(result);
       dispatch(receiveUsers(result.data.data.users))
     });
   };
 }
-
-// export function fetchUsers() {
-//   return dispatch => {
-//     return fetch('http://localhost:3000/test', {
-//       method: 'GET',
-//       mode: 'cors',
-//       // credentials: 'include',
-//       headers: {
-//         'Accept': 'application/json',
-//       }
-//     })
-//     .then(response => dispatch(receiveUsers({stuff: response.data})))//console.log(response))//response.json())
-//     // .then(json => dispatch(receiveUsers(json)));
-//   };
-// }

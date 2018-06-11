@@ -1,52 +1,39 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions/actions';
 
-import _ from 'lodash';
+import PropTypes from 'prop-types';
 
-import { Grid, Form, Button, Segment, Icon, Message} from 'semantic-ui-react';
+// import _ from 'lodash';
 
 import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
 
-  state = {
-    info: {email: '', password: ''},
-    submitted: false,
-    error: false,
-  }
-
-  handleChange = (event, {name, value}) => {
-    event.preventDefault();
-    const info = this.state.info;
-    info[name] = value;
-    this.setState({ info: info })
-  }
-
-  renderError = () => {
-    if (this.state.error)
-      return (
-        <Message
-          error={this.state.error}
-          content='The email and password given do not match any account'
-        />
-      )
+  componentWillUnmount() {
+    this.props.actions.updateField('email', '');
+    this.props.actions.updateField('password', '');
   }
 
   render () {
-    const { email, password } = this.state.info;
-
     return (
-      <LoginForm />
+      <LoginForm
+        myHeader={this.props.myHeader}
+        logSign={this.props.logSign}
+        updateField={this.props.actions.updateField}
+      />
     )
+  }
+
+  static propTypes = {
+    myHeader: PropTypes.func.isRequired,
   }
 }
 
 function mapStateToProps(state) {
   return {
-    users: state.users
+    logSign: state.logSign
   };
 }
 

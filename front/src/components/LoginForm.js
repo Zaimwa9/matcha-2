@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import _ from 'lodash';
+import PropTypes from 'prop-types';
+
+// import _ from 'lodash';
 
 import { Grid, Form, Button, Segment, Icon, Message} from 'semantic-ui-react';
 
 class LoginForm extends Component {
 
   state = {
-    info: {email: '', password: ''},
-    submitted: false,
-    error: false,
+    error: null
   }
 
   handleChange = (event, {name, value}) => {
-    event.preventDefault();
-    const info = this.state.info;
-    info[name] = value;
-    this.setState({ info: info })
+    this.props.updateField(name, value);
   }
 
   renderError = () => {
@@ -31,7 +28,7 @@ class LoginForm extends Component {
   }
 
   render () {
-    const { email, password } = this.state.info;
+    const { email, password } = this.props.logSign.user;
 
     return (
       <Form size='large' onSubmit={e => this.handleSubmit(e)} error={this.state.error}>
@@ -78,6 +75,12 @@ class LoginForm extends Component {
         </Segment>
       </Form>
     )
+  }
+
+  static propTypes = {
+    myHeader: PropTypes.func.isRequired,
+    updateField: PropTypes.func.isRequired,
+    logSign: PropTypes.object.isRequired,
   }
 }
 
