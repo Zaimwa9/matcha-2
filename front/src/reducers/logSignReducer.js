@@ -5,7 +5,8 @@ import {
   RECEIVE_USERS,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
-  SIGNUP_FAILURE
+  SIGNUP_FAILURE,
+  UPDATE_FIELD
 } from '../actions/actionTypes';
 
 /*
@@ -17,10 +18,11 @@ import {
 
 const initialState = {
   user: {
-    email: '',
     first_name: '',
     last_name: '',
-    // password: 'test',
+    email: '',
+    password: '',
+    cpassword: '',
   },
   signupForm: {
     submitted: false,
@@ -35,21 +37,25 @@ export default function users(state = initialState, action) {
   let newState;
 
   switch (action.type) {
+    case UPDATE_FIELD:
+      newState = {...state};
+      newState.user[action.name] = action.value;
+      return newState;
     case SIGNUP_REQUEST:
-      newState = {... state};
+      newState = {...state};
       newState.signupForm.submitted = true;
       newState.signupForm.error.status = false;
       return newState;
     case SIGNUP_SUCCESS:
       localStorage.setItem('token', action.data.token);
-      newState = {... state};
+      newState = {...state};
       newState.signupForm.submitted = false;
-      newState.user = {... action.data};
+      newState.user = {...action.data};
       return newState;
     case SIGNUP_FAILURE:
-      newState = {... state};
+      newState = {...state};
       newState.signupForm.submitted = false;
-      newState.signupForm.error = {... action.error}
+      newState.signupForm.error = {...action.error}
       return newState;
     case FETCH_USERS:
       return action;

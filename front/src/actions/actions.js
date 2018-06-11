@@ -1,6 +1,5 @@
 import * as types from './actionTypes.js';
 import axios from 'axios';
-import { SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS } from './actionTypes.js';
 
 /*
   * receiveUsers est un 'action creator' au sens ou un action creator se contente de creer une action.
@@ -37,10 +36,16 @@ export function signupSuccess(data) {
   }
 }
 
+export function updateField(name, value) {
+  return {
+    name: name,
+    value: value,
+    type: types.UPDATE_FIELD
+  }
+}
+
 export function signup(data) {
   return dispatch => {
-    // dispatch Request et mode submitted
-    // =>
     dispatch(signupRequest());
     axios({
       url: 'http://localhost:3000/graphql/',
@@ -62,48 +67,16 @@ export function signup(data) {
     .then(result => {
       if (!result.data.errors) {
         dispatch(signupSuccess(result.data.data.signup));
-        // localStorage.setItem('token', result.data.data.signup.token);
+        dispatch(updateField('password', ''));
+        dispatch(updateField('cpassword', ''));
       } else {
         dispatch(signupFailure(result.data.errors[0]))
-        // console.log(result.data.errors[0].message);
+        dispatch(updateField('password', ''));
+        dispatch(updateField('cpassword', ''));
       }
     })
-
-    // console.log(data);
-    //axios.faistavie
-    //
-    // ==> En fonction de la reponse ==> dispatch Success soit erreur
   }
 }
-// export function postSignup(data) {
-//   return dispatch => {
-//     axios({
-//       url: 'http://localhost:3000/graphql/',
-//       method: 'post',
-//       data: {
-//         query: `
-//           mutation signup {
-//             signup(email: "${data.email}", password: "${data.password}", first_name: "${data.first_name}", last_name: "${data.last_name}") {
-//               uuid,
-//               first_name,
-//               last_name,
-//               email,
-//               token
-//             }
-//           }
-//         `
-//       }
-//     })
-//     .then(result => {
-//       if (!result.data.errors) {
-//         console.log(result.data.data)
-//         localStorage.setItem('token', result.data.data.signup.token);
-//       } else {
-//         console.log(result.data.errors[0].message);
-//       }
-//     })
-//   }
-// }
 
 export function fetchUsers() {
   /*

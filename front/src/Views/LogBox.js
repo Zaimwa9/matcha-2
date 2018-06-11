@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid, Form, Image, Header, Segment, Icon, Button, Message, Divider } from 'semantic-ui-react';
+import { Grid, Image, Header } from 'semantic-ui-react';
 
 import LogSign from '../containers/LogSign';
 import LoginForm from '../containers/Login';
 import SignupForm from '../containers/Signup';
 
 class LogBox extends Component {
-
-  componentWillMount() {
-    // HERE WE ARE TRIGGERING THE ACTION
-    // this.props.actions.fetchUsers();
-    // console.log(this.props.users);
-    // this.props.actions.signup(this.props.users)
-  }
 
   myHeader = () => {
     return (

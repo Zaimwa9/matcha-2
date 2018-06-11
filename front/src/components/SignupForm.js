@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
+import PropTypes from 'prop-types';
+// import _ from 'lodash';
 
-import { Grid, Form, Button, Segment, Icon, Message, Label } from 'semantic-ui-react';
+import { Grid, Form, Button, Segment, Icon, Label } from 'semantic-ui-react';
 
 class SignupForm extends Component {
 
-  state = {
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    cpassword: '',
-    errEmail: false,
-  }
-  // A garder et update store a la toute fin
-
   handleChange = (event, {name, value}) => {
-    this.setState({[name]: value});
+    this.props.updateField(name, value);
   }
 
   handleSubmit = (event) => {
@@ -28,18 +19,17 @@ class SignupForm extends Component {
   errorMessage = () => {
     if (this.props.logSign.signupForm.error.status) {
       return (
-          <Label pointing basic color='red' style={{marginTop: '0rem', marginBottom: '1rem'}} fluid>{this.props.logSign.signupForm.error.message}</Label>
-      //   <Message
-      //   error={this.props.logSign.signupForm.error.status}
-      //   header={this.props.logSign.signupForm.error.message}
-      // />
+        <Label
+          pointing
+          basic color='red'
+          style={{marginTop: '0rem', marginBottom: '1rem'}}
+        >{this.props.logSign.signupForm.error.message}</Label>
       )
     }
   }
 
   render () {
-    const { first_name, last_name, email, password, cpassword} = this.state;
-
+    const { first_name, last_name, email, password, cpassword} = this.props.logSign.user;
 
     return (
       <Form size='large' onSubmit={this.handleSubmit} error={this.props.logSign.signupForm.error.status}>
@@ -66,6 +56,12 @@ class SignupForm extends Component {
         </Segment>
       </Form>
     )
+  }
+  static propTypes = {
+    myHeader: PropTypes.func.isRequired,
+    updateField: PropTypes.func.isRequired,
+    signup: PropTypes.func.isRequired,
+    logSign: PropTypes.object.isRequired,
   }
 }
 
