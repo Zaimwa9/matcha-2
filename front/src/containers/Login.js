@@ -12,8 +12,8 @@ import LoginForm from '../components/LoginForm';
 class Login extends Component {
 
   componentWillUnmount() {
-    this.props.actions.updateField('email', '');
-    this.props.actions.updateField('password', '');
+    this.props.updateField('email', '');
+    this.props.updateField('password', '');
   }
 
   render () {
@@ -21,6 +21,7 @@ class Login extends Component {
       <LoginForm
         myHeader={this.props.myHeader}
         logSign={this.props.logSign}
+        login={this.props.actions.login}
         updateField={this.props.actions.updateField}
       />
     )

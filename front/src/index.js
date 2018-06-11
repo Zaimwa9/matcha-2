@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import App from './App';
+// import App from './App';
 import LogBox from './views/LogBox';
 
 import registerServiceWorker from './registerServiceWorker';

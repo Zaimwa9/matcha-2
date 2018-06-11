@@ -9,19 +9,19 @@ import { Grid, Form, Button, Segment, Icon, Message} from 'semantic-ui-react';
 
 class LoginForm extends Component {
 
-  state = {
-    error: null
-  }
-
   handleChange = (event, {name, value}) => {
     this.props.updateField(name, value);
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.login(this.props.logSign.user);
+  }
   renderError = () => {
     if (this.props.logSign.signupForm.error.status)
       return (
         <Message
-          error={this.state.error}
+          error={this.props.logSign.signupForm.error.status}
           content='The email and password given do not match any account'
         />
       )
@@ -56,7 +56,7 @@ class LoginForm extends Component {
           {this.renderError()}
           <Button
             fluid
-            disabled={this.state.submitted}
+            disabled={this.props.logSign.signupForm.submitted}
             color='blue'
             size='large'>
             Login
@@ -81,6 +81,7 @@ class LoginForm extends Component {
     myHeader: PropTypes.func.isRequired,
     updateField: PropTypes.func.isRequired,
     logSign: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired
   }
 }
 

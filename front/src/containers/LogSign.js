@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actions from '../actions/actions';
+
 import PropTypes from 'prop-types';
 
-import { Grid, Form, Image, Header, Segment, Icon, Button, Message, Divider } from 'semantic-ui-react';
+import { Grid, Segment, Icon, Button, Divider } from 'semantic-ui-react';
 
 class LogSign extends Component {
 
@@ -35,6 +32,10 @@ class LogSign extends Component {
           </Grid.Row>
       </Segment>
     )
+  }
+
+  static propTypes = {
+    myHeader: PropTypes.func.isRequired
   }
 }
 

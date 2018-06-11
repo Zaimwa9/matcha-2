@@ -1,8 +1,6 @@
 // import initialState from './initialState';
 
 import {
-  FETCH_USERS,
-  RECEIVE_USERS,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
@@ -70,6 +68,7 @@ export default function users(state = initialState, action) {
       localStorage.setItem('token', action.data.token);
       newState = {...state};
       newState.signupForm.submitted = false;
+      action.data.password = '';
       newState.user = {...action.data};
       return newState;
     case LOGIN_FAILURE:

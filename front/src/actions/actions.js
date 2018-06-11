@@ -51,6 +51,8 @@ export function loginRequest() {
 }
 
 export function loginSuccess(data) {
+  console.log('in func ')
+  console.log(data)
   return {
     data: data,
     type: types.LOGIN_SUCCESS,
@@ -113,8 +115,8 @@ export function login(data) {
       method: 'post',
       data: {
         query: `
-          mutation signup {
-            signup(email: "${data.email}", password: "${data.password}", first_name: "${data.first_name}", last_name: "${data.last_name}") {
+          mutation login {
+            login(email: "${data.email}", password: "${data.password}") {
               uuid,
               first_name,
               last_name,
@@ -127,13 +129,12 @@ export function login(data) {
     })
     .then(result => {
       if (!result.data.errors) {
-        dispatch(signupSuccess(result.data.data.signup));
+        console.log(result.data.data)
+        dispatch(loginSuccess(result.data.data.login));
         dispatch(updateField('password', ''));
-        dispatch(updateField('cpassword', ''));
       } else {
-        dispatch(signupFailure('Email already in use!'))
+        dispatch(loginFailure('Email already in use!'))
         dispatch(updateField('password', ''));
-        dispatch(updateField('cpassword', ''));
       }
     })
   }
