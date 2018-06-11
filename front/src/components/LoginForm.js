@@ -18,7 +18,7 @@ class LoginForm extends Component {
   }
 
   renderError = () => {
-    if (this.state.error)
+    if (this.props.logSign.signupForm.error.status)
       return (
         <Message
           error={this.state.error}
@@ -31,7 +31,7 @@ class LoginForm extends Component {
     const { email, password } = this.props.logSign.user;
 
     return (
-      <Form size='large' onSubmit={e => this.handleSubmit(e)} error={this.state.error}>
+      <Form size='large' onSubmit={e => this.handleSubmit(e)} error={this.props.logSign.signupForm.error.status}>
         <Segment padded>
           {this.props.myHeader()}
           <Form.Input

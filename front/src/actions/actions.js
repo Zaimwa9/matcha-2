@@ -19,11 +19,11 @@ export function signupRequest() {
   }
 }
 
-export function signupFailure() {
+export function signupFailure(message) {
   return {
     error: {
       status: true,
-      message: 'Email already in use'
+      message: message
     },
     type: types.SIGNUP_FAILURE
   }
@@ -41,6 +41,29 @@ export function updateField(name, value) {
     name: name,
     value: value,
     type: types.UPDATE_FIELD
+  }
+}
+
+export function loginRequest() {
+  return {
+    type: types.LOGIN_REQUEST,
+  }
+}
+
+export function loginSuccess(data) {
+  return {
+    data: data,
+    type: types.LOGIN_SUCCESS,
+  }
+}
+
+export function loginFailure(message) {
+  return {
+    error : {
+      status: true,
+      message: message
+    },
+    type: types.LOGIN_FAILURE,
   }
 }
 
@@ -74,7 +97,7 @@ export function signup(data) {
         dispatch(updateField('password', ''));
         dispatch(updateField('cpassword', ''));
       } else {
-        dispatch(signupFailure(result.data.errors[0]))
+        dispatch(signupFailure('Email already in use!'))
         dispatch(updateField('password', ''));
         dispatch(updateField('cpassword', ''));
       }
@@ -82,24 +105,36 @@ export function signup(data) {
   }
 }
 
-export function fetchUsers() {
-    return dispatch => {
+export function login(data) {
+  return dispatch => {
+    dispatch(loginRequest());
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
       data: {
         query: `
-          query users {
-            users {
+          mutation signup {
+            signup(email: "${data.email}", password: "${data.password}", first_name: "${data.first_name}", last_name: "${data.last_name}") {
+              uuid,
               first_name,
               last_name,
-              password
-              }
+              email,
+              token
             }
-          `
+          }
+        `
       }
-    }).then(result => {
-      dispatch(receiveUsers(result.data.data.users))
-    });
-  };
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(signupSuccess(result.data.data.signup));
+        dispatch(updateField('password', ''));
+        dispatch(updateField('cpassword', ''));
+      } else {
+        dispatch(signupFailure('Email already in use!'))
+        dispatch(updateField('password', ''));
+        dispatch(updateField('cpassword', ''));
+      }
+    })
+  }
 }
