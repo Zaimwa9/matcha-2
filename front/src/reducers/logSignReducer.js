@@ -34,7 +34,8 @@ const initialState = {
       status: false,
       message: null
     }
-  }
+  },
+  checked: false,
 }
 
 export default function users(state = initialState, action) {
@@ -84,7 +85,9 @@ export default function users(state = initialState, action) {
       newState.signupForm.submitted = false;
       action.data.password = '';
       newState.user = {...action.data};
-      newState.user.isAuth = true;
+      // newState.user.isAuth = true;
+      newState.checked = true;
+      console.log(newState);
       return newState;
     case LOGIN_FAILURE:
       newState = {...state};

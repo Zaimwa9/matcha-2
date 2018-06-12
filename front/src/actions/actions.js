@@ -57,7 +57,6 @@ export function loginRequest() {
 }
 
 export function loginSuccess(data) {
-  console.log(data)
   return {
     data: data,
     type: types.LOGIN_SUCCESS,
@@ -170,7 +169,7 @@ export function isAuth() {
               first_name,
               last_name,
               email,
-              uuid
+              uuid,
           }
         }
         
@@ -196,15 +195,15 @@ export function loggedIn(uuid) {
       data: {
         query: `
           query {
-            checkToken(token: "${token}") {
+            user(uuid: "${uuid}") {
               first_name,
               last_name,
               email,
-              uuid
+              uuid,
+              password
+            }
           }
-        }
-        
-      `
+        `
       }
     })
     .then(result => {

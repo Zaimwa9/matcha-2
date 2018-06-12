@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const RenderPrivate = function ({component: Component, isAuth, ...rest }) {
 
@@ -8,9 +9,17 @@ const RenderPrivate = function ({component: Component, isAuth, ...rest }) {
       {...rest}
       render={(props) => isAuth
       ? <Component {...props} />
-      : <Redirect to={{pathname: '/connexion'}} />}
+      : <Redirect push to={{pathname: '/connexion'}} />}
     />
   )
 }
 
-export default RenderPrivate;
+function mapStateToProps(state) {
+  return {
+    isAuth: state.logSign.user.isAuth,
+    request: state.logSign.signupForm.submitted
+  };
+}
+
+// export default RenderPrivate;
+export default connect(mapStateToProps)(RenderPrivate)

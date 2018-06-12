@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 // import _ from 'lodash';
 
-import { Grid, Form, Button, Segment, Icon, Message} from 'semantic-ui-react';
+import { Grid, Form, Button, Segment, Icon, Message } from 'semantic-ui-react';
 
 class LoginForm extends Component {
 

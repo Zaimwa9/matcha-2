@@ -17,7 +17,6 @@ class Login extends Component {
   }
 
   render () {
-    // this.props.actions.isAuth();
     return (
       <LoginForm
         myHeader={this.props.myHeader}

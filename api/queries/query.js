@@ -47,13 +47,15 @@ var queryType = new GraphQLObjectType({
       type: userType,
       // `args` describes the arguments that the `user` query accepts
       args: {
-        uuid: { type: GraphQLInt },
+        uuid: { type: GraphQLString },
         // password: { type: GraphQLInt }
       },
       resolve: async function (root, args) {
-        textQuery = `SELECT * FROM users WHERE uuid=${args.uuid}`;
+        textQuery = `SELECT * FROM users WHERE uuid='${args.uuid}'`;
+        console.log(textQuery)
         try {
           const data = await psql.query(textQuery);
+          console.log(data);
           return data.rows[0];
         } catch (e) {
           return new Error('Database error: ' + e);
