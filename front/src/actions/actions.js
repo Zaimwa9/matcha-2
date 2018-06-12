@@ -57,7 +57,6 @@ export function loginRequest() {
 }
 
 export function loginSuccess(data) {
-  console.log('in func ')
   console.log(data)
   return {
     data: data,
@@ -85,6 +84,10 @@ export function signup(data) {
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
       data: {
         query: `
           mutation signup {
@@ -120,7 +123,8 @@ export function login(data) {
       url: 'http://localhost:3000/graphql/',
       method: 'post',
       headers: {
-        'Authorization': 'Bearer '+ localStorage.getItem('token')
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
       },
       data: {
         query: `

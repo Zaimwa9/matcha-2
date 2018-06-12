@@ -22,6 +22,9 @@ app.use(cors());
 const schema = new GraphQLSchema({query: queryType, mutation: mutationType})
 
 const verifyToken = (token) => {
+  if (!token) {
+    throw new Error('No token provided');
+  }
   const [prefix, payload] = token.split(' ')
   let user = null
   if (!payload) { //no token in the header
@@ -66,13 +69,19 @@ const verifyToken = (token) => {
 app.use('/graphql',
   // bodyParser.json(),
   (req, res, next) => {
+    console.log(req.headers.protected);
+    if (req.headers.protected === 'false') {
+      console.log('nexting')
+      return next()
+    }
     const token = req.headers['authorization']
     try {
       req.user = verifyToken(token)
       next()
     } catch (e) {
       console.log(e);
-      res.status(401).json({
+      res.status(200).json({
+        auth: false,
         message: e.message
       })
     }
