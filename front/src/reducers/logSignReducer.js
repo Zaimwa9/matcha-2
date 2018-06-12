@@ -26,6 +26,7 @@ const initialState = {
     email: '',
     password: '',
     cpassword: '',
+    isAuth: false
   },
   signupForm: {
     submitted: false,
@@ -41,8 +42,10 @@ export default function users(state = initialState, action) {
 
   switch (action.type) {
     case AUTH_CHECK:
-      console.log(action.data);
-      return action;
+      newState = {...state};
+      newState.user = {...action.data};
+      newState.user.isAuth = true;
+      return newState;
     case UPDATE_FIELD:
       newState = {...state};
       newState.user[action.name] = action.value;
@@ -52,17 +55,18 @@ export default function users(state = initialState, action) {
       newState.signupForm = {...initialState.signupForm};
       newState.signupForm.error = {...initialState.signupForm.error};
       return newState;
+
     case SIGNUP_REQUEST:
       newState = {...state};
       newState.signupForm.submitted = true;
       newState.signupForm.error.status = false;
       return newState;
     case SIGNUP_SUCCESS:
-      localStorage.setItem('token', action.data.token);
       newState = {...state};
       newState.signupForm.submitted = false;
       action.data.password = '';
       newState.user = {...action.data};
+      newState.user.isAuth = true;
       return newState;
     case SIGNUP_FAILURE:
       newState = {...state};
@@ -76,19 +80,19 @@ export default function users(state = initialState, action) {
       newState.signupForm.error.status = false;
       return newState;
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.data.token);
       newState = {...state};
       newState.signupForm.submitted = false;
       action.data.password = '';
       newState.user = {...action.data};
+      newState.user.isAuth = true;
       return newState;
     case LOGIN_FAILURE:
       newState = {...state};
       newState.signupForm.submitted = false;
       newState.signupForm.error = {...action.error}
       return newState;
-    default:
 
+    default:
       return state;
   }
 }

@@ -104,6 +104,7 @@ export function signup(data) {
     })
     .then(result => {
       if (!result.data.errors) {
+        localStorage.setItem('token', result.data.data.signup.token);
         dispatch(signupSuccess(result.data.data.signup));
         dispatch(updateField('password', ''));
         dispatch(updateField('cpassword', ''));
@@ -142,7 +143,7 @@ export function login(data) {
     })
     .then(result => {
       if (!result.data.errors) {
-        console.log(result.data.data)
+        localStorage.setItem('token', result.data.data.login.token);
         dispatch(loginSuccess(result.data.data.login));
         dispatch(updateField('password', ''));
       } else {
@@ -154,31 +155,61 @@ export function login(data) {
 }
 
 export function isAuth() {
-  
   return dispatch => {
+    var token = localStorage.getItem('token');
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
       headers: {
-        'Authorization': 'Bearer '+ localStorage.getItem('token')
+        'Authorization': 'Bearer '+ token
       },
       data: {
         query: `
-        mutation login {
-          login(email: "diwadoo", password: "diwadoo") {
-            uuid,
-            first_name,
-            last_name,
-            email,
-            token
+          query {
+            checkToken(token: "${token}") {
+              first_name,
+              last_name,
+              email,
+              uuid
           }
         }
+        
       `
       }
     })
     .then(result => {
-      console.log(result);
-      dispatch(checkAuth(result));
+      // console.log(result.data.data.checkToken);
+      dispatch(checkAuth(result.data.data.checkToken));
+    })
+  }
+}
+
+export function loggedIn(uuid) {
+  return dispatch => {
+    var token = localStorage.getItem('token');
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Authorization': 'Bearer '+ token
+      },
+      data: {
+        query: `
+          query {
+            checkToken(token: "${token}") {
+              first_name,
+              last_name,
+              email,
+              uuid
+          }
+        }
+        
+      `
+      }
+    })
+    .then(result => {
+      console.log(result.data.data.checkToken);
+      dispatch(loginSuccess(result.data.data.checkToken));
     })
   }
 }

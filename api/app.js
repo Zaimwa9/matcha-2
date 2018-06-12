@@ -34,9 +34,7 @@ const verifyToken = (token) => {
     if (err) { //token is invalid
         throw new Error('Invalid token!')
     } else {
-      console.log(data);
       textQuery = `SELECT * FROM users WHERE uuid='${data.uuid}'`;
-      console.log(textQuery);
       try {
         user = await psql.query(textQuery);
         user = user.rowCount === 1 ? user.rows[0] : null;
@@ -53,39 +51,26 @@ const verifyToken = (token) => {
   return user;
 }
 
-// app.use('/graphql', (req, res, next) => {
-//   const token = req.headers['authorization']
-//   try {
-//     console.log('yia')
-//     req.user = verifyToken(token)
-//     next()
-//   } catch (e) {
-//     res.status(401).json({
-//       message: e.message
-//     })
-//   }
-// });
-
 app.use('/graphql',
   // bodyParser.json(),
-  (req, res, next) => {
-    console.log(req.headers.protected);
-    if (req.headers.protected === 'false') {
-      console.log('nexting')
-      return next()
-    }
-    const token = req.headers['authorization']
-    try {
-      req.user = verifyToken(token)
-      next()
-    } catch (e) {
-      console.log(e);
-      res.status(200).json({
-        auth: false,
-        message: e.message
-      })
-    }
-  },
+  // (req, res, next) => {
+  //   console.log(req.headers.protected);
+  //   if (req.headers.protected === 'false') {
+  //     console.log('nexting')
+  //     return next()
+  //   }
+  //   const token = req.headers['authorization']
+  //   try {
+  //     req.user = verifyToken(token)
+  //     next()
+  //   } catch (e) {
+  //     console.log(e);
+  //     res.status(200).json({
+  //       auth: false,
+  //       message: e.message
+  //     })
+  //   }
+  // },
   graphqlHTTP((req, res) => ({
   schema: schema,
   graphiql: true,
