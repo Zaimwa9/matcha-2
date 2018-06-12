@@ -8,6 +8,8 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  AUTH_CHECK,
+  RESET_FORM
 } from '../actions/actionTypes';
 
 /*
@@ -38,9 +40,17 @@ export default function users(state = initialState, action) {
   let newState;
 
   switch (action.type) {
+    case AUTH_CHECK:
+      console.log(action.data);
+      return action;
     case UPDATE_FIELD:
       newState = {...state};
       newState.user[action.name] = action.value;
+      return newState;
+    case RESET_FORM:
+      newState = {...state};
+      newState.signupForm = {...initialState.signupForm};
+      newState.signupForm.error = {...initialState.signupForm.error};
       return newState;
     case SIGNUP_REQUEST:
       newState = {...state};
@@ -51,6 +61,7 @@ export default function users(state = initialState, action) {
       localStorage.setItem('token', action.data.token);
       newState = {...state};
       newState.signupForm.submitted = false;
+      action.data.password = '';
       newState.user = {...action.data};
       return newState;
     case SIGNUP_FAILURE:

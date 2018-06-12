@@ -12,11 +12,12 @@ import LoginForm from '../components/LoginForm';
 class Login extends Component {
 
   componentWillUnmount() {
-    this.props.updateField('email', '');
-    this.props.updateField('password', '');
+    this.props.actions.updateField('email', '');
+    this.props.actions.updateField('password', '');
   }
 
   render () {
+    // this.props.actions.isAuth();
     return (
       <LoginForm
         myHeader={this.props.myHeader}

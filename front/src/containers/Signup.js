@@ -15,6 +15,7 @@ class Signup extends Component {
     this.props.actions.updateField('email', '');
     this.props.actions.updateField('password', '');
     this.props.actions.updateField('cpassword', '');
+    this.props.actions.resetForm();
   }
 
   render () {

@@ -8,7 +8,7 @@ const commentType = require('./defTypes/commentType');
 const mutationType = require('./mutations/mutation');
 const queryType = require('./queries/query.js');
 const psql = require('./db/dbconnect');
-
+const jwt = require('jsonwebtoken');
 const { GraphQLSchema } = require('graphql');
 
 app.get('/test', (req, res) => {
@@ -21,45 +21,62 @@ app.use(cors());
 
 const schema = new GraphQLSchema({query: queryType, mutation: mutationType})
 
-// const verifyToken = (token) => {
-//   const [prefix, payload] = token.split(' ')
-//   let user = null
-//   if (!payload) { //no token in the header
-//       throw new Error('No token provided')
-//   }
-//   jwt.verify(payload, secret, (err, data) => {
-//       if (err) { //token is invalid
-//           throw new Error('Invalid token!')
-//       } else {
-//         textQuery = `SELECT * FROM users WHERE email='${args.email}' AND password='${args.password}'`;
-//         try {
-//           user = await psql.query(textQuery);
-//           user = user.rowCount === 1 ? user.rows[0] : null;
-//         } catch (e) {
-//           throw (e)
-//         }
-//       }
-//   })
-//   if (!user) { //user does not exist in DB
-//       throw new Error('User does not exist')
-//   }
-//   return user;
-// }
+const verifyToken = (token) => {
+  const [prefix, payload] = token.split(' ')
+  let user = null
+  if (!payload) { //no token in the header
+    throw new Error('No token provided')
+  }
+  jwt.verify(payload, 'quentinbaltringue', async (err, data) => {
+    if (err) { //token is invalid
+        throw new Error('Invalid token!')
+    } else {
+      console.log(data);
+      textQuery = `SELECT * FROM users WHERE uuid='${data.uuid}'`;
+      console.log(textQuery);
+      try {
+        user = await psql.query(textQuery);
+        user = user.rowCount === 1 ? user.rows[0] : null;
+        console.log(user);
+        if (!user) { //user does not exist in DB
+          throw new Error('User does not exist')
+        }
+      } catch (e) {
+        console.log(e);
+        throw (e)
+      }
+    }
+  })
+  return user;
+}
 
 // app.use('/graphql', (req, res, next) => {
 //   const token = req.headers['authorization']
 //   try {
-//       req.user = verifyToken(token)
-//       next()
+//     console.log('yia')
+//     req.user = verifyToken(token)
+//     next()
 //   } catch (e) {
-//       res.status(401).json({
-//           message: e.message
-//       })
+//     res.status(401).json({
+//       message: e.message
+//     })
 //   }
 // });
 
 app.use('/graphql',
   // bodyParser.json(),
+  (req, res, next) => {
+    const token = req.headers['authorization']
+    try {
+      req.user = verifyToken(token)
+      next()
+    } catch (e) {
+      console.log(e);
+      res.status(401).json({
+        message: e.message
+      })
+    }
+  },
   graphqlHTTP((req, res) => ({
   schema: schema,
   graphiql: true,

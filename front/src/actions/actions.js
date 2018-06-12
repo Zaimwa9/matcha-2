@@ -6,11 +6,11 @@ import axios from 'axios';
   * Ici de type receive users avec data comme objet
 */
 
-export function receiveUsers(users) {
+export function checkAuth(data) {
   return {
-    type: types.RECEIVE_USERS,
-    users: users
-  };
+    data: data,
+    type: types.AUTH_CHECK
+  }
 }
 
 export function signupRequest() {
@@ -41,6 +41,12 @@ export function updateField(name, value) {
     name: name,
     value: value,
     type: types.UPDATE_FIELD
+  }
+}
+
+export function resetForm() {
+  return {
+    type: types.RESET_FORM
   }
 }
 
@@ -113,6 +119,9 @@ export function login(data) {
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
+      headers: {
+        'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
       data: {
         query: `
           mutation login {
@@ -136,6 +145,36 @@ export function login(data) {
         dispatch(loginFailure('Email already in use!'))
         dispatch(updateField('password', ''));
       }
+    })
+  }
+}
+
+export function isAuth() {
+  
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query: `
+        mutation login {
+          login(email: "diwadoo", password: "diwadoo") {
+            uuid,
+            first_name,
+            last_name,
+            email,
+            token
+          }
+        }
+      `
+      }
+    })
+    .then(result => {
+      console.log(result);
+      dispatch(checkAuth(result));
     })
   }
 }
