@@ -5,16 +5,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions/actions';
 
-import { loginSuccess, signupRequest, loggedIn } from '../actions/actions';
-
 import NotFound from '../components/NotFound';
 import RenderPublic from './PublicRoutes';
 import RenderPrivate from './PrivateRoutes';
 import LogBox from '../views/LogBox';
 import Homepage from '../views/Homepage';
 import LoadingPage from '../components/LoadingPage';
-
-import jwtDecode from 'jwt-decode';
 
 class Router extends Component {
   componentWillMount() {
