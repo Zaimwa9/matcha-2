@@ -195,32 +195,3 @@ export function isAuth() {
     }
   }
 }
-
-export function loggedIn(uuid) {
-  return dispatch => {
-    var token = localStorage.getItem('token');
-    axios({
-      url: 'http://localhost:3000/graphql/',
-      method: 'post',
-      headers: {
-        'Authorization': 'Bearer '+ token
-      },
-      data: {
-        query: `
-          query {
-            user(uuid: "${uuid}") {
-              first_name,
-              last_name,
-              email,
-              uuid,
-              password
-            }
-          }
-        `
-      }
-    })
-    .then(result => {
-      dispatch(loginSuccess(result.data.data.checkToken));
-    })
-  }
-}
