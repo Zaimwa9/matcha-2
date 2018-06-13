@@ -6,10 +6,16 @@ import axios from 'axios';
   * Ici de type receive users avec data comme objet
 */
 
-export function checkAuth(data) {
+export function checkAuthTrue(data) {
   return {
     data: data,
-    type: types.AUTH_CHECK
+    type: types.AUTH_CHECK_TRUE
+  }
+}
+
+export function checkAuthFalse() {
+  return {
+    type: types.AUTH_CHECK_FALSE
   }
 }
 
@@ -156,30 +162,37 @@ export function login(data) {
 export function isAuth() {
   return dispatch => {
     var token = localStorage.getItem('token');
-    axios({
-      url: 'http://localhost:3000/graphql/',
-      method: 'post',
-      headers: {
-        'Authorization': 'Bearer '+ token
-      },
-      data: {
-        query: `
-          query {
-            checkToken(token: "${token}") {
-              first_name,
-              last_name,
-              email,
-              uuid,
+    // S'il y a un token on verifie sa validite via la requete API
+    if (token) {
+      axios({
+        url: 'http://localhost:3000/graphql/',
+        method: 'post',
+        headers: {
+          'Authorization': 'Bearer '+ token
+        },
+        data: {
+          query: `
+            query {
+              checkToken(token: "${token}") {
+                first_name,
+                last_name,
+                email,
+                uuid,
+            }
           }
+        `
         }
-        
-      `
-      }
-    })
-    .then(result => {
-      // console.log(result.data.data.checkToken);
-      dispatch(checkAuth(result.data.data.checkToken));
-    })
+      })
+      .then(result => {
+        if (result.data.data.checkToken.uuid) {
+          dispatch(checkAuthTrue(result.data.data.checkToken));
+        } else {
+          dispatch(checkAuthFalse())
+        }
+      })
+    } else {
+      dispatch(checkAuthFalse())
+    }
   }
 }
 
@@ -207,7 +220,6 @@ export function loggedIn(uuid) {
       }
     })
     .then(result => {
-      console.log(result.data.data.checkToken);
       dispatch(loginSuccess(result.data.data.checkToken));
     })
   }

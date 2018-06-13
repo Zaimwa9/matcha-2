@@ -8,7 +8,8 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  AUTH_CHECK,
+  AUTH_CHECK_TRUE,
+  AUTH_CHECK_FALSE,
   RESET_FORM
 } from '../actions/actionTypes';
 
@@ -42,11 +43,19 @@ export default function users(state = initialState, action) {
   let newState;
 
   switch (action.type) {
-    case AUTH_CHECK:
+    case AUTH_CHECK_TRUE:
       newState = {...state};
       newState.user = {...action.data};
       newState.user.isAuth = true;
+      newState.checked = true;
       return newState;
+    case AUTH_CHECK_FALSE:
+      newState = {...state};
+      newState.user = {...action.data};
+      newState.user.isAuth = false;
+      newState.checked = true;
+      return newState;
+
     case UPDATE_FIELD:
       newState = {...state};
       newState.user[action.name] = action.value;
@@ -85,9 +94,6 @@ export default function users(state = initialState, action) {
       newState.signupForm.submitted = false;
       action.data.password = '';
       newState.user = {...action.data};
-      // newState.user.isAuth = true;
-      newState.checked = true;
-      console.log(newState);
       return newState;
     case LOGIN_FAILURE:
       newState = {...state};
