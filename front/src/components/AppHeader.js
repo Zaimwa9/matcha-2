@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Container, Grid, Menu, Button } from 'semantic-ui-react';
 
 class AppHeader extends Component {
+
+  handleHoverIn = (event) => {
+    const item = event.target.innerHTML;
+    this.props.setActiveItem(item);
+  }
+
+  handleHoverOut = (event) => {
+    this.props.setActiveItem('');
+  }
+
   render() {
-    console.log(this.props)
+    var { activeItem } = this.props.activeItem;
+
     return (
       <Container fluid>
         <Menu pointing secondary size='massive'>
@@ -17,13 +28,22 @@ class AppHeader extends Component {
           <Menu.Menu position='right' >
             <Menu.Item
               name='profile'
-              active
-              position='right'
               as='a'
+              name='Profile'
+              active={this.props.activeItem === 'Profile'}
+              onMouseOver={this.handleHoverIn}
+              onMouseOut={this.handleHoverOut}
             >
               Profile
             </Menu.Item>
-            <Menu.Item position='right' as='a'>
+            <Menu.Item
+              position='right'
+              as='a'
+              name='Logout'
+              active={this.props.activeItem === 'Logout'}
+              onMouseOver={this.handleHoverIn}
+              onMouseOut={this.handleHoverOut}
+            >
               Logout
             </Menu.Item>
           </Menu.Menu>
@@ -32,5 +52,12 @@ class AppHeader extends Component {
     )
   }
 }
+function mapStateToProps(state) {
+  return {
+    activeItem: state.app.menu.activeItem
+  };
+}
 
-export default AppHeader;
+export default connect(
+  mapStateToProps,
+)(AppHeader);

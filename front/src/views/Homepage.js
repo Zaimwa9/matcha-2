@@ -10,7 +10,6 @@ class Homepage extends Component {
     console.log(this.props);
     return (
       <AppHeader
-        activeItem={this.props.menu.activeItem}
         setActiveItem={this.props.actions.setActiveItem}
       />
     )

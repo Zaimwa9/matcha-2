@@ -24,6 +24,7 @@ class Router extends Component {
           <Route exact path='/' component={LogBox} location={this.props.location} />
           <Route exact path='/login' component={LogBox} location={this.props.location} />
           <Route exact path='/signup' component={LogBox} location={this.props.location} />
+          <RenderPrivate exact path='/profile' component={Homepage} location={this.props.location} />
           <Route component={NotFound}></Route>
         </Switch>
       )
@@ -32,6 +33,8 @@ class Router extends Component {
         <Switch>
           <Route exact path='/' component={Homepage} location={this.props.location} />
           <Route exact path='/profile' component={Homepage} location={this.props.location} />
+          <RenderPublic exact path='/signup' component={LogBox} location={this.props.location} />
+          <RenderPublic exact path='/login' component={LogBox} location={this.props.location} />
           <Route component={NotFound}></Route>
         </Switch>
       )
