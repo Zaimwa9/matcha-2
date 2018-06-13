@@ -2,21 +2,25 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../actions/actions';
+import * as actions from '../actions/appActions';
+import AppHeader from '../components/AppHeader';
 
 class Homepage extends Component {
   render() {
+    console.log(this.props);
     return (
-      <div className='Homepage'>
-        This is gonna be the app
-      </div>
+      <AppHeader
+        activeItem={this.props.menu.activeItem}
+        setActiveItem={this.props.actions.setActiveItem}
+      />
     )
   }
 }
 
 function mapStateToProps(state) {
   return {
-    logSign: state.logSign
+    user: state.logSign.user,
+    menu: state.app.menu
   };
 }
 

@@ -23,6 +23,7 @@ class Login extends Component {
         logSign={this.props.logSign}
         login={this.props.actions.login}
         updateField={this.props.actions.updateField}
+        history={this.props.history}
       />
     )
   }

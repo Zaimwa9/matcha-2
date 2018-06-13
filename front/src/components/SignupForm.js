@@ -14,6 +14,7 @@ class SignupForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.signup(this.props.logSign.user);
+    this.props.history.push('/');
   }
 
   errorMessage = () => {
@@ -62,6 +63,7 @@ class SignupForm extends Component {
     updateField: PropTypes.func.isRequired,
     signup: PropTypes.func.isRequired,
     logSign: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   }
 }
 

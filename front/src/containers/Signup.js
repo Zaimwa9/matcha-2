@@ -25,12 +25,14 @@ class Signup extends Component {
         logSign={this.props.logSign}
         signup={this.props.actions.signup}
         updateField={this.props.actions.updateField}
+        history={this.props.history}
       />
     )
   }
 
   static propTypes = {
     myHeader: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
   }
 }
 

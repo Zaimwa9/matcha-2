@@ -16,6 +16,7 @@ class LoginForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.login(this.props.logSign.user);
+    this.props.history.push('/')
   }
   renderError = () => {
     if (this.props.logSign.signupForm.error.status)
@@ -29,7 +30,6 @@ class LoginForm extends Component {
 
   render () {
     const { email, password } = this.props.logSign.user;
-
     return (
       <Form size='large' onSubmit={e => this.handleSubmit(e)} error={this.props.logSign.signupForm.error.status}>
         <Segment padded>
@@ -81,7 +81,8 @@ class LoginForm extends Component {
     myHeader: PropTypes.func.isRequired,
     updateField: PropTypes.func.isRequired,
     logSign: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired
+    login: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
   }
 }
 

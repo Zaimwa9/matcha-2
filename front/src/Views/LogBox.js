@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Grid, Image, Header } from 'semantic-ui-react';
 
 import LogSign from '../containers/LogSign';
-import LoginForm from '../containers/Login';
-import SignupForm from '../containers/Signup';
+import Login from '../containers/Login';
+import Signup from '../containers/Signup';
 
 class LogBox extends Component {
 
@@ -26,13 +26,13 @@ class LogBox extends Component {
     )
   }
 
-  formRender = () => {
+  formRender = (props) => {
     if (this.props.match.url === '/signup') {
-      return <SignupForm myHeader={this.myHeader} />;
+      return <Signup myHeader={this.myHeader} history={{...props.history}}/>;
     } else if (this.props.match.url === '/login') {
-      return <LoginForm myHeader={this.myHeader} />;
+      return <Login myHeader={this.myHeader} history={{...props.history}}/>;
     }
-    return <LogSign myHeader={this.myHeader} />;
+    return <LogSign myHeader={this.myHeader} history={{...props.history}}/>;
   };
 
   render() {
@@ -42,7 +42,7 @@ class LogBox extends Component {
         <Grid verticalAlign='middle' textAlign='center' style={{ height: '100%' }}>
           <Grid.Column style={{ maxWidth: 450, textAlign: 'start' }}>
 
-            {this.formRender()}
+            {this.formRender(this.props)}
 
           </Grid.Column>
         </Grid>

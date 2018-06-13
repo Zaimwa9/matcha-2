@@ -1,5 +1,3 @@
-// import initialState from './initialState';
-
 import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
