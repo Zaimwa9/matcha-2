@@ -34,7 +34,7 @@ class AppHeader extends Component {
             <Link to={this.props.match.url === '/account' ? '/' : '/account'}>
               <Menu.Item
                 name='account'
-                active={this.props.activeItem === 'Account'}
+                active={this.props.activeItem === 'Account' || this.props.activeItem === 'Home'}
                 onMouseOver={this.handleHoverIn}
                 onMouseOut={this.handleHoverOut}
               >
