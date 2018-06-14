@@ -12,6 +12,7 @@ const initialState = {
     gender: '',
     age: '',
     isAuth: true,
+    isFilled: false,
   },
   menu: {
     activeItem: '',

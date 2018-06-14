@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Container, Grid, Menu, Button } from 'semantic-ui-react';
+import { Container, Grid, Menu } from 'semantic-ui-react';
 
 class AppHeader extends Component {
 

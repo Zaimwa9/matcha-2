@@ -33,7 +33,7 @@ class Router extends Component {
       return (
         <Switch>
           <Route exact path='/' component={Homepage} location={this.props.location} />
-          <Route exact path='/account' component={Homepage} location={this.props.location} />
+          <Route exact path='/account' component={Profile} location={this.props.location} />
           <RenderPublic exact path='/signup' component={LogBox} location={this.props.location} />
           <RenderPublic exact path='/login' component={LogBox} location={this.props.location} />
           <Route component={NotFound}></Route>
