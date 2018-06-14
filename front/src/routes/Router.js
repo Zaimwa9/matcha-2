@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions/actions';
 
-import NotFound from '../components/NotFound';
 import RenderPublic from './PublicRoutes';
 import RenderPrivate from './PrivateRoutes';
+import NotFound from '../components/NotFound';
+import LoadingPage from '../components/LoadingPage';
 import LogBox from '../views/LogBox';
 import Homepage from '../views/Homepage';
-import LoadingPage from '../components/LoadingPage';
+import Profile from '../views/Profile';
 
 class Router extends Component {
   componentWillMount() {
