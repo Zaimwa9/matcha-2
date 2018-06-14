@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Rating from 'react-rating';
 
-import { Segment, Input, Item, Divider } from 'semantic-ui-react';
+import { Segment, Input, Item, Divider, Popup } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
@@ -36,6 +36,17 @@ class UserInfo extends Component {
         <Item.Group>
           <Item>
             <Item.Content>
+              <Popup
+                className='popup'
+                trigger= {<Item.Header content='Overall Popularity' />}
+                content='Popularity is a score based on the safety of your account'
+                on='click'
+                size='mini'
+              />
+            </Item.Content>
+          </Item>
+          <Item>
+            <Item.Content>
               <Rating
                 fullSymbol={<img alt='full symbol' src="/black_star.svg" className="icon" />}
                 emptySymbol={<img alt='empty symbol' src="/empty_star.svg" className="icon" />}
@@ -44,9 +55,9 @@ class UserInfo extends Component {
               </Item.Content>
             </Item>
             <Item>
-            <Item.Content>
-              <Item.Header content={`${popularity}%`} />
-            </Item.Content>
+              <Item.Content>
+                <Item.Header content={`${popularity}%`} />
+              </Item.Content>
             </Item>
           </Item.Group>
       </Segment>

@@ -19,3 +19,7 @@ body {
 .icon {
   min-width: 35px;
 }
+
+.popup {
+  color: teal;
+}
