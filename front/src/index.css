@@ -16,9 +16,6 @@ body {
   height: 100%;
 }
 
-.center-cropped {
-  width: 350px;
-  height: 350px;
-  background-position: center center;
-  background-repeat: no-repeat;
+.icon {
+  min-width: 35px;
 }

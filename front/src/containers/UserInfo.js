@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { Container, Grid, Segment, Image, Input, Card, Item, Divider } from 'semantic-ui-react';
+import Rating from 'react-rating';
+
+import { Segment, Input, Item, Divider } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
 class UserInfo extends Component {
   render() {
+    const popularity = 74;
+    const rating = Math.round((popularity / 100 * 5) * 2) / 2;
+
     return (
       <Segment textAlign='center'>
         <Item>
@@ -16,16 +20,35 @@ class UserInfo extends Component {
         <Item.Group>
           <Item>
             <Item.Content verticalAlign='middle'>
-              <Item.Header as='a' content={`${this.props.appUser.first_name} ${this.props.appUser.last_name}`} />
+              <Item.Header content={`${this.props.appUser.first_name} ${this.props.appUser.last_name}`} />
             </Item.Content>
           </Item>
           <Item>
+            <Item.Content>
+              {`${this.props.appUser.email}@hotmail.fr`}
+            </Item.Content>
             <Item.Content>
               27 ans - M
             </Item.Content>
           </Item>
         </Item.Group>
         <Divider />
+        <Item.Group>
+          <Item>
+            <Item.Content>
+              <Rating
+                fullSymbol={<img alt='full symbol' src="/black_star.svg" className="icon" />}
+                emptySymbol={<img alt='empty symbol' src="/empty_star.svg" className="icon" />}
+                initialRating={rating}
+                readonly />
+              </Item.Content>
+            </Item>
+            <Item>
+            <Item.Content>
+              <Item.Header content={`${popularity}%`} />
+            </Item.Content>
+            </Item>
+          </Item.Group>
       </Segment>
     )
   }
