@@ -6,6 +6,11 @@ import * as actions from '../actions/appActions';
 import AppHeader from '../components/AppHeader';
 
 class Profile extends Component {
+  componentWillMount() {
+    if (!this.props.appUser.isFilled)
+      this.props.actions.copyUser(this.props.userIn);
+  }
+
   render() {
     return (
       <AppHeader
@@ -19,8 +24,9 @@ class Profile extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.logSign.user,
-    menu: state.app.menu
+    userIn: state.logSign.user,
+    menu: state.app.menu,
+    appUser: state.app.user,
   };
 }
 

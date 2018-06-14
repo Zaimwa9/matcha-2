@@ -23,7 +23,7 @@ class AppHeader extends Component {
 
   render() {
     var { activeItem } = this.props.activeItem;
-    console.log(this.props)
+
     return (
       <Container fluid>
         <Menu pointing secondary size='massive'>
@@ -57,7 +57,14 @@ class AppHeader extends Component {
       </Container>
     )
   }
+
+  static propTypes = {
+    activeItem: PropTypes.string.isRequired,
+    logout: PropTypes.func.isRequired,
+    setActiveItem: PropTypes.func.isRequired
+  }
 }
+
 function mapStateToProps(state) {
   return {
     activeItem: state.app.menu.activeItem

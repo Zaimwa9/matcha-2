@@ -13,3 +13,10 @@ export function logout() {
     type: types.LOGOUT
   }
 }
+
+export function copyUser(user) {
+  return {
+    user: {...user, isFilled: true},
+    type: types.COPY_USER
+  }
+}
