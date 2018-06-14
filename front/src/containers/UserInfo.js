@@ -57,23 +57,7 @@ class UserInfo extends Component {
     ]
     const popularity = 74;
     const rating = Math.round((popularity / 100 * 5) * 2) / 2;
-    const hashtags1 = _.map(_.chunk(fakeHash, 4)[0], hash => {
-      return (
-        <Item.Content>
-          {`#${hash.content}`}
-        </Item.Content>
-      )
-    });
 
-    const hashtags2 = _.map(_.chunk(fakeHash, 4)[1], hash => {
-      return (
-        <Item.Content>
-          {`#${hash.content}`}
-        </Item.Content>
-      )
-    })
-
-    console.log(fakeHash)
     return (
       <Segment textAlign='center'>
         <Item>
@@ -124,17 +108,6 @@ class UserInfo extends Component {
           </Item.Group>
           {fakeHash.length > 0 ? this.generateHashRow(this.chunkHash(fakeHash, 0)) : ''}
           {fakeHash.length > 4 ? this.generateHashRow(this.chunkHash(fakeHash, 1)) : ''}
-          {/* <Item.Group>
-            <Item>
-              {hashtags1}
-            </Item>
-          </Item.Group>
-          <Item.Group>
-            <Item>
-              {hashtags2}
-            </Item>
-          </Item.Group> */}
-          YOYOYOYOYO
       </Segment>
     )
   }
