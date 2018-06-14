@@ -16,10 +16,15 @@ body {
   height: 100%;
 }
 
-.icon {
-  min-width: 35px;
+.rankingIcon {
+  min-width: 28px;
+}
+
+.actionIcon {
+  cursor: pointer
 }
 
 .popup {
   color: teal;
 }
+

@@ -20,3 +20,12 @@ export function copyUser(user) {
     type: types.COPY_USER
   }
 }
+
+export function setUpdateMode(status) {
+  return {
+    infoBlock: {
+      updateMode: !status
+    },
+    type: types.SET_UPDATE_MODE
+  }
+}

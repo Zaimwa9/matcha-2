@@ -26,7 +26,9 @@ class Profile extends Component {
         <Container fluid>
           <Grid>
             <Grid.Column width={6}>
-              <UserInfo />
+              <UserInfo
+                setUpdateMode={this.props.actions.setUpdateMode}
+              />
             </Grid.Column>
             <Grid.Column width={10}>
               Yo

@@ -3,13 +3,18 @@ import { connect } from 'react-redux';
 
 import Rating from 'react-rating';
 
-import { Segment, Input, Item, Divider, Popup } from 'semantic-ui-react';
+import { Segment, Button, Input, Item, Divider, Popup, Icon } from 'semantic-ui-react';
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 
 
 class UserInfo extends Component {
+
+  handleUpdateMode = () => {
+    console.log(this.props.infoBlock.updateMode);
+    this.props.setUpdateMode(this.props.infoBlock.updateMode);
+  }
 
   generateHashRow = (hash) => {
     return (
@@ -26,7 +31,7 @@ class UserInfo extends Component {
       return (
         _.map(_.chunk(hashArr, 4)[0], hash => {
           return (
-            <Item.Content>
+            <Item.Content relaxed>
               {`#${hash.content}`}
             </Item.Content>
           )
@@ -79,7 +84,7 @@ class UserInfo extends Component {
           </Item>
         </Item.Group>
         <Divider />
-        <Item.Group>
+        <Item.Group relaxed>
           <Item>
             <Item.Content>
               <Popup
@@ -94,8 +99,8 @@ class UserInfo extends Component {
           <Item>
             <Item.Content>
               <Rating
-                fullSymbol={<img alt='full symbol' src="/black_star.svg" className="icon" />}
-                emptySymbol={<img alt='empty symbol' src="/empty_star.svg" className="icon" />}
+                fullSymbol={<img alt='full symbol' src="/black_star.svg" className="rankingIcon" />}
+                emptySymbol={<img alt='empty symbol' src="/empty_star.svg" className="rankingIcon" />}
                 initialRating={rating}
                 readonly />
               </Item.Content>
@@ -108,6 +113,23 @@ class UserInfo extends Component {
           </Item.Group>
           {fakeHash.length > 0 ? this.generateHashRow(this.chunkHash(fakeHash, 0)) : ''}
           {fakeHash.length > 4 ? this.generateHashRow(this.chunkHash(fakeHash, 1)) : ''}
+          <Item.Group>
+            <Item>
+              <Item.Content>
+                  <Icon
+                    className='actionIcon'
+                    // color='black'
+                    // size='mini'
+                    // inverted
+                    name='edit'
+                    // size='small'
+                    color='black'
+                    style={{float: 'left'}}
+                    onClick={this.handleUpdateMode}
+                  />
+              </Item.Content>
+            </Item>
+          </Item.Group>
       </Segment>
     )
   }
@@ -116,6 +138,7 @@ class UserInfo extends Component {
 function mapStateToProps(state) {
   return {
     appUser: state.app.user,
+    infoBlock: state.app.infoBlock
   };
 }
 
