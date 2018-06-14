@@ -16,6 +16,12 @@ class AppHeader extends Component {
     this.props.setActiveItem('');
   }
 
+  handleLogout = () => {
+    this.props.logout();
+    window.location.reload();
+    // this.props.history.push('/');
+  }
+
   render() {
     var { activeItem } = this.props.activeItem;
 
@@ -29,7 +35,6 @@ class AppHeader extends Component {
             <Menu.Item
               name='profile'
               as='a'
-              name='Profile'
               active={this.props.activeItem === 'Profile'}
               onMouseOver={this.handleHoverIn}
               onMouseOut={this.handleHoverOut}
@@ -43,6 +48,7 @@ class AppHeader extends Component {
               active={this.props.activeItem === 'Logout'}
               onMouseOver={this.handleHoverIn}
               onMouseOut={this.handleHoverOut}
+              onClick={this.handleLogout}
             >
               Logout
             </Menu.Item>

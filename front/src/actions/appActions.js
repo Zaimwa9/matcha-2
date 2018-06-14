@@ -7,3 +7,9 @@ export function setActiveItem(activeItem) {
     type: types.ACTIVE_MENU_ITEM
   }
 }
+
+export function logout() {
+  return {
+    type: types.LOGOUT
+  }
+}

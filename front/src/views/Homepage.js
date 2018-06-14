@@ -7,10 +7,11 @@ import AppHeader from '../components/AppHeader';
 
 class Homepage extends Component {
   render() {
-    console.log(this.props);
     return (
       <AppHeader
         setActiveItem={this.props.actions.setActiveItem}
+        logout={this.props.actions.logout}
+        history={this.props.history}
       />
     )
   }
