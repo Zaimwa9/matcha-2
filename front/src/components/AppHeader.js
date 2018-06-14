@@ -19,12 +19,11 @@ class AppHeader extends Component {
   handleLogout = () => {
     this.props.logout();
     window.location.reload();
-    // this.props.history.push('/');
   }
 
   render() {
     var { activeItem } = this.props.activeItem;
-
+    console.log(this.props)
     return (
       <Container fluid>
         <Menu pointing secondary size='massive'>
@@ -32,15 +31,16 @@ class AppHeader extends Component {
             MATCHA
           </Menu.Item>
           <Menu.Menu position='right' >
-            <Menu.Item
-              name='profile'
-              as='a'
-              active={this.props.activeItem === 'Profile'}
-              onMouseOver={this.handleHoverIn}
-              onMouseOut={this.handleHoverOut}
-            >
-              Profile
-            </Menu.Item>
+            <Link to={this.props.match.url === '/account' ? '/' : '/account'}>
+              <Menu.Item
+                name='account'
+                active={this.props.activeItem === 'Account'}
+                onMouseOver={this.handleHoverIn}
+                onMouseOut={this.handleHoverOut}
+              >
+                {this.props.match.url === '/account' ? 'Home' : 'Account'}
+              </Menu.Item>
+            </Link>
             <Menu.Item
               position='right'
               as='a'

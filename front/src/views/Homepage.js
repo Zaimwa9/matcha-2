@@ -11,7 +11,7 @@ class Homepage extends Component {
       <AppHeader
         setActiveItem={this.props.actions.setActiveItem}
         logout={this.props.actions.logout}
-        history={this.props.history}
+        {...this.props}
       />
     )
   }
