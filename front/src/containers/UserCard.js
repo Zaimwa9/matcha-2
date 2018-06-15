@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Rating from 'react-rating';
+import TagCloud from '../components/TagCloud';
 
 import { Segment, Button, Input, Item, Divider, Popup, Icon } from 'semantic-ui-react';
 
@@ -9,45 +10,11 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 
 
-class UserInfo extends Component {
+class UserCard extends Component {
 
   handleUpdateMode = () => {
     console.log(this.props.infoBlock.updateMode);
     this.props.setUpdateMode(this.props.infoBlock.updateMode);
-  }
-
-  generateHashRow = (hash) => {
-    return (
-      <Item.Group>
-        <Item>
-          {hash}
-        </Item>
-      </Item.Group>
-    )
-  }
-
-  chunkHash = (hashArr, index) => {
-    if (index === 0) {
-      return (
-        _.map(_.chunk(hashArr, 4)[0], hash => {
-          return (
-            <Item.Content relaxed>
-              {`#${hash.content}`}
-            </Item.Content>
-          )
-        })
-      )
-    } else {
-      return (
-        _.map(_.chunk(hashArr, 4)[1], hash => {
-          return (
-            <Item.Content>
-              {`#${hash.content}`}
-            </Item.Content>
-          )
-        })
-      )
-    }
   }
 
   render() {
@@ -111,8 +78,7 @@ class UserInfo extends Component {
               </Item.Content>
             </Item>
           </Item.Group>
-          {fakeHash.length > 0 ? this.generateHashRow(this.chunkHash(fakeHash, 0)) : ''}
-          {fakeHash.length > 4 ? this.generateHashRow(this.chunkHash(fakeHash, 1)) : ''}
+          {fakeHash.length > 0 ? <TagCloud hashtags={fakeHash}/> : ''}
           <Item.Group>
             <Item>
               <Item.Content>
@@ -133,6 +99,10 @@ class UserInfo extends Component {
       </Segment>
     )
   }
+
+  static PropTypes = {
+    setUpdateMode: PropTypes.func.isRequired
+  }
 }
 
 function mapStateToProps(state) {
@@ -144,4 +114,4 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-)(UserInfo);
+)(UserCard);

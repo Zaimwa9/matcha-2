@@ -29,7 +29,7 @@ export default function appRed(state = initialState, action) {
   switch (action.type) {
     case COPY_USER:
       newState = {...state, user: {...action.user}};
-    return newState;
+      return newState;
     case ACTIVE_MENU_ITEM:
       newState = {...state};
       newState.menu.activeItem = action.activeItem

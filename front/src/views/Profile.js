@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions/appActions';
 
 import AppHeader from '../components/AppHeader';
-import UserInfo from '../containers/UserInfo';
+import UserCard from '../containers/UserCard';
+import UserUpdate from '../containers/UserUpdate';
 
 import { Container, Grid } from 'semantic-ui-react';
 
@@ -13,6 +14,22 @@ class Profile extends Component {
   componentWillMount() {
     if (!this.props.appUser.isFilled)
       this.props.actions.copyUser(this.props.userIn);
+  }
+
+  viewMode = () => {
+    if (!this.props.infoBlock.updateMode) {
+      return (
+        <UserCard
+          setUpdateMode={this.props.actions.setUpdateMode}
+        />
+      )
+    } else {
+      return (
+        <UserUpdate
+          setUpdateMode={this.props.actions.setUpdateMode}
+        />
+      )
+    }
   }
 
   render() {
@@ -26,9 +43,7 @@ class Profile extends Component {
         <Container fluid>
           <Grid>
             <Grid.Column width={6}>
-              <UserInfo
-                setUpdateMode={this.props.actions.setUpdateMode}
-              />
+              {this.viewMode()}
             </Grid.Column>
             <Grid.Column width={10}>
               Yo
@@ -38,6 +53,10 @@ class Profile extends Component {
       </Container>
     )
   }
+
+  static PropTypes = {
+    match: PropTypes.object.isRequired
+  }
 }
 
 function mapStateToProps(state) {
@@ -45,6 +64,7 @@ function mapStateToProps(state) {
     userIn: state.logSign.user,
     menu: state.app.menu,
     appUser: state.app.user,
+    infoBlock: state.app.infoBlock
   };
 }
 

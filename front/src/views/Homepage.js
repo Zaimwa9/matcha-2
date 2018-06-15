@@ -20,13 +20,17 @@ class Homepage extends Component {
       />
     )
   }
+
+  static PropTypes = {
+    match: PropTypes.object.isRequired
+  }
 }
 
 function mapStateToProps(state) {
   return {
     userIn: state.logSign.user,
     menu: state.app.menu,
-    appUser: state.app.user,
+    appUser: state.app.user
   };
 }
 
