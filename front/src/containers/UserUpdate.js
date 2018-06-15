@@ -32,6 +32,10 @@ class UserUpdate extends Component {
     console.log('submitted');
   }
 
+  handleChangeDate = (event) => {
+    console.log(event)
+  }
+
   handleChange = (event, {name, value}) => {
     this.props.updateUserField(this.props.appUser, name, value);
   }
@@ -56,7 +60,7 @@ class UserUpdate extends Component {
     const rating = Math.round((popularity / 100) * 5 * 2) / 2;
     return (
       <Segment textAlign="center">
-        <Form onClick={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <Item>
             <Item.Image
               src="http://mradio.fr/media/news/thumb/870x489_jessica-alba-bb.jpg"
@@ -97,19 +101,27 @@ class UserUpdate extends Component {
               </Form.Group>
               <Form.Group style={{justifyContent:'space-evenly'}}>
                 <Form.Field
+                  onChange={this.handleChange}
                   width={4}
                   style={{maxHeight: 30}}>
                     <label>Gender</label>
-                    <Select width={2} label='Gender' name='gender'
-                    options={options}
-                    placeholder={this.props.appUser.gender}
+                    <Select
+                      width={2}
+                      label='Gender'
+                      name='gender'
+                      options={options}
+                      value={this.props.appUser.gender}
+                      placeholder={this.props.appUser.gender}
+                      onChange={this.handleChange}
                   />
                 </Form.Field>
                 <Form.Field width={5}>
                   <label>Birthday</label>
                   <DatePicker
                     selected={moment()}
-                    // onChange={this.handleChange}
+                    value={moment()}
+                    name='age'
+                    onChange={this.handleChangeDate}
                   />
                 </Form.Field>
               </Form.Group>
