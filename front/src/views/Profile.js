@@ -26,6 +26,7 @@ class Profile extends Component {
     } else {
       return (
         <UserUpdate
+          updateUserField={this.props.actions.updateUserField}
           setUpdateMode={this.props.actions.setUpdateMode}
         />
       )
@@ -54,7 +55,7 @@ class Profile extends Component {
     )
   }
 
-  static PropTypes = {
+  static propTypes = {
     match: PropTypes.object.isRequired
   }
 }

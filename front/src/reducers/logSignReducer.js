@@ -97,7 +97,7 @@ export default function users(state = initialState, action) {
     case LOGIN_FAILURE:
       newState = {...state};
       newState.signupForm.submitted = false;
-      action.data.password = '';
+      // action.data.password = '';
       newState.signupForm.error = {...action.error}
       return newState;
 

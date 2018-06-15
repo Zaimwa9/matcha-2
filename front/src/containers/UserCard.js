@@ -102,7 +102,7 @@ class UserCard extends Component {
     )
   }
 
-  static PropTypes = {
+  static propTypes = {
     setUpdateMode: PropTypes.func.isRequired
   }
 }

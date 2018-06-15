@@ -3,6 +3,7 @@ import {
   COPY_USER,
   LOGOUT,
   SET_UPDATE_MODE,
+  UPDATE_USER_FIELD
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -27,8 +28,13 @@ export default function appRed(state = initialState, action) {
   let newState;
 
   switch (action.type) {
-    case COPY_USER:
+    case UPDATE_USER_FIELD:
+      console.log(state)
       newState = {...state, user: {...action.user}};
+    //  newState.user[action.name] = action.value;
+      return newState;
+    case COPY_USER:
+      newState = {...state, user: {...action.user}, witness: {...action.user}};
       return newState;
     case ACTIVE_MENU_ITEM:
       newState = {...state};

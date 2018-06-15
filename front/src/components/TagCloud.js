@@ -9,9 +9,9 @@ class TagCloud extends Component {
 
   generateHashRow = (hash) => {
     return (
-        <Item>
-          {hash}
-        </Item>
+      <Item>
+        {hash}
+      </Item>
     )
   }
 
@@ -20,8 +20,8 @@ class TagCloud extends Component {
       return (
         _.map(_.chunk(hashArr, 4)[0], hash => {
           return (
-            <Item.Content relaxed>
-              {`#${hash.content}`}
+            <Item.Content key={hash.key}>
+              <p>{`#${hash.content}`}</p>
             </Item.Content>
           )
         })
@@ -30,8 +30,8 @@ class TagCloud extends Component {
       return (
         _.map(_.chunk(hashArr, 4)[1], hash => {
           return (
-            <Item.Content>
-              {`#${hash.content}`}
+            <Item.Content key={hash.key}>
+              <p>{`#${hash.content}`}</p>
             </Item.Content>
           )
         })
@@ -48,7 +48,7 @@ class TagCloud extends Component {
     )
   }
 
-  static PropTypes = {
+  static propTypes = {
     hashtags: PropTypes.array.isRequired
   }
 }

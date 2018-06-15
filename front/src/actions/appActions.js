@@ -29,3 +29,11 @@ export function setUpdateMode(status) {
     type: types.SET_UPDATE_MODE
   }
 }
+
+export function updateUserField(user, name, value) {
+  user[name] = value
+  return {
+    user: user,
+    type: types.UPDATE_USER_FIELD
+  }
+}
