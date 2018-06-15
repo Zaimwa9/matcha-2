@@ -38,7 +38,9 @@ class UserCard extends Component {
         <Item.Group>
           <Item>
             <Item.Content verticalAlign='middle'>
-              <Item.Header content={`${this.props.appUser.first_name} ${this.props.appUser.last_name}`} />
+              <Item.Header content={`${this.props.appUser.first_name}`} />
+              {' '}
+              <Item.Header content={` ${this.props.appUser.last_name}`} />
             </Item.Content>
           </Item>
           <Item>

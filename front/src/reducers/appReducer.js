@@ -19,7 +19,7 @@ const initialState = {
     activeItem: '',
   },
   infoBlock: {
-    updateMode: false,
+    updateMode: true,
   }
 }
 
