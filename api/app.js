@@ -1,15 +1,16 @@
 const express = require('express');
+const app = express();
 const cors = require('cors');
 const graphqlHTTP = require('express-graphql');
-const app = express();
 
+const { GraphQLSchema } = require('graphql');
 const userType = require('./defTypes/userType');
-const commentType = require('./defTypes/commentType');
 const mutationType = require('./mutations/mutation');
 const queryType = require('./queries/query.js');
+
 const psql = require('./db/dbconnect');
+
 const jwt = require('jsonwebtoken');
-const { GraphQLSchema } = require('graphql');
 
 app.get('/test', (req, res) => {
   console.log('received request on test');
@@ -96,5 +97,11 @@ app.get('/setup', async function () {
   await psql.query(textQuery);
 
   var textQuery = "INSERT INTO USERS (email, first_name, last_name, password) VALUES ('tidus', 'tidus', 'tidus', 'tidus')";
+  await psql.query(textQuery);
+
+  var textQuery = "DROP TABLE IF EXISTS hashtags";
+  await psql.query(textQuery);
+
+  var textQuery = "CREATE TABLE IF NOT EXISTS hashtags(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, content TEXT NOT NULL)";
   await psql.query(textQuery);
 })

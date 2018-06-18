@@ -10,7 +10,8 @@ const {
   GraphQLSchema,
 } = require('graphql');
 
-const commentType = require('./commentType')
+const commentType = require('./commentType');
+const hashtagType = require('./hashtagType');
 const psql = require('../db/dbconnect.js');
 
 var userType = new GraphQLObjectType({
@@ -30,18 +31,31 @@ var userType = new GraphQLObjectType({
     token: { type: GraphQLString },
     gender: { type: GraphQLString },
     created_at: { type: GraphQLString },
-    messages: {
-      type: new GraphQLList(commentType),
+    hashtags: {
+      type: new GraphQLList(hashtagType),
       resolve: async (User) => {
-        textQuery = `SELECT * FROM messages where author=${User.id}`;
+        textQuery = `SELECT * FROM hashtags where uuid='${User.uuid}'`;
         try {
-          const data = await psql.query(textQuery)
+          const data = await psql.query(textQuery);
           return data.rows;
         } catch (e) {
-          return new Error('Database error: ' + e);
+          return new Error('Database error: ' + e)
         }
       }
-    },
+    }
+
+    // messages: {
+    //   type: new GraphQLList(commentType),
+    //   resolve: async (User) => {
+    //     textQuery = `SELECT * FROM messages where author=${User.id}`;
+    //     try {
+    //       const data = await psql.query(textQuery)
+    //       return data.rows;
+    //     } catch (e) {
+    //       return new Error('Database error: ' + e);
+    //     }
+    //   }
+    // },
   }
 })
 

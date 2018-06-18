@@ -1,4 +1,4 @@
-const commentType = require('../defTypes/commentType')
+const hashtagType = require('../defTypes/hashtagType')
 const userType = require('../defTypes/userType')
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
@@ -103,6 +103,27 @@ var mutationType = new GraphQLObjectType({
           }
         } catch (e) {
           return new Error('Error: ' + e);
+        }
+      }
+    },
+
+    // HASHTAGS
+    addHashtag: {
+      type: hashtagType,
+      args: {
+        uuid: {type: GraphQLString},
+        content: {type: GraphQLString}
+      },
+      resolve: async function(root, args) {
+        textQuery = `INSERT INTO hashtags(
+                    uuid, content
+                    ) VALUES ('${args.uuid}', '${args.content}') RETURNING *`;
+        try {
+          var data = await psql.query(textQuery);
+          data = data.rows[0];
+          return data;
+        } catch (e) {
+          return new Error('Database error: ' + e);
         }
       }
     }
