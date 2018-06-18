@@ -28,6 +28,7 @@ class Profile extends Component {
         <UserUpdate
           updateUserField={this.props.actions.updateUserField}
           setUpdateMode={this.props.actions.setUpdateMode}
+          submitUpdateUser={this.props.actions.submitUpdateUser}
         />
       )
     }

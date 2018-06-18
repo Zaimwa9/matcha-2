@@ -30,6 +30,8 @@ class UserUpdate extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     console.log('submitted');
+    console.log(this.props.appUser)
+    this.props.submitUpdateUser(this.props.appUser)
   }
 
   handleChangeDate = (event) => {
@@ -58,6 +60,7 @@ class UserUpdate extends Component {
 
     const popularity = 74;
     const rating = Math.round((popularity / 100) * 5 * 2) / 2;
+    console.log(this.props)
     return (
       <Segment textAlign="center">
         <Form onSubmit={this.handleSubmit}>
@@ -119,12 +122,12 @@ class UserUpdate extends Component {
                 </Form.Field>
                 <Form.Field width={5}>
                   <label>Birthday</label>
-                  <DatePicker
+                  {/* <DatePicker
                     selected={moment()}
                     value={moment()}
                     name='age'
                     onChange={this.handleChangeDate}
-                  />
+                  /> */}
                 </Form.Field>
               </Form.Group>
               <Button>
