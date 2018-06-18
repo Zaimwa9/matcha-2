@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Item } from 'semantic-ui-react';
+import { Item, Icon } from 'semantic-ui-react';
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -21,7 +21,12 @@ class TagCloud extends Component {
         _.map(_.chunk(hashArr, 4)[0], hash => {
           return (
             <Item.Content key={hash.key}>
-              <p>{`#${hash.content}`}</p>
+               {`#${hash.content}`}
+               <Icon
+                size='small'
+                name='delete'
+                color='black'
+              />
             </Item.Content>
           )
         })
@@ -31,7 +36,12 @@ class TagCloud extends Component {
         _.map(_.chunk(hashArr, 4)[1], hash => {
           return (
             <Item.Content key={hash.key}>
-              <p>{`#${hash.content}`}</p>
+              {`#${hash.content}`}
+              <Icon
+                size='small'
+                name='delete'
+                color='black'
+              />
             </Item.Content>
           )
         })

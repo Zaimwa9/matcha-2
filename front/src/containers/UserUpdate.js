@@ -72,13 +72,9 @@ class UserUpdate extends Component {
               <Item.Content>
                 <Icon
                   className="actionIcon"
-                  // color='black'
-                  // size='mini'
-                  // inverted
                   name={this.props.infoBlock.updateMode ? "cancel" : "edit"}
-                  // size='small'
                   color="black"
-                  style={{ float: "left" }}
+                  style={{ float: "right" }}
                   onClick={this.handleUpdateMode}
                 />
               </Item.Content>

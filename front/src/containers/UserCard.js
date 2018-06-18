@@ -38,13 +38,9 @@ class UserCard extends Component {
             <Item.Content>
                 <Icon
                   className='actionIcon'
-                  // color='black'
-                  // size='mini'
-                  // inverted
                   name='edit'
-                  // size='small'
                   color='black'
-                  style={{float: 'left'}}
+                  style={{float: 'right'}}
                   onClick={this.handleUpdateMode}
                 />
             </Item.Content>
@@ -99,6 +95,16 @@ class UserCard extends Component {
             </Item>
           </Item.Group>
           {fakeHash.length > 0 ? <TagCloud hashtags={fakeHash}/> : ''}
+          <Item.Group >
+            <Item style={{justifyContent:'center'}}>
+              <Input
+                action={{ color: 'black', icon: 'plus' }}
+                actionPosition='left'
+                placeholder='Add Hashtag...'
+                size='mini'
+              />
+            </Item>
+          </Item.Group>
       </Segment>
     )
   }
