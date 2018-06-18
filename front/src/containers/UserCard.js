@@ -33,7 +33,7 @@ class UserCard extends Component {
     return (
       <Segment textAlign='center'>
         <Item>
-          <Item.Image src='http://mradio.fr/media/news/thumb/870x489_jessica-alba-bb.jpg' centered size='medium' rounded />
+          <Item.Image src='"/annemo.jpg"' centered size='medium' rounded />
         </Item>
         <Item.Group>
           <Item>

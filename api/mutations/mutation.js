@@ -73,6 +73,39 @@ var mutationType = new GraphQLObjectType({
           return new Error('Error: ' + e);
         }
       }
+    },
+
+    updateUser: {
+      type: userType,
+      args: {
+        uuid: {type: GraphQLString},
+        first_name: {type: GraphQLString},
+        last_name: {type: GraphQLString},
+        gender: {type: GraphQLString},
+        // age: {type: GraphQLString},
+        email: {type: GraphQLString},
+      },
+      resolve: async function(root, args) {
+        textQuery = `UPDATE users SET
+                      first_name='${args.first_name}',
+                      last_name='${args.last_name}',
+                      gender='${args.gender}',
+                      email='${args.email}'
+                      WHERE uuid='${args.uuid}' RETURNING *`
+        try {
+          var data = await psql.query(textQuery);
+          console.log(data);
+          if (data.rowCount === 0) {
+            throw new Error('No such user found');
+          } else {
+            // User existant; delivrement du token
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          return new Error('Error: ' + e);
+        }
+      }
     }
   }
 })

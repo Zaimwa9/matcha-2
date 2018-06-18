@@ -63,7 +63,7 @@ class UserUpdate extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Item>
             <Item.Image
-              src="http://mradio.fr/media/news/thumb/870x489_jessica-alba-bb.jpg"
+              src="/annemo.jpg"
               centered
               size="medium"
               rounded
@@ -80,6 +80,8 @@ class UserUpdate extends Component {
                   name='first_name'
                   onChange={this.handleChange}
                 />
+              </Form.Group>
+              <Form.Group style={{justifyContent:'center'}}>
                 <Form.Input
                   width={6}
                   style={{maxHeight: 30}}
@@ -91,7 +93,7 @@ class UserUpdate extends Component {
               </Form.Group>
               <Form.Group style={{justifyContent:'center'}}>
                 <Form.Input
-                  width={10}
+                  width={6}
                   style={{maxHeight: 30}}
                   label='Email'
                   value={this.props.appUser.email}
