@@ -1,5 +1,6 @@
 import * as types from './appActionTypes.js';
 import axios from 'axios';
+import _ from 'lodash';
 
 export function updateUserRequest(data) {
   return {
@@ -145,5 +146,61 @@ export function fetchHashtags(uuid) {
         dispatch(fetchHashFailure(result.data.errors[0]))
       }
     })
+  }
+}
+
+export function hashAdded(data) {
+  return {
+    data: data.addHashtag,
+    type: types.ADD_HASHTAG
+  }
+}
+
+export function hashFailed(error) {
+  return {
+    error_message: error,
+    type: types.ADD_HASHTAG_FAILURE
+  }
+}
+
+export function postHashtag(data, currentHashes) {
+  return dispatch => {
+    var flag = false;
+    _.find(currentHashes, item => {
+      if (item.content === data.content) {
+        flag = true;
+      }
+    })
+    if (flag === false) {
+      axios({
+        url: 'http://localhost:3000/graphql/',
+        method: 'post',
+        headers: {
+          'Protected': false,
+          // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+        },
+        data: {
+          query: `
+            mutation addHashtag {
+              addHashtag(uuid: "${data.uuid}", content: "${data.content}") {
+                id,
+                content
+              }
+            }
+          `
+        }
+      })
+      .then(result => {
+        if (!result.data.errors) {
+          dispatch(hashAdded(result.data.data))
+        } else {
+          console.log(result.data.errors);
+          dispatch(hashFailed(result.data.errors[0]))
+        }
+      })
+    } else {
+      console.log('duplicate');
+      dispatch(hashFailed('Duplicate hashtag'));
+    }
   }
 }

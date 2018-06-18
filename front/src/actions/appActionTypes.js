@@ -10,5 +10,8 @@ export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
 export const USER_UPDATE_FAILURE = 'USER_UPDATE_FAILURE';
 export const RESET_UPDATE = 'RESET_UPDATE';
 
+export const ADD_HASHTAG = 'ADD_HASHTAG';
+export const ADD_HASHTAG_FAILURE = 'ADD_HASHTAG_FAILURE';
+
 export const COPY_USER = 'COPY_USER';
 export const LOGOUT = 'LOGOUT';

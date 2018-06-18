@@ -31,15 +31,17 @@ class UserUpdate extends Component {
     this.props.setUpdateMode(this.props.infoBlock.updateMode);
   };
 
+  handleSubmitHash = (event) => {
+    this.props.postHashtag({uuid: this.props.appUser.uuid, content: this.props.appUser.addinghash}, this.props.appUser.hashtags);
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.submitUpdateUser(this.props.appUser)
   }
 
   handleChangeDate = (event) => {
-    console.log(event.format('X'))
     var test = event.format('X')
-    console.log(moment.unix(test).format('DD-MM-YYYY'))
     this.props.updateUserField(this.props.appUser, 'age', event.format('X'));
   }
 
@@ -53,10 +55,10 @@ class UserUpdate extends Component {
       { key: 'f', text: 'Female', value: 'female' },
     ]
 
-    const hashtags = this.props.appUser.hashtags
-
+    const hashtags = (this.props.appUser.hashtags ? this.props.appUser.hashtags : [])
     const popularity = 74;
     const rating = Math.round((popularity / 100) * 5 * 2) / 2;
+
     return (
       <Segment textAlign="center">
           <Item.Group>
@@ -190,10 +192,12 @@ class UserUpdate extends Component {
             <Item style={{justifyContent:'center'}}>
               <Input
                 disabled={hashtags.length >= 8}
-                action={{ color: 'black', icon: 'plus' }}
+                action={<Button color= 'black' icon= 'plus' onClick={this.handleSubmitHash}/>}
                 actionPosition='left'
+                name='addinghash'
                 placeholder={hashtags.length >= 8 ? 'Max 8 tags' : 'Add Hashtag...'}
                 size='small'
+                onChange={this.handleChange}
               />
             </Item>
           </Item.Group>
@@ -206,6 +210,7 @@ class UserUpdate extends Component {
     updateUserField: PropTypes.func.isRequired,
     resetUpdate: PropTypes.func.isRequired,
     submitUpdateUser: PropTypes.func.isRequired,
+    postHashtag: PropTypes.func.isRequired
   };
 }
 

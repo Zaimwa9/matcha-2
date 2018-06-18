@@ -9,7 +9,9 @@ import {
   USER_UPDATE_FAILURE,
   RESET_UPDATE,
   FETCH_HASHTAGS_SUCCESS,
-  FETCH_HASHTAGS_FAILURE
+  FETCH_HASHTAGS_FAILURE,
+  ADD_HASHTAG,
+  ADD_HASHTAG_FAILURE,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
     gender: '',
     age: '',
     hashtags: [],
+    addinghash: '',
     isAuth: true,
     isFilled: false,
   },
@@ -27,10 +30,11 @@ const initialState = {
     activeItem: '',
   },
   infoBlock: {
-    updateMode: false,
+    updateMode: true,
   },
   requesting: false,
-  error: false
+  error: false,
+  error_message: '',
 }
 
 export default function appRed(state = initialState, action) {
@@ -41,6 +45,12 @@ export default function appRed(state = initialState, action) {
       newState = {...state, user: {...state.witness}};
       return newState;
 
+    case ADD_HASHTAG:
+      newState = {...state, user: {...state.user, addinghash: '', hashtags: [...state.user.hashtags, {...action.data}]}}
+      return newState
+    case ADD_HASHTAG_FAILURE:
+      newState = {...state, error: true, error_message: action.error_message};
+      return newState
     case FETCH_HASHTAGS_SUCCESS:
       newState = {...state, user: {...state.user, hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
       return newState;
