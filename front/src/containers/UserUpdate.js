@@ -67,6 +67,24 @@ class UserUpdate extends Component {
     const rating = Math.round((popularity / 100) * 5 * 2) / 2;
     return (
       <Segment textAlign="center">
+          <Item.Group>
+            <Item>
+              <Item.Content>
+                <Icon
+                  className="actionIcon"
+                  // color='black'
+                  // size='mini'
+                  // inverted
+                  name={this.props.infoBlock.updateMode ? "cancel" : "edit"}
+                  // size='small'
+                  color="black"
+                  style={{ float: "left" }}
+                  onClick={this.handleUpdateMode}
+                />
+              </Item.Content>
+            </Item>
+          </Item.Group>
+
         <Form onSubmit={this.handleSubmit}>
           <Item>
             <Item.Image
@@ -180,23 +198,6 @@ class UserUpdate extends Component {
             </Item>
           </Item.Group>
           {fakeHash.length > 0 ? <TagCloud hashtags={fakeHash} /> : ""}
-          <Item.Group>
-            <Item>
-              <Item.Content>
-                <Icon
-                  className="actionIcon"
-                  // color='black'
-                  // size='mini'
-                  // inverted
-                  name="edit"
-                  // size='small'
-                  color="black"
-                  style={{ float: "left" }}
-                  onClick={this.handleUpdateMode}
-                />
-              </Item.Content>
-            </Item>
-          </Item.Group>
         </Segment>
     );
   }

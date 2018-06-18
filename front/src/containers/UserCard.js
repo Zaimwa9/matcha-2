@@ -13,7 +13,6 @@ import moment from 'moment';
 class UserCard extends Component {
 
   handleUpdateMode = () => {
-    console.log(this.props.infoBlock.updateMode);
     this.props.setUpdateMode(this.props.infoBlock.updateMode);
   }
 
@@ -34,6 +33,23 @@ class UserCard extends Component {
 
     return (
       <Segment textAlign='center'>
+        <Item.Group>
+          <Item>
+            <Item.Content>
+                <Icon
+                  className='actionIcon'
+                  // color='black'
+                  // size='mini'
+                  // inverted
+                  name='edit'
+                  // size='small'
+                  color='black'
+                  style={{float: 'left'}}
+                  onClick={this.handleUpdateMode}
+                />
+            </Item.Content>
+          </Item>
+        </Item.Group>
         <Item>
           <Item.Image src='/annemo.jpg' centered size='medium' rounded />
         </Item>
@@ -83,23 +99,6 @@ class UserCard extends Component {
             </Item>
           </Item.Group>
           {fakeHash.length > 0 ? <TagCloud hashtags={fakeHash}/> : ''}
-          <Item.Group>
-            <Item>
-              <Item.Content>
-                  <Icon
-                    className='actionIcon'
-                    // color='black'
-                    // size='mini'
-                    // inverted
-                    name='edit'
-                    // size='small'
-                    color='black'
-                    style={{float: 'left'}}
-                    onClick={this.handleUpdateMode}
-                  />
-              </Item.Content>
-            </Item>
-          </Item.Group>
       </Segment>
     )
   }
