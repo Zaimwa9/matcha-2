@@ -42,7 +42,7 @@ export default function appRed(state = initialState, action) {
       return newState;
 
     case FETCH_HASHTAGS_SUCCESS:
-      newState = {...state, user: {...state.user, hashtags: [...action.hashtags]}}
+      newState = {...state, user: {...state.user, hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
       return newState;
     case FETCH_HASHTAGS_SUCCESS:
       console.log('ERROR');

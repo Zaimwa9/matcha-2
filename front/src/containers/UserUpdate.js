@@ -78,7 +78,7 @@ class UserUpdate extends Component {
             <Item.Image
               src="/annemo.jpg"
               centered
-              size="medium"
+              size="small"
               rounded
               style={{marginBottom: '1em'}}
             />
@@ -185,7 +185,18 @@ class UserUpdate extends Component {
               </Item.Content>
             </Item>
           </Item.Group>
-          {hashtags.length > 0 ? <TagCloud hashtags={hashtags} /> : ""}
+          {hashtags.length > 0 ? <TagCloud hashtags={hashtags} visible='true'/> : ""}
+          <Item.Group>
+            <Item style={{justifyContent:'center'}}>
+              <Input
+                disabled={hashtags.length >= 8}
+                action={{ color: 'black', icon: 'plus' }}
+                actionPosition='left'
+                placeholder={hashtags.length >= 8 ? 'Max 8 tags' : 'Add Hashtag...'}
+                size='small'
+              />
+            </Item>
+          </Item.Group>
         </Segment>
     );
   }

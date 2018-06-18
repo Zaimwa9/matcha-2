@@ -39,7 +39,7 @@ class UserCard extends Component {
           </Item>
         </Item.Group>
         <Item>
-          <Item.Image src='/annemo.jpg' centered size='medium' rounded />
+          <Item.Image src='/annemo.jpg' centered size='small' rounded />
         </Item>
         <Item.Group>
           <Item>
@@ -86,17 +86,7 @@ class UserCard extends Component {
               </Item.Content>
             </Item>
           </Item.Group>
-          {hashtags.length > 0 ? <TagCloud hashtags={hashtags}/> : ''}
-          <Item.Group >
-            <Item style={{justifyContent:'center'}}>
-              <Input
-                action={{ color: 'black', icon: 'plus' }}
-                actionPosition='left'
-                placeholder='Add Hashtag...'
-                size='mini'
-              />
-            </Item>
-          </Item.Group>
+          {hashtags.length > 0 ? <TagCloud hashtags={hashtags} visible='false'/> : ''}
       </Segment>
     )
   }
