@@ -8,7 +8,6 @@ export function updateUserRequest(data) {
 }
 
 export function updateUserFailure(error) {
-  console.log(error);
   return {
     error: error,
     type: types.USER_UPDATE_FAILURE
@@ -96,6 +95,54 @@ export function submitUpdateUser(data) {
       } else {
         console.log(result.data.errors);
         dispatch(updateUserFailure(result.data.errors[0]))
+      }
+    })
+  }
+}
+
+export function fetchHashSuccess(data) {
+  return {
+    hashtags: data.hashtags,
+    type: types.FETCH_HASHTAGS_SUCCESS
+  }
+}
+
+export function fetchHashFailure(error) {
+  return {
+    error: error,
+    type: types.FETCH_HASHTAGS_FAILURE
+  }
+}
+
+export function fetchHashtags(uuid) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query: `
+          query user {
+            user(uuid: "${uuid}") {
+              hashtags {
+                id,
+                content
+              }
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        console.log('success hash');
+        dispatch(fetchHashSuccess(result.data.data.user))
+      } else {
+        console.log(result.data.errors);
+        dispatch(fetchHashFailure(result.data.errors[0]))
       }
     })
   }

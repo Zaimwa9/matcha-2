@@ -20,7 +20,7 @@ class TagCloud extends Component {
       return (
         _.map(_.chunk(hashArr, 4)[0], hash => {
           return (
-            <Item.Content key={hash.key}>
+            <Item.Content key={hash.id}>
                {`#${hash.content}`}
                <Icon
                 size='small'
@@ -35,7 +35,7 @@ class TagCloud extends Component {
       return (
         _.map(_.chunk(hashArr, 4)[1], hash => {
           return (
-            <Item.Content key={hash.key}>
+            <Item.Content key={hash.id}>
               {`#${hash.content}`}
               <Icon
                 size='small'

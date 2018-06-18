@@ -17,15 +17,7 @@ class UserCard extends Component {
   }
 
   render() {
-    const fakeHash = [
-      {key: 1, uuid: 1, content: 'drinks'},
-      {key: 2, uuid: 1, content: 'bitch'},
-      {key: 3, uuid: 1, content: 'football'},
-      {key: 4, uuid: 1, content: 'beach'},
-      {key: 5, uuid: 1, content: 'beach'},
-      {key: 6, uuid: 1, content: 'beach'},
-      {key: 7, uuid: 1, content: 'beach2'}
-    ]
+    const hashtags = (this.props.appUser.hashtags ? this.props.appUser.hashtags : [])
     const popularity = 74;
     const rating = Math.round((popularity / 100 * 5) * 2) / 2;
     const age = moment().diff(moment.unix(this.props.appUser.age).format('DD-MM-YYYY'), 'years');
@@ -94,7 +86,7 @@ class UserCard extends Component {
               </Item.Content>
             </Item>
           </Item.Group>
-          {fakeHash.length > 0 ? <TagCloud hashtags={fakeHash}/> : ''}
+          {hashtags.length > 0 ? <TagCloud hashtags={hashtags}/> : ''}
           <Item.Group >
             <Item style={{justifyContent:'center'}}>
               <Input

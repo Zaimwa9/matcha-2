@@ -7,7 +7,9 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAILURE,
-  RESET_UPDATE
+  RESET_UPDATE,
+  FETCH_HASHTAGS_SUCCESS,
+  FETCH_HASHTAGS_FAILURE
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -17,6 +19,7 @@ const initialState = {
     email: '',
     gender: '',
     age: '',
+    hashtags: [],
     isAuth: true,
     isFilled: false,
   },
@@ -37,6 +40,14 @@ export default function appRed(state = initialState, action) {
     case RESET_UPDATE:
       newState = {...state, user: {...state.witness}};
       return newState;
+
+    case FETCH_HASHTAGS_SUCCESS:
+      newState = {...state, user: {...state.user, hashtags: [...action.hashtags]}}
+      return newState;
+    case FETCH_HASHTAGS_SUCCESS:
+      console.log('ERROR');
+      // newState = {...state, user: {...state.user, ...action.data}}
+      return action;
     case USER_UPDATE_REQUEST:
       newState = {...state, requesting: true, error: false, error_message: ''};
       return newState;
@@ -46,12 +57,14 @@ export default function appRed(state = initialState, action) {
     case USER_UPDATE_FAILURE:
       newState = {...state, requesting: false, error: true, error_message: action.error.message};
       return newState;
+
     case UPDATE_USER_FIELD:
       newState = {...state, user: {...action.user}};
       return newState;
     case COPY_USER:
       newState = {...state, user: {...action.user}, witness: {...action.user}};
       return newState;
+
     case ACTIVE_MENU_ITEM:
       newState = {...state};
       newState.menu.activeItem = action.activeItem
@@ -59,7 +72,8 @@ export default function appRed(state = initialState, action) {
     case SET_UPDATE_MODE:
       newState = {...state, infoBlock: {...action.infoBlock}};
       return newState;
-    case LOGOUT:
+
+      case LOGOUT:
       newState = initialState;
       localStorage.removeItem('token');
       newState.user.isAuth = false;

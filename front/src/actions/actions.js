@@ -180,8 +180,8 @@ export function isAuth() {
                 uuid,
                 gender,
                 age
+              }
             }
-          }
         `
         }
       })
