@@ -178,7 +178,8 @@ export function isAuth() {
                 last_name,
                 email,
                 uuid,
-                gender
+                gender,
+                age
             }
           }
         `

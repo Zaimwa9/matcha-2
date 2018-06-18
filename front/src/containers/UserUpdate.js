@@ -37,7 +37,10 @@ class UserUpdate extends Component {
   }
 
   handleChangeDate = (event) => {
-    console.log(event)
+    console.log(event.format('X'))
+    var test = event.format('X')
+    console.log(moment.unix(test).format('DD-MM-YYYY'))
+    this.props.updateUserField(this.props.appUser, 'age', event.format('X'));
   }
 
   handleChange = (event, {name, value}) => {
@@ -62,7 +65,6 @@ class UserUpdate extends Component {
 
     const popularity = 74;
     const rating = Math.round((popularity / 100) * 5 * 2) / 2;
-    console.log(this.props)
     return (
       <Segment textAlign="center">
         <Form onSubmit={this.handleSubmit}>
@@ -124,12 +126,11 @@ class UserUpdate extends Component {
                 </Form.Field>
                 <Form.Field width={5}>
                   <label>Birthday</label>
-                  {/* <DatePicker
-                    selected={moment()}
-                    value={moment()}
+                  <DatePicker
+                    selected={moment.unix(this.props.appUser.age)}
                     name='age'
                     onChange={this.handleChangeDate}
-                  /> */}
+                  />
                 </Form.Field>
               </Form.Group>
               <Button>
@@ -202,14 +203,16 @@ class UserUpdate extends Component {
 
   static propTypes = {
     setUpdateMode: PropTypes.func.isRequired,
-    updateUserField: PropTypes.func.isRequired
+    updateUserField: PropTypes.func.isRequired,
+    resetUpdate: PropTypes.func.isRequired,
+    submitUpdateUser: PropTypes.func.isRequired,
   };
 }
 
 function mapStateToProps(state) {
   return {
     appUser: state.app.user,
-    infoBlock: state.app.infoBlock
+    infoBlock: state.app.infoBlock,
   };
 }
 

@@ -78,7 +78,7 @@ export function submitUpdateUser(data) {
       data: {
         query: `
           mutation updateUser {
-            updateUser(email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}") {
+            updateUser(age: "${data.age}", email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}") {
               uuid,
               first_name,
               last_name,

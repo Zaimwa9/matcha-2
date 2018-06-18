@@ -81,7 +81,7 @@ var mutationType = new GraphQLObjectType({
         first_name: {type: GraphQLString},
         last_name: {type: GraphQLString},
         gender: {type: GraphQLString},
-        // age: {type: GraphQLString},
+        age: {type: GraphQLString},
         email: {type: GraphQLString},
       },
       resolve: async function(root, args) {
@@ -89,7 +89,8 @@ var mutationType = new GraphQLObjectType({
                       first_name='${args.first_name}',
                       last_name='${args.last_name}',
                       gender='${args.gender}',
-                      email='${args.email}'
+                      email='${args.email}',
+                      age='${args.age}'
                       WHERE uuid='${args.uuid}' RETURNING *`
         try {
           var data = await psql.query(textQuery);

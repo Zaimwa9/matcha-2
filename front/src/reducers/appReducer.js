@@ -15,7 +15,7 @@ const initialState = {
     first_name: '',
     last_name: '',
     email: '',
-    gender: 'Male',
+    gender: '',
     age: '',
     isAuth: true,
     isFilled: false,
@@ -24,7 +24,7 @@ const initialState = {
     activeItem: '',
   },
   infoBlock: {
-    updateMode: true,
+    updateMode: false,
   },
   requesting: false,
   error: false

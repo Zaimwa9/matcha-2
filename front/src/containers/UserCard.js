@@ -8,7 +8,7 @@ import { Segment, Button, Input, Item, Divider, Popup, Icon } from 'semantic-ui-
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-
+import moment from 'moment';
 
 class UserCard extends Component {
 
@@ -29,6 +29,8 @@ class UserCard extends Component {
     ]
     const popularity = 74;
     const rating = Math.round((popularity / 100 * 5) * 2) / 2;
+    const age = moment().diff(moment.unix(this.props.appUser.age).format('DD-MM-YYYY'), 'years');
+    const gender = this.props.appUser.gender === 'male' ? 'M' : 'F';
 
     return (
       <Segment textAlign='center'>
@@ -40,7 +42,7 @@ class UserCard extends Component {
             <Item.Content verticalAlign='middle'>
               <Item.Header content={`${this.props.appUser.first_name}`} />
               {' '}
-              <Item.Header content={` ${this.props.appUser.last_name}`} />
+              <Item.Header content={`${this.props.appUser.last_name}`} />
             </Item.Content>
           </Item>
           <Item>
@@ -48,7 +50,7 @@ class UserCard extends Component {
               {`${this.props.appUser.email}@hotmail.fr`}
             </Item.Content>
             <Item.Content>
-              27 ans - M
+              {`${age} ans - ${gender}`}
             </Item.Content>
           </Item>
         </Item.Group>
