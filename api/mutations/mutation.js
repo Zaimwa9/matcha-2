@@ -28,7 +28,6 @@ var mutationType = new GraphQLObjectType({
         age: { type: GraphQLInt },
       },
       resolve: async function(root, args) {
-        console.log('signup api');
         args.uuid = uuidv4();
         // args.password = await bcrypt.hash(args.password, 10);
         textQuery = `INSERT INTO users (
@@ -94,7 +93,6 @@ var mutationType = new GraphQLObjectType({
                       WHERE uuid='${args.uuid}' RETURNING *`
         try {
           var data = await psql.query(textQuery);
-          console.log(data);
           if (data.rowCount === 0) {
             throw new Error('No such user found');
           } else {

@@ -4,7 +4,10 @@ import {
   LOGOUT,
   SET_UPDATE_MODE,
   UPDATE_USER_FIELD,
-  USER_UPDATE_REQUEST
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAILURE,
+  RESET_UPDATE
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -31,13 +34,20 @@ export default function appRed(state = initialState, action) {
   let newState;
 
   switch (action.type) {
+    case RESET_UPDATE:
+      newState = {...state, user: {...state.witness}};
+      return newState;
     case USER_UPDATE_REQUEST:
-      newState = {...state, requesting: true, error: false};
+      newState = {...state, requesting: true, error: false, error_message: ''};
+      return newState;
+    case USER_UPDATE_SUCCESS:
+      newState = {...state, requesting: false, user: {...state.user, ...action.user}, witness: {...state.witness, ...action.user}};
+      return newState;
+    case USER_UPDATE_FAILURE:
+      newState = {...state, requesting: false, error: true, error_message: action.error.message};
       return newState;
     case UPDATE_USER_FIELD:
-      console.log(state)
       newState = {...state, user: {...action.user}};
-    //  newState.user[action.name] = action.value;
       return newState;
     case COPY_USER:
       newState = {...state, user: {...action.user}, witness: {...action.user}};

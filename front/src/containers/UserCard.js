@@ -23,9 +23,9 @@ class UserCard extends Component {
       {key: 2, uuid: 1, content: 'bitch'},
       {key: 3, uuid: 1, content: 'football'},
       {key: 4, uuid: 1, content: 'beach'},
-      {key: 4, uuid: 1, content: 'beach'},
-      {key: 4, uuid: 1, content: 'beach'},
-      {key: 4, uuid: 1, content: 'beach2'}
+      {key: 5, uuid: 1, content: 'beach'},
+      {key: 6, uuid: 1, content: 'beach'},
+      {key: 7, uuid: 1, content: 'beach2'}
     ]
     const popularity = 74;
     const rating = Math.round((popularity / 100 * 5) * 2) / 2;
@@ -33,7 +33,7 @@ class UserCard extends Component {
     return (
       <Segment textAlign='center'>
         <Item>
-          <Item.Image src='"/annemo.jpg"' centered size='medium' rounded />
+          <Item.Image src='/annemo.jpg' centered size='medium' rounded />
         </Item>
         <Item.Group>
           <Item>

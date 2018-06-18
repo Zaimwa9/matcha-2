@@ -15,10 +15,15 @@ export function updateUserFailure(error) {
   }
 }
 
-export function updateUserSuccess(data) {
-  console.log(data);
+export function resetUpdate() {
   return {
-    user: data.user,
+    type: types.RESET_UPDATE
+  }
+}
+
+export function updateUserSuccess(data) {
+  return {
+    user: {...data},
     type: types.USER_UPDATE_SUCCESS
   }
 }
@@ -89,8 +94,8 @@ export function submitUpdateUser(data) {
         console.log('success');
         dispatch(updateUserSuccess(result.data.data.updateUser))
       } else {
-        console.log('fail');
-        dispatch(updateUserFailure(result.data.data.updateUser))
+        console.log(result.data.errors);
+        dispatch(updateUserFailure(result.data.errors[0]))
       }
     })
   }

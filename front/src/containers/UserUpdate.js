@@ -23,14 +23,16 @@ import PropTypes from "prop-types";
 
 class UserUpdate extends Component {
 
+  componentWillUnmount = () => {
+    this.props.resetUpdate();
+  }
+
   handleUpdateMode = () => {
     this.props.setUpdateMode(this.props.infoBlock.updateMode);
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log('submitted');
-    console.log(this.props.appUser)
     this.props.submitUpdateUser(this.props.appUser)
   }
 
