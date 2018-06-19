@@ -7,6 +7,7 @@ import * as actions from '../actions/appActions';
 import AppHeader from '../components/AppHeader';
 import UserCard from '../containers/UserCard';
 import UserUpdate from '../containers/UserUpdate';
+import PicturesZone from '../containers/PicturesZone';
 
 import { Container, Grid } from 'semantic-ui-react';
 
@@ -53,7 +54,9 @@ class Profile extends Component {
               {this.viewMode()}
             </Grid.Column>
             <Grid.Column width={10}>
-              Yo
+              <Grid.Row style={{height: '75%'}}>
+                <PicturesZone />
+              </Grid.Row>
             </Grid.Column>
           </Grid>
         </Container>

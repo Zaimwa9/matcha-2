@@ -55,3 +55,26 @@ body {
   text-decoration: line-through;
   cursor: pointer;
 }
+
+.dropzone {
+  background-color: red;
+  width: 100%;
+  height: 100%;
+  border-style: solid;
+  border-radius: 30px;
+}
+
+.active-dropzone {
+  background-color: green;
+  width: 100%;
+  height: 100%;
+  border-style: solid;
+  border-radius: 30px;
+}
+
+.pictureIcon {
+  position: absolute;
+  top: 2px;
+  right: 20px;
+  z-index: 2
+}

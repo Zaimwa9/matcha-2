@@ -35,7 +35,7 @@ class TagCloud extends Component {
       return (
         _.map(_.chunk(hashArr, 4)[0], hash => {
           return (
-            <Item.Content className='hashItem' key={hash.id} onClick={() => this.handleClick(hash.id)}>
+            <Item.Content className={this.props.visible === 'true' ? 'hashItem' : ''} key={hash.id} onClick={() => this.handleClick(hash.id)}>
                {`#${hash.content}`}
             </Item.Content>
           )

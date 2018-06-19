@@ -186,7 +186,7 @@ class UserUpdate extends Component {
               </Item.Content>
             </Item>
           </Item.Group>
-          {hashtags.length > 0 ? <TagCloud hashtags={hashtags} deleteHashtag={this.props.deleteHashtag}/> : ""}
+          {hashtags.length > 0 ? <TagCloud hashtags={hashtags} visible={'true'} deleteHashtag={this.props.deleteHashtag}/> : ""}
           <Item.Group>
             <Item style={{justifyContent:'center'}}>
               <Input
