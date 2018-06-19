@@ -27,16 +27,13 @@ class TagCloud extends Component {
     )
   }
 
-  chunkHash = (hashArr, index) => {
+  chunkHash = (hashArr, index, deleteHashtag) => {
     if (index === 0) {
       return (
         _.map(_.chunk(hashArr, 4)[0], hash => {
           return (
-            <Item.Content key={hash.id}>
-              {/* <div className='hashtagsTop'> */}
+            <Item.Content className='hashItem' key={hash.id} onClick={deleteHashtag}>
                {`#${hash.content}`}
-               {this.props.visible === 'true' ? <DeleteIcon /> : ''}
-              {/* </div> */}
             </Item.Content>
           )
         })
@@ -47,7 +44,6 @@ class TagCloud extends Component {
           return (
             <Item.Content key={hash.id}>
               {`#${hash.content}`}
-              {this.props.visible === 'true' ? <DeleteIcon /> : ''}
             </Item.Content>
           )
         })
@@ -58,15 +54,14 @@ class TagCloud extends Component {
   render () {
     return (
       <Item.Group>
-        {this.props.hashtags.length > 0 ? this.generateHashRow(this.chunkHash(this.props.hashtags, 0)) : ''}
-        {this.props.hashtags.length > 4 ? this.generateHashRow(this.chunkHash(this.props.hashtags, 1)) : ''}
+        {this.props.hashtags.length > 0 ? this.generateHashRow(this.chunkHash(this.props.hashtags, 0, this.props.deleteHashtag)) : ''}
+        {this.props.hashtags.length > 4 ? this.generateHashRow(this.chunkHash(this.props.hashtags, 1, this.props.deleteHashtag)) : ''}
       </Item.Group>
     )
   }
 
   static propTypes = {
     hashtags: PropTypes.array.isRequired,
-    visible: PropTypes.string.isRequired,
   }
 }
 

@@ -12,6 +12,7 @@ import {
   FETCH_HASHTAGS_FAILURE,
   ADD_HASHTAG,
   ADD_HASHTAG_FAILURE,
+  DELETE_HASHTAG,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -54,10 +55,15 @@ export default function appRed(state = initialState, action) {
     case FETCH_HASHTAGS_SUCCESS:
       newState = {...state, user: {...state.user, hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
       return newState;
-    case FETCH_HASHTAGS_SUCCESS:
+    case FETCH_HASHTAGS_FAILURE:
       console.log('ERROR');
       // newState = {...state, user: {...state.user, ...action.data}}
       return action;
+
+    case DELETE_HASHTAG:
+      console.log(action);
+      return state;
+
     case USER_UPDATE_REQUEST:
       newState = {...state, requesting: true, error: false, error_message: ''};
       return newState;

@@ -204,3 +204,10 @@ export function postHashtag(data, currentHashes) {
     }
   }
 }
+
+export function deleteHashtag(data) {
+  console.log('in action delete hash')
+  return {
+    type: types.DELETE_HASHTAG
+  }
+}

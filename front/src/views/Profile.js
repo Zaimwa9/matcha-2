@@ -12,7 +12,8 @@ import { Container, Grid } from 'semantic-ui-react';
 
 class Profile extends Component {
   componentWillMount() {
-    this.props.actions.fetchHashtags(this.props.userIn.uuid);
+    if (!this.props.appUser.hashtags[0])
+      this.props.actions.fetchHashtags(this.props.userIn.uuid);
     if (!this.props.appUser.isFilled)
       this.props.actions.copyUser(this.props.userIn);
   }
@@ -32,6 +33,7 @@ class Profile extends Component {
           submitUpdateUser={this.props.actions.submitUpdateUser}
           resetUpdate={this.props.actions.resetUpdate}
           postHashtag={this.props.actions.postHashtag}
+          deleteHashtag={this.props.actions.deleteHashtag}
         />
       )
     }

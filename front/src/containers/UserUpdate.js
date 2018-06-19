@@ -187,7 +187,7 @@ class UserUpdate extends Component {
               </Item.Content>
             </Item>
           </Item.Group>
-          {hashtags.length > 0 ? <TagCloud hashtags={hashtags} visible='true'/> : ""}
+          {hashtags.length > 0 ? <TagCloud hashtags={hashtags} deleteHashtag={this.props.deleteHashtag}/> : ""}
           <Item.Group>
             <Item style={{justifyContent:'center'}}>
               <Input
@@ -197,6 +197,7 @@ class UserUpdate extends Component {
                 name='addinghash'
                 placeholder={hashtags.length >= 8 ? 'Max 8 tags' : 'Add Hashtag...'}
                 size='small'
+                value={this.props.appUser.addinghash}
                 onChange={this.handleChange}
               />
             </Item>

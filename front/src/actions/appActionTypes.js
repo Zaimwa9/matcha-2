@@ -13,5 +13,7 @@ export const RESET_UPDATE = 'RESET_UPDATE';
 export const ADD_HASHTAG = 'ADD_HASHTAG';
 export const ADD_HASHTAG_FAILURE = 'ADD_HASHTAG_FAILURE';
 
+export const DELETE_HASHTAG = 'DELETE_HASHTAG';
+
 export const COPY_USER = 'COPY_USER';
 export const LOGOUT = 'LOGOUT';

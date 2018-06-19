@@ -48,3 +48,9 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+.hashItem:hover {
+  font-weight: bold;
+  font-style: italic;
+  text-decoration: line-through;
+}
