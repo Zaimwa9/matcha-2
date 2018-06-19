@@ -13,7 +13,7 @@ import { Container, Grid } from 'semantic-ui-react';
 
 class Profile extends Component {
   componentWillMount() {
-    if (!this.props.appUser.hashtags[0])
+    if (this.props.appUser.hashtags && !this.props.appUser.hashtags[0])
       this.props.actions.fetchHashtags(this.props.userIn.uuid);
     if (!this.props.appUser.isFilled)
       this.props.actions.copyUser(this.props.userIn);

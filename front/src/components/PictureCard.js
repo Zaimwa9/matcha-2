@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 
 class PictureCard extends Component {
   render() {
-    const url='https://www.photo-paysage.com/albums/Paysages/Lac-riviere-cascade/normal_croatie-lacs-plitvice-cascades-7.jpg';
+    const url='https://pbs.twimg.com/profile_images/807269899819225089/1dqgaL06_400x400.jpg';
+//    <Icon size='large' color='orange' className='pictureIcon' name='remove' />
 
     return(
-      <Item.Group>
-        <Item>
-          <Icon size='large' color='orange' className='pictureIcon' name='remove' />
-          <Item.Image src={url} centered verticalAlign='middle' spaced />
+      <Item.Group >
+        <Item style={{justifyContent: 'center'}}>
+          <Item.Image src={url} centered verticalAlign='middle' />
         </Item>
       </Item.Group>
     )
