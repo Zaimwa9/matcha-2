@@ -205,9 +205,49 @@ export function postHashtag(data, currentHashes) {
   }
 }
 
-export function deleteHashtag(data) {
-  console.log('in action delete hash')
+export function deleteHashtagSuccess(key, hashtags) {
   return {
-    type: types.DELETE_HASHTAG
+    key: key,
+    hashtags: _.filter(hashtags, (item) => item.id !== key),
+    type: types.DELETE_HASHTAG_SUCCESS
+  }
+}
+
+export function deleteHashtagFailure(error) {
+  return {
+    error_message: error,
+    type: types.DELETE_HASHTAG_FAILURE
+  }
+}
+
+export function deleteHashtag(key, hashtags) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query: `
+          mutation deleteHashtag {
+            deleteHashtag(id: ${key}) {
+              id,
+              content
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      console.log(result)
+      if (!result.data.errors) {
+        dispatch(deleteHashtagSuccess(key, hashtags))
+      } else {
+        console.log(result.data.errors);
+        dispatch(deleteHashtagFailure(result.data.errors[0]))
+      }
+    })
   }
 }

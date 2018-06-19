@@ -131,11 +131,11 @@ var mutationType = new GraphQLObjectType({
     deleteHashtag: {
       type: hashtagType,
       args: {
-        id: {type: GraphQLInt},
-        uuid: {type: GraphQLString}
+        id: {type: GraphQLInt}
       },
       resolve: async function(root, args) {
-        textQuery = `DELETE FROM hashtags WHERE id='${args.id}' AND uuid='${args.uuid}' RETURNING *`;
+        textQuery = `DELETE FROM hashtags WHERE id='${args.id}' RETURNING *`;
+        console.log(textQuery)
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];

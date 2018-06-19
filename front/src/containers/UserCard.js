@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import TagCloud from '../components/TagCloud';
 
-import { Segment, Button, Input, Item, Divider, Popup, Icon } from 'semantic-ui-react';
+import { Segment, Item, Divider, Popup, Icon } from 'semantic-ui-react';
 
-import _ from 'lodash';
+//import _ from 'lodash';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 

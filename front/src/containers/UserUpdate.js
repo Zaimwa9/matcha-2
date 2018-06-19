@@ -17,7 +17,7 @@ import {
 } from "semantic-ui-react";
 import 'react-datepicker/dist/react-datepicker.css';
 
-import _ from "lodash";
+//import _ from "lodash";
 import moment from 'moment';
 import PropTypes from "prop-types";
 
@@ -41,7 +41,6 @@ class UserUpdate extends Component {
   }
 
   handleChangeDate = (event) => {
-    var test = event.format('X')
     this.props.updateUserField(this.props.appUser, 'age', event.format('X'));
   }
 

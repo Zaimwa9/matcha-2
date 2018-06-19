@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Container, Grid, Menu } from 'semantic-ui-react';
+import { Container, Menu } from 'semantic-ui-react';
 
 class AppHeader extends Component {
 
@@ -22,8 +22,6 @@ class AppHeader extends Component {
   }
 
   render() {
-    var { activeItem } = this.props.activeItem;
-
     return (
       <Container fluid>
         <Menu pointing secondary size='massive'>
