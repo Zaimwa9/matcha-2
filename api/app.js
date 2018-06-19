@@ -87,7 +87,7 @@ app.get('/setup', async function () {
   var textQuery = "DROP TABLE IF EXISTS users";
   await psql.query(textQuery);
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, uuid TEXT, age INTEGER, gender TEXT, created_at TIMESTAMP DEFAULT now())";
+  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, uuid TEXT, age INTEGER DEFAULT 684430845, gender TEXT, created_at TIMESTAMP DEFAULT now())";
   await psql.query(textQuery);
 
   var textQuery = "INSERT INTO USERS (email, first_name, last_name, password) VALUES ('diwadoo', 'diwadoo', 'diwadoo', 'diwadoo')";

@@ -32,7 +32,7 @@ const initialState = {
     activeItem: '',
   },
   infoBlock: {
-    updateMode: true,
+    updateMode: false,
   },
   requesting: false,
   error: false,

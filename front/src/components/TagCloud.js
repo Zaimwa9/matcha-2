@@ -65,7 +65,7 @@ class TagCloud extends Component {
 
   static propTypes = {
     hashtags: PropTypes.array.isRequired,
-    deleteHashtag: PropTypes.func.isRequired
+    deleteHashtag: PropTypes.func
   }
 }
 

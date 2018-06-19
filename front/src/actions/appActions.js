@@ -68,6 +68,7 @@ export function updateUserField(user, name, value) {
 export function submitUpdateUser(data) {
   return dispatch => {
     dispatch(updateUserRequest());
+    console.log(data)
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
@@ -78,7 +79,7 @@ export function submitUpdateUser(data) {
       data: {
         query: `
           mutation updateUser {
-            updateUser(age: "${data.age}", email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}") {
+            updateUser(age: ${data.age}, email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}") {
               uuid,
               first_name,
               last_name,
@@ -139,7 +140,6 @@ export function fetchHashtags(uuid) {
     })
     .then(result => {
       if (!result.data.errors) {
-        console.log('success hash');
         dispatch(fetchHashSuccess(result.data.data.user))
       } else {
         console.log(result.data.errors);

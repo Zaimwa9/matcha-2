@@ -20,7 +20,7 @@ class UserCard extends Component {
     const hashtags = (this.props.appUser.hashtags ? this.props.appUser.hashtags : [])
     const popularity = 74;
     const rating = Math.round((popularity / 100 * 5) * 2) / 2;
-    const age = moment().diff(moment.unix(this.props.appUser.age).format('DD-MM-YYYY'), 'years');
+    const age = moment().diff(moment.unix(this.props.appUser.age), 'years');
     const gender = this.props.appUser.gender === 'male' ? 'M' : 'F';
 
     return (

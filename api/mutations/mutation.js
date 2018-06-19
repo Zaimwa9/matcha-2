@@ -81,7 +81,7 @@ var mutationType = new GraphQLObjectType({
         first_name: {type: GraphQLString},
         last_name: {type: GraphQLString},
         gender: {type: GraphQLString},
-        age: {type: GraphQLString},
+        age: {type: GraphQLInt},
         email: {type: GraphQLString},
       },
       resolve: async function(root, args) {
@@ -135,7 +135,6 @@ var mutationType = new GraphQLObjectType({
       },
       resolve: async function(root, args) {
         textQuery = `DELETE FROM hashtags WHERE id='${args.id}' RETURNING *`;
-        console.log(textQuery)
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
