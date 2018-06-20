@@ -107,10 +107,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     ) RETURNING *`;
     try {
       const data = await psql.query(textQuery);
-      console.log(data.rows[0]);
-      res.status(200).send({data: data.rows[0]})
-      //res.stat(data.rows[0]);
-      //return data.rows[0];
+      res.status(200).send({data: data.rows[0]});
     } catch (e) {
       res.send('500');
       return new Error('Database error: ' + e);

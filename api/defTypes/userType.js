@@ -51,7 +51,6 @@ var userType = new GraphQLObjectType({
         textQuery = `SELECT * FROM pictures where author_uuid='${User.uuid}' ORDER BY posted_at DESC LIMIT 5`
         try {
           const data = await psql.query(textQuery);
-          console.log(data);
           return data.rows;
         } catch (e) {
           return new Error('Database error: ' + e)
