@@ -11,6 +11,7 @@ class PicturesZone extends Component {
   handleOnDrop = (event) => {
     this.props.postPictureUpload(event[0], this.props.appUser.uuid);
   }
+
 /*
 <Item.Group>
   <Item style={{justifyContent: 'center'}}>
@@ -29,6 +30,8 @@ class PicturesZone extends Component {
 */
 
   render() {
+    const pictures = (this.props.appUser.pictures ? this.props.appUser.pictures : []);
+    console.log(pictures)
     const url='https://opensource.ncsa.illinois.edu/confluence/download/attachments/7930052/draganddrop.png?version=1&modificationDate=1310053949000&api=v2';
     return (
       <Segment >

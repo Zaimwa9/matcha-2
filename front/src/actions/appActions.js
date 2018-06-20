@@ -104,6 +104,7 @@ export function submitUpdateUser(data) {
 
 export function fetchHashSuccess(data) {
   return {
+    pictures: data.pictures,
     hashtags: data.hashtags,
     type: types.FETCH_HASHTAGS_SUCCESS
   }
@@ -132,6 +133,11 @@ export function fetchHashtags(uuid) {
               hashtags {
                 id,
                 content
+              },
+              pictures {
+                id,
+                path,
+                posted_at
               }
             }
           }
