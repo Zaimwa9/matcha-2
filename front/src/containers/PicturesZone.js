@@ -9,7 +9,7 @@ import PictureCard from '../components/PictureCard'
 
 class PicturesZone extends Component {
   handleOnDrop = (event) => {
-    console.log(event)
+    this.props.postPictureUpload(event[0], this.props.appUser.uuid);
   }
 /*
 <Item.Group>
@@ -37,23 +37,26 @@ class PicturesZone extends Component {
             <Grid.Column>
               <PictureCard />
             </Grid.Column>
-            <Grid.Column style={{height:'100%'}}>
-            <Item.Group>
-              <Item style={{justifyContent: 'center'}}>
-              <Dropzone
-              className='dropzone'
-              activeClassName='active-dropzone'
-              onDrop={this.handleOnDrop}
-              >
-              <div className='contentDropzone'>
-                <p className='textDropzone'>Drag your picture here or click to browse</p>
-                <Image src='/dropbox.svg' size='mini' centered/>
-              </div>
-              </Dropzone>
-              </Item>
-            </Item.Group>
 
+            <Grid.Column style={{height:'100%'}}>
+
+              <Item.Group>
+                <Item style={{justifyContent: 'center'}}>
+                <Dropzone
+                className='dropzone'
+                activeClassName='active-dropzone'
+                onDrop={this.handleOnDrop}
+                >
+                <div className='contentDropzone'>
+                  <p className='textDropzone'>Drag your picture here or click to browse</p>
+                  <Image src='/dropbox.svg' size='mini' centered/>
+                </div>
+                </Dropzone>
+                </Item>
+              </Item.Group>
             </Grid.Column>
+
+
             <Grid.Column>
               <PictureCard />
             </Grid.Column>

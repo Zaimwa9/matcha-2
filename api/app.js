@@ -8,6 +8,12 @@ const userType = require('./defTypes/userType');
 const mutationType = require('./mutations/mutation');
 const queryType = require('./queries/query.js');
 
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
+var fs = require('fs');
+var path = require('path');
+
 const psql = require('./db/dbconnect');
 
 const jwt = require('jsonwebtoken');
@@ -18,6 +24,7 @@ app.get('/test', (req, res) => {
 })
 app.use(cors());
 
+app.use(express.static('public'));
 // const schema = require('./Graphql/Schema')
 
 const schema = new GraphQLSchema({query: queryType, mutation: mutationType})
@@ -79,6 +86,42 @@ app.use('/graphql',
 ))
 ;
 
+app.post('/upload', upload.single('file'), (req, res) => {
+  var tmp_path = req.file.path;
+  var name = Date.now() + req.file.originalname;
+  var target_path = './public/uploads/' + name;
+  var db_path = '/uploads/' + name;
+
+  var src = fs.createReadStream(tmp_path);
+  var dest = fs.createWriteStream(target_path);
+  src.pipe(dest);
+  src.on('end', async function() {
+    var textQuery = `INSERT INTO pictures (
+      author_uuid,
+      path,
+      mimetype,
+      name,
+      size
+    ) VALUES (
+      '${req.body.uuid}', '${db_path}', '${req.file.mimetype}', '${req.file.originalname}', '${req.file.size}'
+    ) RETURNING *`;
+    try {
+      const data = await psql.query(textQuery);
+      console.log(data.rows[0]);
+      res.status(200).send({data: data.rows[0]})
+      //res.stat(data.rows[0]);
+      //return data.rows[0];
+    } catch (e) {
+      res.send('500');
+      return new Error('Database error: ' + e);
+    }
+  });
+  src.on('error', function(err) {
+    console.log('error');
+    res.send('500');
+  });
+})
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 })
@@ -103,5 +146,8 @@ app.get('/setup', async function () {
   await psql.query(textQuery);
 
   var textQuery = "CREATE TABLE IF NOT EXISTS hashtags(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, content TEXT NOT NULL)";
+  await psql.query(textQuery);
+
+  var textQuery = "CREATE TABLE IF NOT EXISTS pictures(id SERIAL PRIMARY KEY, author_uuid TEXT NOT NULL, path TEXT NOT NULL, mimetype TEXT, name TEXT, size INT, posted_at TIMESTAMP DEFAULT now())";
   await psql.query(textQuery);
 })

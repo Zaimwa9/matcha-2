@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js install
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add multer --save
 
 PATH: 
   /home/wadii/google-cloud-sdk/bin:/home/wadii/bin:/home/wadii/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin

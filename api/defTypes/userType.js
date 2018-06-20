@@ -12,6 +12,8 @@ const {
 
 const commentType = require('./commentType');
 const hashtagType = require('./hashtagType');
+const pictureType = require('./pictureType');
+
 const psql = require('../db/dbconnect.js');
 
 var userType = new GraphQLObjectType({
@@ -37,6 +39,19 @@ var userType = new GraphQLObjectType({
         textQuery = `SELECT * FROM hashtags where uuid='${User.uuid}'`;
         try {
           const data = await psql.query(textQuery);
+          return data.rows;
+        } catch (e) {
+          return new Error('Database error: ' + e)
+        }
+      }
+    },
+    pictures: {
+      type: new GraphQLList(pictureType),
+      resolve: async (User) => {
+        textQuery = `SELECT * FROM pictures where author_uuid='${User.uuid}' ORDER BY posted_at DESC LIMIT 5`
+        try {
+          const data = await psql.query(textQuery);
+          console.log(data);
           return data.rows;
         } catch (e) {
           return new Error('Database error: ' + e)

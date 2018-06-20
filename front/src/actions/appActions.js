@@ -251,3 +251,49 @@ export function deleteHashtag(key, hashtags) {
     })
   }
 }
+
+export function uploadPictureRequest(data) {
+  console.log(data);
+  return {
+    type: types.UPLOAD_PICTURE_REQUEST
+  }
+}
+
+export function uploadPictureSuccess(file, blob) {
+  return {
+    picture: {
+      id: file.id,
+      src: blob.preview
+    },
+    type: types.UPLOAD_PICTURE_SUCCESS
+  }
+}
+
+export function uploadPictureFailure() {
+  return {
+    type: types.UPLOAD_PICTURE_FAILURE
+  }
+}
+
+export function postPictureUpload(file, uuid) {
+  return dispatch => {
+    dispatch(uploadPictureRequest(file))
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('uuid', uuid);
+    fetch('http://localhost:3000/upload' , {
+      method: 'POST',
+      body: formData
+    }).then(result => {
+      if (result.status === 200) {
+        return result.json();
+      } else {
+        dispatch(uploadPictureFailure());
+      }
+    }).then(data => {
+        if (data && data.data) {
+          dispatch(uploadPictureSuccess(data, file))
+        }
+    })
+  }
+}
