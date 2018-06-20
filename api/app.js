@@ -90,7 +90,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
   var tmp_path = req.file.path;
   var name = Date.now() + req.file.originalname;
   var target_path = './public/uploads/' + name;
-  var db_path = 'http.//localhost:3000/uploads/' + name;
+  var db_path = 'http://localhost:3000/uploads/' + name;
 
   var src = fs.createReadStream(tmp_path);
   var dest = fs.createWriteStream(target_path);

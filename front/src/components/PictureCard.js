@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Icon, Item } from 'semantic-ui-react';
+import { Grid, Image, Icon, Item } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
@@ -9,11 +9,13 @@ class PictureCard extends Component {
 //    <Icon size='large' color='orange' className='pictureIcon' name='remove' />
 
     return (
-      <Item.Group>
-        <Item style={{justifyContent: 'center'}}>
-          <Item.Image src={url} centered verticalAlign='middle' />
-        </Item>
-      </Item.Group>
+      <Grid.Column>
+        <Item.Group>
+          <Item style={{justifyContent: 'center'}}>
+            <Item.Image src={this.props.url} centered verticalAlign='middle' />
+          </Item>
+        </Item.Group>
+      </Grid.Column>
     )
   }
 }

@@ -266,10 +266,12 @@ export function uploadPictureRequest(data) {
 }
 
 export function uploadPictureSuccess(file, blob) {
+  console.log(file);
   return {
     picture: {
       id: file.id,
-      src: blob.preview
+      path: file.path,
+      posted_at: file.posted_at
     },
     type: types.UPLOAD_PICTURE_SUCCESS
   }
@@ -298,7 +300,8 @@ export function postPictureUpload(file, uuid) {
       }
     }).then(data => {
         if (data && data.data) {
-          dispatch(uploadPictureSuccess(data, file))
+          console.log(data);
+          dispatch(uploadPictureSuccess(data.data, file))
         }
     })
   }

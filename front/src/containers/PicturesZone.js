@@ -4,13 +4,10 @@ import { Grid, Segment, Item, Image, Icon } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
-import Dropzone from 'react-dropzone';
 import PictureCard from '../components/PictureCard'
+import UploadPicture from '../components/UploadPicture'
 
 class PicturesZone extends Component {
-  handleOnDrop = (event) => {
-    this.props.postPictureUpload(event[0], this.props.appUser.uuid);
-  }
 
 /*
 <Item.Group>
@@ -31,49 +28,20 @@ class PicturesZone extends Component {
 
   render() {
     const pictures = (this.props.appUser.pictures ? this.props.appUser.pictures : []);
-    console.log(pictures)
-    const url='https://opensource.ncsa.illinois.edu/confluence/download/attachments/7930052/draganddrop.png?version=1&modificationDate=1310053949000&api=v2';
+
     return (
       <Segment >
         <Grid columns={5}>
           <Grid.Row centered columns={3} verticalAlign='middle'>
-            <Grid.Column>
-              <PictureCard />
-            </Grid.Column>
 
-            <Grid.Column style={{height:'100%'}}>
-
-              <Item.Group>
-                <Item style={{justifyContent: 'center'}}>
-                <Dropzone
-                className='dropzone'
-                activeClassName='active-dropzone'
-                onDrop={this.handleOnDrop}
-                >
-                <div className='contentDropzone'>
-                  <p className='textDropzone'>Drag your picture here or click to browse</p>
-                  <Image src='/dropbox.svg' size='mini' centered/>
-                </div>
-                </Dropzone>
-                </Item>
-              </Item.Group>
-            </Grid.Column>
-
-
-            <Grid.Column>
-              <PictureCard />
-            </Grid.Column>
-            </Grid.Row>
-            <Grid.Row centered columns={3}>
-              <Grid.Column>
-                <PictureCard />
-              </Grid.Column>
-              <Grid.Column>
-                <PictureCard />
-              </Grid.Column>
-              <Grid.Column>
-                <PictureCard />
-              </Grid.Column>
+            {pictures[0] ? <PictureCard url={pictures[0].path} /> : ''}
+            {pictures[1] ? <PictureCard url={pictures[1].path} /> : ''}
+            {pictures[2] ? <PictureCard url={pictures[2].path} /> : ''}
+          </Grid.Row>
+          <Grid.Row centered columns={3}>
+            {pictures[3] ? <PictureCard url={pictures[3].path} /> : ''}
+            {pictures[4] ? <PictureCard url={pictures[4].path} /> : ''}
+            <UploadPicture postPictureUpload={this.props.postPictureUpload} uuid={this.props.appUser.uuid} />
           </Grid.Row>
         </Grid>
       </Segment>

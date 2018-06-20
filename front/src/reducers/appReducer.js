@@ -50,6 +50,10 @@ export default function appRed(state = initialState, action) {
       newState = {...state, user: {...state.witness}};
       return newState;
 
+    case UPLOAD_PICTURE_SUCCESS:
+      newState = {...state, user: {...state.user, pictures: [...state.user.pictures, {...action.picture}]}}
+      console.log(newState.user)
+      return newState;
     case ADD_HASHTAG:
       newState = {...state, user: {...state.user, addinghash: '', hashtags: [...state.user.hashtags, {...action.data}]}}
       return newState
