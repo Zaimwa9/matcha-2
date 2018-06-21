@@ -21,6 +21,8 @@ import {
   DELETE_PICTURE_FAILURE,
   DELETE_PICTURE_SUCCESS,
   SET_EDITING_MODE,
+  UPDATE_DESCRIPTION_FAILURE,
+  UPDATE_DESCRIPTION_SUCCESS
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -104,6 +106,10 @@ export default function appRed(state = initialState, action) {
       newState = {...state, requesting: false, error: true, error_message: action.error.message};
       return newState;
 
+    case UPDATE_DESCRIPTION_SUCCESS:
+      console.log(action)
+      newState = {...state, user: {...state.user, description: action.description }, descBlock: { editMode: false }}
+      return newState;
     case UPDATE_USER_FIELD:
       newState = {...state, user: {...action.user}};
       return newState;
@@ -124,6 +130,7 @@ export default function appRed(state = initialState, action) {
     case SET_EDITING_MODE:
       newState = {...state, descBlock: {...action.descBlock}}
       return newState;
+
     case LOGOUT:
       newState = initialState;
       localStorage.removeItem('token');

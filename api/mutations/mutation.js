@@ -173,6 +173,33 @@ var mutationType = new GraphQLObjectType({
         }
       }
     },
+
+    updateDescription: {
+      type: userType,
+      args: {
+        uuid: {type: GraphQLString},
+        description: {type: GraphQLString}
+      },
+      resolve: async function(root, args) {
+        textQuery = `
+                      UPDATE users SET
+                      description = '${args.description}'
+                      WHERE uuid = '${args.uuid}'
+                      RETURNING *
+                    `
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('No such user found');
+          } else {
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          return new Error('Error: ' + e);
+        }
+      }
+    }
   }
 })
 

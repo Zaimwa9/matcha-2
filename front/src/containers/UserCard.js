@@ -28,6 +28,7 @@ class UserCard extends Component {
         <Item.Group>
           <Item>
             <Item.Content>
+              <Item.Header as='h2'>Profile</Item.Header>
                 <Icon
                   className='actionIcon'
                   name='edit'

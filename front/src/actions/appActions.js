@@ -369,3 +369,50 @@ export function deletePicture(key, pictures) {
     })
   }
 }
+
+export function updateDescriptionSuccess(data) {
+  console.log(data)
+  return {
+    description: data.description,
+    type: types.UPDATE_DESCRIPTION_SUCCESS
+  }
+}
+
+export function updateDescriptionFailure() {
+  return {
+    type: types.UPDATE_DESCRIPTION_FAILURE
+  }
+}
+
+export function postDescription(uuid, description) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query: `
+          mutation updateDescription {
+            updateDescription(uuid: "${uuid}", description: "${description}") {
+            	uuid,
+            	description,
+              email,
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      console.log(result)
+      if (!result.data.errors) {
+        dispatch(updateDescriptionSuccess(result.data.data.updateDescription))
+      } else {
+        console.log(result.data.errors);
+        dispatch(updateDescriptionFailure(result.data.errors[0]))
+      }
+    })
+  }
+}

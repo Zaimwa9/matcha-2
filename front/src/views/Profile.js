@@ -64,6 +64,7 @@ class Profile extends Component {
               </Grid.Row>
               <Grid.Row>
                 <DescCard
+                  postDescription={this.props.actions.postDescription}
                   setEditingMode={this.props.actions.setEditingMode}
                   updateUserField={this.props.actions.updateUserField}
                 />

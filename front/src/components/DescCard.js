@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Segment, Header, Form, TextArea, Container, Item, Icon } from 'semantic-ui-react';
+import { Segment, Button, Header, Form, TextArea, Container, Item, Icon } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
@@ -14,10 +14,14 @@ class DescCard extends Component {
     this.props.setEditingMode(this.props.descBlock.editMode)
   }
 
+  handleSubmit = (e) => {
+    this.props.postDescription(this.props.appUser.uuid, this.props.appUser.description);
+  }
+
   renderView = () => {
     if (this.props.descBlock.editMode) {
       return (
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <TextArea
             name='description'
             maxLength="400"
@@ -26,6 +30,9 @@ class DescCard extends Component {
             autoHeight
             placeholder='Tell us more about yourself (400 characters max)'
           />
+          <Button>
+            Save
+          </Button>
         </Form>
       )
     } else {
@@ -45,6 +52,7 @@ class DescCard extends Component {
       <Item.Group>
         <Item>
           <Item.Content>
+              <Item.Header as='h2'>Biography</Item.Header>
               <Icon
                 className='actionIcon'
                 name='edit'
@@ -55,9 +63,6 @@ class DescCard extends Component {
           </Item.Content>
         </Item>
       </Item.Group>
-      <Header as='h2'>
-        Biography
-      </Header>
         {this.renderView()}
       </Segment>
     )

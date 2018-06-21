@@ -16,11 +16,11 @@ class PicturesZone extends Component {
     const pictures = (this.props.appUser.pictures ? this.props.appUser.pictures : []);
 
     return (
-      <Segment >
-        {this.props.pictureBlock.manageMode ? 'Click on a picture to delete it' : ''}
+      <Segment>
         <Item.Group>
           <Item>
-            <Item.Content>
+            <Item.Content verticalAlign='middle'>
+              <Item.Header as='h2'>Pictures</Item.Header>
                 <Icon
                   className='actionIcon'
                   name='edit'
@@ -28,6 +28,9 @@ class PicturesZone extends Component {
                   style={{float: 'right'}}
                   onClick={this.handleManageMode}
                 />
+                <Item.Meta>
+                  {this.props.pictureBlock.manageMode ? 'Click on a picture to delete it' : ''}
+                </Item.Meta>
             </Item.Content>
           </Item>
         </Item.Group>
