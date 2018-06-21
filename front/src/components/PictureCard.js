@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 class PictureCard extends Component {
   handleClick = (idkey) => {
-    console.log(idkey)
+    this.props.deletePicture(idkey, this.props.pictures);
   }
 
   render() {

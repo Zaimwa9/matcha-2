@@ -268,14 +268,12 @@ export function deleteHashtag(key, hashtags) {
 }
 
 export function uploadPictureRequest(data) {
-  console.log(data);
   return {
     type: types.UPLOAD_PICTURE_REQUEST
   }
 }
 
 export function uploadPictureSuccess(file, blob) {
-  console.log(file);
   return {
     picture: {
       id: file.id,
@@ -312,6 +310,53 @@ export function postPictureUpload(file, uuid) {
           console.log(data);
           dispatch(uploadPictureSuccess(data.data, file))
         }
+    })
+  }
+}
+
+export function deletePictureSuccess(key, pictures) {
+  return {
+    key: key,
+    pictures: _.filter(pictures, (item) => item.id !== key),
+    type: types.DELETE_PICTURE_SUCCESS
+  }
+}
+
+export function deletePictureFailure(error) {
+  return {
+    error_message: error,
+    type: types.DELETE_PICTURE_FAILURE
+  }
+}
+
+export function deletePicture(key, pictures) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query: `
+          mutation deletePicture {
+            deletePicture(id: ${key}) {
+              id,
+              author_uuid,
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      console.log(result)
+      if (!result.data.errors) {
+        dispatch(deletePictureSuccess(key, pictures))
+      } else {
+        console.log(result.data.errors);
+        dispatch(deletePictureFailure(result.data.errors[0]))
+      }
     })
   }
 }

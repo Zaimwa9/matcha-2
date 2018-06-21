@@ -58,6 +58,7 @@ class Profile extends Component {
                 <PicturesZone
                   postPictureUpload={this.props.actions.postPictureUpload}
                   pictureManageMode={this.props.actions.pictureManageMode}
+                  deletePicture={this.props.actions.deletePicture}
                 />
               </Grid.Row>
             </Grid.Column>

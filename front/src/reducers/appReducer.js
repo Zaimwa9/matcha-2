@@ -18,6 +18,8 @@ import {
   UPLOAD_PICTURE_REQUEST,
   UPLOAD_PICTURE_FAILURE,
   MANAGE_PICTURE_MODE,
+  DELETE_PICTURE_FAILURE,
+  DELETE_PICTURE_SUCCESS,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -73,6 +75,13 @@ export default function appRed(state = initialState, action) {
       // newState = {...state, user: {...state.user, ...action.data}}
       return action;
 
+    case DELETE_PICTURE_SUCCESS:
+      console.log(action.pictures);
+      newState = {...state, user: {...state.user, pictures: [...action.pictures]}};
+      return newState;
+    case DELETE_HASHTAG_FAILURE:
+      newState = {...state, error: true, error_message: action.error_message};
+      return newState;
     case DELETE_HASHTAG_SUCCESS:
       newState = {...state, user: {...state.user, hashtags: [...action.hashtags]}};
       return newState;
