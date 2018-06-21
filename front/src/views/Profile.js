@@ -8,6 +8,7 @@ import AppHeader from '../components/AppHeader';
 import UserCard from '../containers/UserCard';
 import UserUpdate from '../containers/UserUpdate';
 import PicturesZone from '../containers/PicturesZone';
+import DescCard from '../components/DescCard';
 
 import { Container, Grid } from 'semantic-ui-react';
 
@@ -54,11 +55,17 @@ class Profile extends Component {
               {this.viewMode()}
             </Grid.Column>
             <Grid.Column width={10}>
-              <Grid.Row style={{height: '75%'}}>
+              <Grid.Row>
                 <PicturesZone
                   postPictureUpload={this.props.actions.postPictureUpload}
                   pictureManageMode={this.props.actions.pictureManageMode}
                   deletePicture={this.props.actions.deletePicture}
+                />
+              </Grid.Row>
+              <Grid.Row>
+                <DescCard
+                  setEditingMode={this.props.actions.setEditingMode}
+                  updateUserField={this.props.actions.updateUserField}
                 />
               </Grid.Row>
             </Grid.Column>

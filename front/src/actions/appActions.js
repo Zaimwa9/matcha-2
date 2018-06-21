@@ -66,6 +66,15 @@ export function pictureManageMode(status) {
   }
 }
 
+export function setEditingMode(status) {
+  return {
+    descBlock: {
+      editMode: !status
+    },
+    type: types.SET_EDITING_MODE,
+  }
+}
+
 export function updateUserField(user, name, value) {
   user[name] = value
   return {

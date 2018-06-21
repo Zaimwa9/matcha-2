@@ -14,7 +14,7 @@ class PicturesZone extends Component {
 
   render() {
     const pictures = (this.props.appUser.pictures ? this.props.appUser.pictures : []);
-    pictures && pictures[0] ? console.log(pictures[0].id): '';
+
     return (
       <Segment >
         {this.props.pictureBlock.manageMode ? 'Click on a picture to delete it' : ''}

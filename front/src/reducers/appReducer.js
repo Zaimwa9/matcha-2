@@ -20,6 +20,7 @@ import {
   MANAGE_PICTURE_MODE,
   DELETE_PICTURE_FAILURE,
   DELETE_PICTURE_SUCCESS,
+  SET_EDITING_MODE,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
     email: '',
     gender: '',
     age: '',
+    description: 'youpi',
     hashtags: [],
     pictures: [],
     addinghash: '',
@@ -43,6 +45,9 @@ const initialState = {
   },
   pictureBlock: {
     manageMode: true,
+  },
+  descBlock: {
+    editMode: true,
   },
   requesting: false,
   error: false,
@@ -115,6 +120,9 @@ export default function appRed(state = initialState, action) {
       return newState;
     case MANAGE_PICTURE_MODE:
       newState = {...state, pictureBlock: {...action.pictureBlock}};
+      return newState;
+    case SET_EDITING_MODE:
+      newState = {...state, descBlock: {...action.descBlock}}
       return newState;
     case LOGOUT:
       newState = initialState;
