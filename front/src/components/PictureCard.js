@@ -10,9 +10,14 @@ class PictureCard extends Component {
 
     return (
       <Grid.Column>
-        <Item.Group>
+        <Item.Group unstackable>
           <Item style={{justifyContent: 'center'}}>
-            <Item.Image src={this.props.url} centered verticalAlign='middle' />
+            <Item.Image
+              className={this.props.manageMode ? 'picManageMode' : ''}
+              src={this.props.url}
+              centered
+              verticalAlign='middle'
+            />
           </Item>
         </Item.Group>
       </Grid.Column>

@@ -1,5 +1,7 @@
-const hashtagType = require('../defTypes/hashtagType')
-const userType = require('../defTypes/userType')
+const hashtagType = require('../defTypes/hashtagType');
+const userType = require('../defTypes/userType');
+const pictureType = require('../defTypes/pictureType');
+
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -143,7 +145,24 @@ var mutationType = new GraphQLObjectType({
           return new Error('Database error: ' + e);
         }
       }
-    }
+    },
+
+    deletePicture: {
+      type: pictureType,
+      args: {
+        id: {type: GraphQLInt}
+      },
+      resolve: async function(root, args) {
+        textQuery = `DELETE FROM pictures WHERE id='${args.id}' RETURNING *`;
+        try {
+          var data = await psql.query(textQuery);
+          data = data.rows[0];
+          return data;
+        } catch (e) {
+          return new Error('Database error: ' + e);
+        }
+      }
+    },
   }
 })
 

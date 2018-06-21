@@ -57,6 +57,15 @@ export function setUpdateMode(status) {
   }
 }
 
+export function pictureManageMode(status) {
+  return {
+    pictureBlock: {
+      manageMode: !status
+    },
+    type: types.MANAGE_PICTURE_MODE,
+  }
+}
+
 export function updateUserField(user, name, value) {
   user[name] = value
   return {

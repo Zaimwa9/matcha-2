@@ -8,40 +8,40 @@ import PictureCard from '../components/PictureCard'
 import UploadPicture from '../components/UploadPicture'
 
 class PicturesZone extends Component {
-
-/*
-<Item.Group>
-  <Item style={{justifyContent: 'center'}}>
-  <Item.Meta>
-    <Dropzone
-    className='dropzone'
-    activeClassName='active-dropzone'
-    onDrop={this.handleOnDrop}
-    >
-    </Dropzone>
-    </Item.Meta>
-  </Item>
-</Item.Group>
-<Item.Image src={url} centered verticalAlign='middle' />
-
-*/
+  handleManageMode = () => {
+    this.props.pictureManageMode(this.props.pictureBlock.manageMode);
+  }
 
   render() {
     const pictures = (this.props.appUser.pictures ? this.props.appUser.pictures : []);
 
     return (
       <Segment >
+        {this.props.pictureBlock.manageMode ? 'Click on a picture to delete it' : ''}
+        <Item.Group>
+          <Item>
+            <Item.Content>
+                <Icon
+                  className='actionIcon'
+                  name='edit'
+                  color='black'
+                  style={{float: 'right'}}
+                  onClick={this.handleManageMode}
+                />
+            </Item.Content>
+          </Item>
+        </Item.Group>
         <Grid columns={5}>
           <Grid.Row centered columns={3} verticalAlign='middle'>
-
-            {pictures[0] ? <PictureCard url={pictures[0].path} /> : ''}
-            {pictures[1] ? <PictureCard url={pictures[1].path} /> : ''}
-            {pictures[2] ? <PictureCard url={pictures[2].path} /> : ''}
+            {pictures[0] ? <PictureCard key={pictures[0].id} manageMode={this.props.pictureBlock.manageMode} url={pictures[0].path} /> : ''}
+            {pictures[1] ? <PictureCard key={pictures[1].id} manageMode={this.props.pictureBlock.manageMode} url={pictures[1].path} /> : ''}
+            {pictures[2] ? <PictureCard key={pictures[2].id} manageMode={this.props.pictureBlock.manageMode} url={pictures[2].path} /> : ''}
           </Grid.Row>
           <Grid.Row centered columns={3}>
-            {pictures[3] ? <PictureCard url={pictures[3].path} /> : ''}
-            {pictures[4] ? <PictureCard url={pictures[4].path} /> : ''}
-            <UploadPicture postPictureUpload={this.props.postPictureUpload} uuid={this.props.appUser.uuid} />
+            {pictures[3] ? <PictureCard key={pictures[3].id} manageMode={this.props.pictureBlock.manageMode} url={pictures[3].path} /> : ''}
+            {pictures[4] ? <PictureCard key={pictures[4].id} manageMode={this.props.pictureBlock.manageMode} url={pictures[4].path} /> : ''}
+            {(this.props.pictureBlock.manageMode === true && pictures.length < 5) ?
+              <UploadPicture postPictureUpload={this.props.postPictureUpload} uuid={this.props.appUser.uuid} /> : ''}
           </Grid.Row>
         </Grid>
       </Segment>
@@ -52,7 +52,8 @@ class PicturesZone extends Component {
 function mapStateToProps(state) {
   return {
     appUser: state.app.user,
-    infoBlock: state.app.infoBlock
+    infoBlock: state.app.infoBlock,
+    pictureBlock: state.app.pictureBlock
   };
 }
 

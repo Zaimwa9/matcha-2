@@ -21,7 +21,7 @@ class Homepage extends Component {
     )
   }
 
-  static PropTypes = {
+  static propTypes = {
     match: PropTypes.object.isRequired
   }
 }

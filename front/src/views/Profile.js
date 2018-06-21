@@ -57,6 +57,7 @@ class Profile extends Component {
               <Grid.Row style={{height: '75%'}}>
                 <PicturesZone
                   postPictureUpload={this.props.actions.postPictureUpload}
+                  pictureManageMode={this.props.actions.pictureManageMode}
                 />
               </Grid.Row>
             </Grid.Column>

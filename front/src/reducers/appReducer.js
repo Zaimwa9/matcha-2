@@ -16,7 +16,8 @@ import {
   DELETE_HASHTAG_FAILURE,
   UPLOAD_PICTURE_SUCCESS,
   UPLOAD_PICTURE_REQUEST,
-  UPLOAD_PICTURE_FAILURE
+  UPLOAD_PICTURE_FAILURE,
+  MANAGE_PICTURE_MODE,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -27,6 +28,7 @@ const initialState = {
     gender: '',
     age: '',
     hashtags: [],
+    pictures: [],
     addinghash: '',
     isAuth: true,
     isFilled: false,
@@ -36,6 +38,9 @@ const initialState = {
   },
   infoBlock: {
     updateMode: false,
+  },
+  pictureBlock: {
+    manageMode: true,
   },
   requesting: false,
   error: false,
@@ -99,8 +104,10 @@ export default function appRed(state = initialState, action) {
     case SET_UPDATE_MODE:
       newState = {...state, infoBlock: {...action.infoBlock}};
       return newState;
-
-      case LOGOUT:
+    case MANAGE_PICTURE_MODE:
+      newState = {...state, pictureBlock: {...action.pictureBlock}};
+      return newState;
+    case LOGOUT:
       newState = initialState;
       localStorage.removeItem('token');
       newState.user.isAuth = false;

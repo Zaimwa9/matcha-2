@@ -96,3 +96,10 @@ body {
   position: absolute;
   z-index: 2
 }
+
+/*.picManageMode:hover > * {
+  border-style: solid!important;
+  border-radius: 50px!important;
+  opacity: 0%!important;
+  position: relative!important;
+}*/
