@@ -6,6 +6,8 @@ const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
+const fs = require('fs');
+const path = require('path');
 
 const {
   GraphQLInt,
@@ -157,6 +159,14 @@ var mutationType = new GraphQLObjectType({
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
+          console.log(data);
+          var target = path.join(__dirname, '../public/uploads/', data.db_name);
+          fs.unlink(target, (err) => {
+            if (err)
+              console.log(err)
+            else
+              console.log('deleted ' + target)
+          });
           return data;
         } catch (e) {
           return new Error('Database error: ' + e);

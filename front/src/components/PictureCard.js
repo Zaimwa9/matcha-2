@@ -4,15 +4,18 @@ import { Grid, Image, Icon, Item } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 class PictureCard extends Component {
-  render() {
-    const url='https://pbs.twimg.com/profile_images/807269899819225089/1dqgaL06_400x400.jpg';
-//    <Icon size='large' color='orange' className='pictureIcon' name='remove' />
+  handleClick = (idkey) => {
+    console.log(idkey)
+  }
 
+  render() {
     return (
       <Grid.Column>
         <Item.Group unstackable>
-          <Item style={{justifyContent: 'center'}}>
+          <Item style={{justifyContent: 'center'}} >
             <Item.Image
+              onClick={() => this.handleClick(this.props.idkey)}
+              idkey={this.props.idkey}
               className={this.props.manageMode ? 'picManageMode' : ''}
               src={this.props.url}
               centered

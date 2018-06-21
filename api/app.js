@@ -101,9 +101,10 @@ app.post('/upload', upload.single('file'), (req, res) => {
       path,
       mimetype,
       name,
+      db_name,
       size
     ) VALUES (
-      '${req.body.uuid}', '${db_path}', '${req.file.mimetype}', '${req.file.originalname}', '${req.file.size}'
+      '${req.body.uuid}', '${db_path}', '${req.file.mimetype}', '${req.file.originalname}', '${name}', '${req.file.size}'
     ) RETURNING *`;
     try {
       const data = await psql.query(textQuery);
