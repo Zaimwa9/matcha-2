@@ -14,6 +14,7 @@ import {
   Popup,
   Icon,
   Select,
+  Modal,
 } from "semantic-ui-react";
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -25,6 +26,10 @@ class UserUpdate extends Component {
 
   componentWillUnmount = () => {
     this.props.resetUpdate();
+  }
+
+  handleUpdatePwd = (event, {name, value}) => {
+    this.props.updatePwd(name, value);
   }
 
   handleUpdateMode = () => {
@@ -140,52 +145,35 @@ class UserUpdate extends Component {
                   />
                 </Form.Field>
               </Form.Group>
+              <Modal trigger={<p>Modify Password</p>} basic size='small' closeIcon>
+                <Modal.Header>Modify Password</Modal.Header>
+                <Segment>
+                <Modal.Content>
+                  <Modal.Description>
+                    <Form size='small'>
+                      <Form.Input
+                        type='password'
+                        name='currPwd'
+                        label='Current password'
+                        onChange={this.handleUpdatePwd}
+                      />
+                      <Form.Input
+                        type='password'
+                        name='oldPwd'
+                        label='New password'
+                        onChange={this.handleUpdatePwd}
+                      />
+                      <Button>Save</Button>
+                    </Form>
+                  </Modal.Description>
+                </Modal.Content>
+                </Segment>
+              </Modal>
               <Button>
                 Save
               </Button>
-            {/* <Form.Field control={Select} label='Gender' options={options} placeholder='Gender' /> */}
             </Form>
           <Divider />
-          <Item.Group relaxed>
-            <Item>
-              <Item.Content>
-                <Popup
-                  className="popup"
-                  trigger={<Item.Header content="Overall Popularity" />}
-                  content="Popularity is a score based on the safety of your account"
-                  on="click"
-                  size="mini"
-                />
-              </Item.Content>
-            </Item>
-            <Item>
-              <Item.Content>
-                <Rating
-                  fullSymbol={
-                    <img
-                      alt="full symbol"
-                      src="/black_star.svg"
-                      className="rankingIcon"
-                    />
-                  }
-                  emptySymbol={
-                    <img
-                      alt="empty symbol"
-                      src="/empty_star.svg"
-                      className="rankingIcon"
-                    />
-                  }
-                  initialRating={rating}
-                  readonly
-                />
-              </Item.Content>
-            </Item>
-            <Item>
-              <Item.Content>
-                <Item.Header content={`${popularity}%`} />
-              </Item.Content>
-            </Item>
-          </Item.Group>
           {hashtags.length > 0 ? <TagCloud hashtags={hashtags} visible={'true'} deleteHashtag={this.props.deleteHashtag}/> : ""}
           <Item.Group>
             <Item style={{justifyContent:'center'}}>

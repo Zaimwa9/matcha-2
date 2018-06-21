@@ -22,7 +22,8 @@ import {
   DELETE_PICTURE_SUCCESS,
   SET_EDITING_MODE,
   UPDATE_DESCRIPTION_FAILURE,
-  UPDATE_DESCRIPTION_SUCCESS
+  UPDATE_DESCRIPTION_SUCCESS,
+  UPDATE_PWD
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -54,6 +55,10 @@ const initialState = {
   requesting: false,
   error: false,
   error_message: '',
+  updatePwd: {
+    currPwd: '',
+    oldPwd: '',
+  }
 }
 
 export default function appRed(state = initialState, action) {
@@ -129,7 +134,10 @@ export default function appRed(state = initialState, action) {
     case SET_EDITING_MODE:
       newState = {...state, descBlock: {...action.descBlock}}
       return newState;
-
+    case UPDATE_PWD:
+      newState = {...state, updatePwd: {...state.updatePwd, ...action.updatePwd}};
+      console.log(newState);
+      return newState;
     case LOGOUT:
       newState = initialState;
       localStorage.removeItem('token');

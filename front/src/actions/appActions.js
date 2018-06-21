@@ -83,6 +83,15 @@ export function updateUserField(user, name, value) {
   }
 }
 
+export function updatePwd(name, value) {
+  let updatePwd = [];
+  updatePwd[name] = value
+  return {
+    updatePwd: updatePwd,
+    type: types.UPDATE_PWD
+  }
+}
+
 export function submitUpdateUser(data) {
   return dispatch => {
     dispatch(updateUserRequest());

@@ -30,6 +30,7 @@ class Profile extends Component {
     } else {
       return (
         <UserUpdate
+          updatePwd={this.props.actions.updatePwd}
           updateUserField={this.props.actions.updateUserField}
           setUpdateMode={this.props.actions.setUpdateMode}
           submitUpdateUser={this.props.actions.submitUpdateUser}
