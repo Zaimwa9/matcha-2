@@ -101,6 +101,7 @@ export function signup(data) {
               first_name,
               last_name,
               email,
+              description,
               token
             }
           }

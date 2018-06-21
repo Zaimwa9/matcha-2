@@ -122,6 +122,7 @@ export function submitUpdateUser(data) {
 
 export function fetchHashSuccess(data) {
   return {
+    description: data.description,
     pictures: data.pictures,
     hashtags: data.hashtags,
     type: types.FETCH_HASHTAGS_SUCCESS
@@ -148,6 +149,7 @@ export function fetchHashtags(uuid) {
         query: `
           query user {
             user(uuid: "${uuid}") {
+              description,
               hashtags {
                 id,
                 content
