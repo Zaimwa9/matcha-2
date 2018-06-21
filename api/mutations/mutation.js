@@ -187,6 +187,7 @@ var mutationType = new GraphQLObjectType({
                       WHERE uuid = '${args.uuid}'
                       RETURNING *
                     `
+                    console.log(textQuery);
         try {
           var data = await psql.query(textQuery);
           if (data.rowCount === 0) {
@@ -196,6 +197,7 @@ var mutationType = new GraphQLObjectType({
             return data;
           }
         } catch (e) {
+          console.log(e);
           return new Error('Error: ' + e);
         }
       }

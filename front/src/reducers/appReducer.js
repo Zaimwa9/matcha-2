@@ -107,7 +107,6 @@ export default function appRed(state = initialState, action) {
       return newState;
 
     case UPDATE_DESCRIPTION_SUCCESS:
-      console.log(action)
       newState = {...state, user: {...state.user, description: action.description }, descBlock: { editMode: false }}
       return newState;
     case UPDATE_USER_FIELD:

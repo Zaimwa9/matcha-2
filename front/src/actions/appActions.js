@@ -385,6 +385,7 @@ export function updateDescriptionFailure() {
 }
 
 export function postDescription(uuid, description) {
+  description = description.replace(/\n$/, '');
   return dispatch => {
     axios({
       url: 'http://localhost:3000/graphql/',
@@ -394,7 +395,8 @@ export function postDescription(uuid, description) {
         // 'Authorization': 'Bearer '+ localStorage.getItem('token')
       },
       data: {
-        query: `
+        query:
+        `
           mutation updateDescription {
             updateDescription(uuid: "${uuid}", description: "${description}") {
             	uuid,
@@ -406,8 +408,8 @@ export function postDescription(uuid, description) {
       }
     })
     .then(result => {
-      console.log(result)
       if (!result.data.errors) {
+        console.log(result);
         dispatch(updateDescriptionSuccess(result.data.data.updateDescription))
       } else {
         console.log(result.data.errors);

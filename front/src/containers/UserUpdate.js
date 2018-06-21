@@ -63,7 +63,7 @@ class UserUpdate extends Component {
           <Item.Group>
             <Item>
               <Item.Content>
-                <Item.Header float='left' as='h2'>Profile</Item.Header>
+                <Item.Header as='h2'>Profile</Item.Header>
                 <Icon
                   className="actionIcon"
                   name={this.props.infoBlock.updateMode ? "cancel" : "edit"}
