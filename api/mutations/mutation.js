@@ -81,12 +81,15 @@ var mutationType = new GraphQLObjectType({
     updateUser: {
       type: userType,
       args: {
-        uuid: {type: GraphQLString},
-        first_name: {type: GraphQLString},
-        last_name: {type: GraphQLString},
-        gender: {type: GraphQLString},
-        age: {type: GraphQLInt},
-        email: {type: GraphQLString},
+        uuid: { type: GraphQLString },
+        first_name: { type: GraphQLString },
+        last_name: { type: GraphQLString },
+        gender: { type: GraphQLString },
+        age: { type: GraphQLInt },
+        email: { type: GraphQLString },
+        address: { type: GraphQLString },
+        lat: { type: GraphQLString },
+        lng: { type: GraphQLString }
       },
       resolve: async function(root, args) {
         textQuery = `UPDATE users SET
@@ -94,7 +97,10 @@ var mutationType = new GraphQLObjectType({
                       last_name='${args.last_name}',
                       gender='${args.gender}',
                       email='${args.email}',
-                      age='${args.age}'
+                      age='${args.age}',
+                      address='${args.address}',
+                      lat='${args.lat}',
+                      lng='${args.lng}'
                       WHERE uuid='${args.uuid}' RETURNING *`
         try {
           var data = await psql.query(textQuery);

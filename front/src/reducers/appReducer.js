@@ -39,6 +39,9 @@ const initialState = {
     hashtags: [],
     pictures: [],
     addinghash: '',
+    address: 'greneta',
+    lat: '',
+    lng: '',
     isAuth: true,
     isFilled: false,
   },
@@ -90,7 +93,7 @@ export default function appRed(state = initialState, action) {
       newState = {...state, error: true, error_message: action.error_message};
       return newState
     case FETCH_HASHTAGS_SUCCESS:
-      newState = {...state, user: {...state.user, description: action.description, pictures: [...action.pictures], hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
+      newState = {...state, user: {...state.user, lat: action.lat, lng: action.lng, address: action.address, description: action.description, pictures: [...action.pictures], hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
       return newState;
     case FETCH_HASHTAGS_FAILURE:
       console.log('ERROR');

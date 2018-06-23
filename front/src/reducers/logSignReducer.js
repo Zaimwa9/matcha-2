@@ -23,6 +23,7 @@ const initialState = {
     first_name: '',
     last_name: '',
     email: '',
+    address: '',
     password: '',
     cpassword: '',
     isAuth: false

@@ -94,6 +94,7 @@ export function updatePwd(name, value) {
 
 export function submitUpdateUser(data) {
   return dispatch => {
+    data.age = data.age ? data.age : 663807600;
     dispatch(updateUserRequest());
     axios({
       url: 'http://localhost:3000/graphql/',
@@ -105,10 +106,13 @@ export function submitUpdateUser(data) {
       data: {
         query: `
           mutation updateUser {
-            updateUser(age: ${data.age}, email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}") {
+            updateUser(age: ${data.age}, email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}", address: "${data.address}", lat: "${data.lat}", lng: "${data.lng}") {
               uuid,
               first_name,
               last_name,
+              address,
+              lng,
+              lat,
               email,
               gender
             }
@@ -130,6 +134,7 @@ export function submitUpdateUser(data) {
 
 export function fetchHashSuccess(data) {
   return {
+    address: data.address,
     description: data.description,
     pictures: data.pictures,
     hashtags: data.hashtags,
@@ -158,6 +163,9 @@ export function fetchHashtags(uuid) {
           query user {
             user(uuid: "${uuid}") {
               description,
+              address,
+              lat,
+              lng,
               hashtags {
                 id,
                 content

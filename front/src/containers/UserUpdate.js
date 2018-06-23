@@ -33,7 +33,6 @@ class UserUpdate extends Component {
   }
 
   handleSubmitUpdatePwd = () => {
-    console.log('pwd submitted');
     this.props.submitPwdUpdate(this.props.appUser.uuid, this.props.pwdState.oldPwd, this.props.pwdState.newPwd);
   }
 
@@ -126,7 +125,9 @@ class UserUpdate extends Component {
               <Form.Group style={{justifyContent:'center'}}>
                 <Form.Field>
                   <label>Address</label>
-                  <LocationSearchInput />
+                  <LocationSearchInput
+                    updateUserField={this.props.updateUserField}
+                  />
               </Form.Field>
               </Form.Group>
               <Form.Group style={{justifyContent:'space-evenly'}}>
@@ -221,4 +222,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(UserUpdate);
+export default connect(
+  mapStateToProps
+)(UserUpdate);

@@ -32,6 +32,9 @@ var userType = new GraphQLObjectType({
     age: { type: GraphQLInt },
     token: { type: GraphQLString },
     gender: { type: GraphQLString },
+    address: { type: GraphQLString },
+    lat: {type: GraphQLString },
+    lng: {type: GraphQLString },
     created_at: { type: GraphQLString },
     description: { type: GraphQLString },
     hashtags: {

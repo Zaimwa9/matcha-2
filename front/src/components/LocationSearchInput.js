@@ -1,5 +1,7 @@
-import React from 'react'
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import React from 'react';
+import { connect } from "react-redux";
+
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -7,23 +9,29 @@ class LocationSearchInput extends React.Component {
     this.state = { address: '' }
   }
 
-  handleChange = (address) => {
-    this.setState({ address })
+  handleChange = (name, value) => {
+    this.props.updateUserField(this.props.appUser, name, value);
   }
 
   handleSelect = (address) => {
-    this.setState({address})
+    this.props.updateUserField(this.props.appUser, 'address', address);
     geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(results => {
+        return getLatLng(results[0])
+      })
+      .then(latLng => {
+        this.props.updateUserField(this.props.appUser, 'lat', latLng.lat);
+        this.props.updateUserField(this.props.appUser, 'lng', latLng.lng);
+        console.log('Success', latLng)
+      })
       .catch(error => console.error('Error', error))
   }
 
   render() {
     return (
       <PlacesAutocomplete
-        value={this.state.address}
-        onChange={this.handleChange}
+        value={this.props.appUser.address ? this.props.appUser.address : ''}
+        onChange={(value) => this.handleChange('address', value)}
         onSelect={this.handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
@@ -55,4 +63,12 @@ class LocationSearchInput extends React.Component {
   }
 }
 
-export default LocationSearchInput;
+function mapStateToProps(state) {
+  return {
+    appUser: state.app.user,
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(LocationSearchInput);
