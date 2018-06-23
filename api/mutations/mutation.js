@@ -186,8 +186,36 @@ var mutationType = new GraphQLObjectType({
                       description = '${args.description}'
                       WHERE uuid = '${args.uuid}'
                       RETURNING *
-                    `
-                    console.log(textQuery);
+                    `;
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('No such user found');
+          } else {
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          console.log(e);
+          return new Error('Error: ' + e);
+        }
+      }
+    },
+
+    updatePwd: {
+      type: userType,
+      args: {
+        uuid: {type: GraphQLString},
+        oldPwd: {type: GraphQLString},
+        newPwd: {type: GraphQLString},
+      },
+      resolve: async function(root, args) {
+        textQuery = `
+                      UPDATE users SET
+                      password='${args.newPwd}'
+                      WHERE uuid='${args.uuid}' and password='${args.oldPwd}'
+                      RETURNING *
+                    `;
         try {
           var data = await psql.query(textQuery);
           if (data.rowCount === 0) {
