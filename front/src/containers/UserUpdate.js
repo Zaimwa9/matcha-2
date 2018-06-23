@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import TagCloud from "../components/TagCloud";
+import LocationSearchInput from '../components/LocationSearchInput';
 import DatePicker from 'react-datepicker';
+
 import {
   Segment,
   Form,
@@ -120,6 +122,12 @@ class UserUpdate extends Component {
                   name='email'
                   onChange={this.handleChange}
                 />
+              </Form.Group>
+              <Form.Group style={{justifyContent:'center'}}>
+                <Form.Field>
+                  <label>Address</label>
+                  <LocationSearchInput />
+              </Form.Field>
               </Form.Group>
               <Form.Group style={{justifyContent:'space-evenly'}}>
                 <Form.Field

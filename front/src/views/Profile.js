@@ -9,7 +9,6 @@ import UserCard from '../containers/UserCard';
 import UserUpdate from '../containers/UserUpdate';
 import PicturesZone from '../containers/PicturesZone';
 import DescCard from '../components/DescCard';
-import LocationSearchInput from '../components/LocationSearchInput';
 
 import { Container, Grid } from 'semantic-ui-react';
 
@@ -52,7 +51,6 @@ class Profile extends Component {
           logout={this.props.actions.logout}
           {...this.props}
         />
-        <LocationSearchInput />
         <Container fluid>
           <Grid>
             <Grid.Column width={6}>
