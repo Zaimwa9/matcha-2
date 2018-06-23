@@ -63,7 +63,8 @@ const initialState = {
   updatePwd: {
     oldPwd: '',
     newPwd: '',
-  }
+  },
+  complete: false,
 }
 
 export default function appRed(state = initialState, action) {
@@ -71,7 +72,7 @@ export default function appRed(state = initialState, action) {
 
   switch (action.type) {
     case RESET_UPDATE:
-      newState = {...state, user: {...state.witness, description: state.user.description, pictures: [...state.user.pictures]}};
+      newState = {...state, user: {...state.witness, address: state.user.address, description: state.user.description, pictures: [...state.user.pictures]}};
       return newState;
 
     case SUBMIT_PWD_FAILURE:
@@ -93,7 +94,7 @@ export default function appRed(state = initialState, action) {
       newState = {...state, error: true, error_message: action.error_message};
       return newState
     case FETCH_HASHTAGS_SUCCESS:
-      newState = {...state, user: {...state.user, lat: action.lat, lng: action.lng, address: action.address, description: action.description, pictures: [...action.pictures], hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
+      newState = {...state, complete: true, user: {...state.user, lat: action.lat, lng: action.lng, address: action.address, description: action.description, pictures: [...action.pictures], hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
       return newState;
     case FETCH_HASHTAGS_FAILURE:
       console.log('ERROR');

@@ -128,7 +128,7 @@ app.get('/setup', async function () {
   var textQuery = "DROP TABLE IF EXISTS users";
   await psql.query(textQuery);
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, uuid TEXT, address TEXT, description TEXT, age INTEGER DEFAULT 684430845, gender TEXT, lat TEXT, lng TEXT, created_at TIMESTAMP DEFAULT now())";
+  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, uuid TEXT, address TEXT, description TEXT, age INTEGER DEFAULT 684367200, gender TEXT, lat TEXT, lng TEXT, created_at TIMESTAMP DEFAULT now())";
   await psql.query(textQuery);
 
   var textQuery = "INSERT INTO USERS (email, first_name, last_name, password) VALUES ('diwadoo', 'diwadoo', 'diwadoo', 'diwadoo')";
@@ -151,4 +151,11 @@ app.get('/setup', async function () {
 
   var textQuery = "COPY users(email, first_name, last_name, password, uuid, gender, description, address, lat, lng) from '/home/wadii/Desktop/matcha/userscleaned.csv' delimiter ',';"
   await psql.query(textQuery);
+
+  var textQuery = "copy hashtags(uuid, content) from '/home/wadii/Desktop/matcha/hashtags.csv' delimiter ','"
+  await psql.query(textQuery);
+
+//  copy pictures(author_uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
+//copy pictures(uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
+
 })

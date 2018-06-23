@@ -14,8 +14,10 @@ import { Container, Grid } from 'semantic-ui-react';
 
 class Profile extends Component {
   componentWillMount() {
-    if (this.props.appUser.hashtags && !this.props.appUser.hashtags[0])
+    if (!this.props.complete) {
+      console.log('firing');
       this.props.actions.fetchHashtags(this.props.userIn.uuid);
+    }
     if (!this.props.appUser.isFilled)
       this.props.actions.copyUser(this.props.userIn);
   }
@@ -88,7 +90,8 @@ function mapStateToProps(state) {
     userIn: state.logSign.user,
     menu: state.app.menu,
     appUser: state.app.user,
-    infoBlock: state.app.infoBlock
+    infoBlock: state.app.infoBlock,
+    complete: state.app.complete
   };
 }
 
