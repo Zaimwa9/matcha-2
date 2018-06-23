@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Image, Icon, Item } from 'semantic-ui-react';
+import { Grid, Item } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
@@ -25,6 +25,10 @@ class PictureCard extends Component {
         </Item.Group>
       </Grid.Column>
     )
+  }
+
+  static propTypes = {
+    deletePicture: PropTypes.func.isRequired
   }
 }
 

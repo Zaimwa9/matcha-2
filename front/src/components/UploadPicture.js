@@ -29,6 +29,10 @@ class UploadPicture extends Component {
       </Grid.Column>
     )
   }
+
+  static propTypes = {
+    postPictureUpload: PropTypes.func.isRequired
+  }
 }
 
 export default UploadPicture;

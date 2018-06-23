@@ -46,7 +46,7 @@ const initialState = {
     activeItem: '',
   },
   infoBlock: {
-    updateMode: false,
+    updateMode: true,
   },
   pictureBlock: {
     manageMode: true,
@@ -107,9 +107,6 @@ export default function appRed(state = initialState, action) {
     case DELETE_HASHTAG_SUCCESS:
       newState = {...state, user: {...state.user, hashtags: [...action.hashtags]}};
       return newState;
-    case DELETE_HASHTAG_FAILURE:
-      newState = {...state, error: true, error_message: action.error_message};
-      return newState
 
     case USER_UPDATE_REQUEST:
       newState = {...state, requesting: true, error: false, error_message: ''};

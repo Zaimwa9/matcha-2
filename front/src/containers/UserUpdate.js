@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import Rating from "react-rating";
 import TagCloud from "../components/TagCloud";
 import DatePicker from 'react-datepicker';
 import {
@@ -11,7 +10,6 @@ import {
   Input,
   Item,
   Divider,
-  Popup,
   Icon,
   Select,
   Modal,
@@ -65,8 +63,6 @@ class UserUpdate extends Component {
     ]
 
     const hashtags = (this.props.appUser.hashtags ? this.props.appUser.hashtags : [])
-    const popularity = 74;
-    const rating = Math.round((popularity / 100) * 5 * 2) / 2;
 
     return (
       <Segment textAlign="center">
@@ -150,6 +146,7 @@ class UserUpdate extends Component {
                   />
                 </Form.Field>
               </Form.Group>
+
               <Modal trigger={<p>Modify Password</p>} basic size='small' closeIcon>
                 <Modal.Header>Modify Password</Modal.Header>
                 <Segment>
@@ -174,6 +171,7 @@ class UserUpdate extends Component {
                 </Modal.Content>
                 </Segment>
               </Modal>
+
               <Button>
                 Save
               </Button>

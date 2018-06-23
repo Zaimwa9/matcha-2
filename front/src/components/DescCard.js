@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Segment, Button, Header, Form, TextArea, Container, Item, Icon } from 'semantic-ui-react';
+import { Segment, Button, Form, TextArea, Container, Item, Icon } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
@@ -66,6 +66,12 @@ class DescCard extends Component {
         {this.renderView()}
       </Segment>
     )
+  }
+
+  static propTypes = {
+    setEditingMode: PropTypes.func.isRequired,
+    updateUserField: PropTypes.func.isRequired,
+    postDescription: PropTypes.func.isRequired
   }
 }
 

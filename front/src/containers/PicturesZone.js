@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Segment, Item, Image, Icon } from 'semantic-ui-react';
+import { Grid, Segment, Item, Icon } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
 
@@ -49,6 +49,10 @@ class PicturesZone extends Component {
         </Grid>
       </Segment>
     )
+  }
+
+  static propTypes = {
+    pictureManageMode: PropTypes.func.isRequired
   }
 }
 

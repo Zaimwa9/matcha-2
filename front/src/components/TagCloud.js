@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
 
-import { Item, Icon } from 'semantic-ui-react';
+import { Item } from 'semantic-ui-react';
 
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-
-const DeleteIcon = () => {
-  return (
-    <Icon
-      style={{paddingLeft:'1em'}}
-      size='small'
-      name='delete'
-      color='black'
-      circular
-    />
-  )
-}
 
 class TagCloud extends Component {
   handleClick = (key) => {
