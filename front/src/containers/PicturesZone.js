@@ -13,7 +13,7 @@ class PicturesZone extends Component {
   }
 
   render() {
-    const pictures = (this.props.appUser.pictures ? this.props.appUser.pictures : []);
+    var pictures = (this.props.appUser.pictures ? this.props.appUser.pictures : []);
 
     return (
       <Segment>
@@ -23,7 +23,7 @@ class PicturesZone extends Component {
               <Item.Header as='h2'>Pictures</Item.Header>
                 <Icon
                   className='actionIcon'
-                  name='edit'
+                  name={this.props.pictureBlock.manageMode ? "cancel" : "edit"}
                   color='black'
                   style={{float: 'right'}}
                   onClick={this.handleManageMode}

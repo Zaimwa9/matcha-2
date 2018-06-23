@@ -71,7 +71,7 @@ export default function appRed(state = initialState, action) {
 
   switch (action.type) {
     case RESET_UPDATE:
-      newState = {...state, user: {...state.witness}};
+      newState = {...state, user: {...state.witness, description: state.user.description, pictures: [...state.user.pictures]}};
       return newState;
 
     case SUBMIT_PWD_FAILURE:

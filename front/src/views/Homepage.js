@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions/appActions';
+
 import AppHeader from '../components/AppHeader';
+import BrowsePeople from '../containers/BrowsePeople';
+import { Carousel } from 'react-responsive-carousel';
+import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
 
 class Homepage extends Component {
   componentWillMount() {
@@ -13,11 +17,29 @@ class Homepage extends Component {
 
   render() {
     return (
-      <AppHeader
-        setActiveItem={this.props.actions.setActiveItem}
-        logout={this.props.actions.logout}
-        {...this.props}
-      />
+      <Container fluid>
+        <AppHeader
+          setActiveItem={this.props.actions.setActiveItem}
+          logout={this.props.actions.logout}
+          {...this.props}
+        />
+        <Container fluid>
+        <Segment>
+            <Grid.Row>
+              <Icon
+                name='venus mars'
+                size='big'
+              />
+              <Icon.Group size='big'>
+                <Icon name='chat' />
+                <Icon corner name='mail' />
+              </Icon.Group>
+            </Grid.Row>
+            <Divider />
+            <BrowsePeople />
+          </Segment>
+        </Container>
+      </Container>
     )
   }
 
