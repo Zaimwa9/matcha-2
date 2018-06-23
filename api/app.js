@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const graphqlHTTP = require('express-graphql');
 
-const { GraphQLSchema } = require('graphql');
+const { GraphQLSchema, execute, subscribe } = require('graphql');
 const userType = require('./defTypes/userType');
 const mutationType = require('./mutations/mutation');
 const queryType = require('./queries/query.js');
@@ -17,6 +17,12 @@ var path = require('path');
 const psql = require('./db/dbconnect');
 
 const jwt = require('jsonwebtoken');
+const {createServer} = require('http');
+
+const expressPlayground = require('graphql-playground-middleware-express');
+const subscriptionType = require('./mutations/subscription');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
+const {graphiqlExpress, graphqlExpress} = require('graphql-server-express')
 
 app.get('/test', (req, res) => {
   console.log('received request on test');
@@ -25,9 +31,42 @@ app.get('/test', (req, res) => {
 app.use(cors());
 
 app.use(express.static('public'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 // const schema = require('./Graphql/Schema')
 
-const schema = new GraphQLSchema({query: queryType, mutation: mutationType})
+const schema = new GraphQLSchema({query: queryType, mutation: mutationType, subscription: subscriptionType})
+
+const ws = createServer(app);
+
+ws.listen(3000, () => {
+  console.log('running')
+  new SubscriptionServer({
+    execute,
+    subscribe,
+    schema: schema,
+  }, {
+    server: ws,
+    path: '/subscriptions',
+  });
+});
+
+app.use(
+  '/graphql',
+  graphqlExpress((req) => ({
+    schema
+  })
+));
+
+app.use(
+  '/graphiql',
+  graphiqlExpress({
+    endpointURL: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:3000/subscriptions`
+  })
+);
 
 const verifyToken = (token) => {
   if (!token) {
@@ -59,6 +98,7 @@ const verifyToken = (token) => {
   return user;
 }
 
+/*
 app.use('/graphql',
   // bodyParser.json(),
   // (req, res, next) => {
@@ -84,6 +124,7 @@ app.use('/graphql',
   graphiql: true,
   })
 ))
+*/
 ;
 
 app.post('/upload', upload.single('file'), (req, res) => {
@@ -119,11 +160,11 @@ app.post('/upload', upload.single('file'), (req, res) => {
     res.send('500');
   });
 })
-
+/*
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 })
-
+*/
 app.get('/setup', async function () {
   var textQuery = "DROP TABLE IF EXISTS users";
   await psql.query(textQuery);

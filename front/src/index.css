@@ -6,6 +6,7 @@ body {
 
 #root {
   height: 100%;
+  background-color: #F7F8FA;
 }
 
 .logBox {

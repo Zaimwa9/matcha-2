@@ -39,9 +39,6 @@ class UserCard extends Component {
             </Item.Content>
           </Item>
         </Item.Group>
-        <Item>
-          <Item.Image src='/annemo.jpg' centered size='small' rounded />
-        </Item>
         <Item.Group>
           <Item>
             <Item.Content verticalAlign='middle'>

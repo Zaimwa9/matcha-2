@@ -82,16 +82,7 @@ class UserUpdate extends Component {
             </Item>
           </Item.Group>
         <Form onSubmit={this.handleSubmit}>
-          <Item>
-            <Item.Image
-              src="/annemo.jpg"
-              centered
-              size="small"
-              rounded
-              style={{marginBottom: '1em'}}
-            />
-          </Item>
-              <Form.Group style={{justifyContent:'center'}}>
+          <Form.Group style={{justifyContent:'center'}}>
                 {" "}
                 <Form.Input
                   width={6}

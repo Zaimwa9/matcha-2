@@ -9,6 +9,8 @@ const uuidv4 = require('uuid/v4');
 const fs = require('fs');
 const path = require('path');
 
+const pubsub = require('./serverConfig');
+
 const {
   GraphQLInt,
   GraphQLBoolean,
@@ -131,6 +133,7 @@ var mutationType = new GraphQLObjectType({
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
+          pubsub.publish('newHash', data)
           return data;
         } catch (e) {
           return new Error('Database error: ' + e);
