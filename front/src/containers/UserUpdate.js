@@ -32,6 +32,11 @@ class UserUpdate extends Component {
     this.props.updatePwd(name, value);
   }
 
+  handleSubmitUpdatePwd = () => {
+    console.log('pwd submitted');
+    this.props.submitPwdUpdate(this.props.appUser.uuid, this.props.pwdState.oldPwd, this.props.pwdState.newPwd);
+  }
+
   handleUpdateMode = () => {
     this.props.setUpdateMode(this.props.infoBlock.updateMode);
   };
@@ -150,16 +155,16 @@ class UserUpdate extends Component {
                 <Segment>
                 <Modal.Content>
                   <Modal.Description>
-                    <Form size='small'>
+                    <Form size='small' onSubmit={this.handleSubmitUpdatePwd}>
                       <Form.Input
                         type='password'
-                        name='currPwd'
+                        name='oldPwd'
                         label='Current password'
                         onChange={this.handleUpdatePwd}
                       />
                       <Form.Input
                         type='password'
-                        name='oldPwd'
+                        name='newPwd'
                         label='New password'
                         onChange={this.handleUpdatePwd}
                       />
@@ -206,6 +211,7 @@ function mapStateToProps(state) {
   return {
     appUser: state.app.user,
     infoBlock: state.app.infoBlock,
+    pwdState: state.app.updatePwd,
   };
 }
 

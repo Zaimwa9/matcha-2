@@ -95,7 +95,6 @@ export function updatePwd(name, value) {
 export function submitUpdateUser(data) {
   return dispatch => {
     dispatch(updateUserRequest());
-    console.log(data)
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
@@ -382,7 +381,6 @@ export function deletePicture(key, pictures) {
 }
 
 export function updateDescriptionSuccess(data) {
-  console.log(data)
   return {
     description: data.description,
     type: types.UPDATE_DESCRIPTION_SUCCESS
@@ -420,11 +418,54 @@ export function postDescription(uuid, description) {
     })
     .then(result => {
       if (!result.data.errors) {
-        console.log(result);
         dispatch(updateDescriptionSuccess(result.data.data.updateDescription))
       } else {
         console.log(result.data.errors);
         dispatch(updateDescriptionFailure(result.data.errors[0]))
+      }
+    })
+  }
+}
+
+export function submitPwdSuccess(data) {
+  return {
+    type: types.SUBMIT_PWD_SUCCESS
+  }
+}
+
+export function submitPwdFailure(error) {
+  return {
+    error_message: error,
+    type: types.SUBMIT_PWD_FAILURE
+  }
+}
+
+export function submitPwdUpdate(uuid, oldPwd, newPwd) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          mutation updatePwd {
+            updatePwd(uuid: "${uuid}", oldPwd: "${oldPwd}", newPwd: "${newPwd}") {
+            	uuid
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(submitPwdSuccess(result.data.data.updatePwd))
+      } else {
+        console.log(result.data.errors);
+        dispatch(submitPwdFailure(result.data.errors[0]))
       }
     })
   }

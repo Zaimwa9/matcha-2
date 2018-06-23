@@ -23,7 +23,9 @@ import {
   SET_EDITING_MODE,
   UPDATE_DESCRIPTION_FAILURE,
   UPDATE_DESCRIPTION_SUCCESS,
-  UPDATE_PWD
+  UPDATE_PWD,
+  SUBMIT_PWD_FAILURE,
+  SUBMIT_PWD_SUCCESS
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -56,8 +58,8 @@ const initialState = {
   error: false,
   error_message: '',
   updatePwd: {
-    currPwd: '',
     oldPwd: '',
+    newPwd: '',
   }
 }
 
@@ -67,6 +69,14 @@ export default function appRed(state = initialState, action) {
   switch (action.type) {
     case RESET_UPDATE:
       newState = {...state, user: {...state.witness}};
+      return newState;
+
+    case SUBMIT_PWD_FAILURE:
+      newState = {...state, error: true, error_message: action.error_message};
+      return newState;
+    case SUBMIT_PWD_SUCCESS:
+      console.log('success update');
+      newState = {...state};
       return newState;
 
     case UPLOAD_PICTURE_SUCCESS:
@@ -136,7 +146,6 @@ export default function appRed(state = initialState, action) {
       return newState;
     case UPDATE_PWD:
       newState = {...state, updatePwd: {...state.updatePwd, ...action.updatePwd}};
-      console.log(newState);
       return newState;
     case LOGOUT:
       newState = initialState;
