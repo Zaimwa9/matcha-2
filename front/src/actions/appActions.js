@@ -478,3 +478,69 @@ export function submitPwdUpdate(uuid, oldPwd, newPwd) {
     })
   }
 }
+
+export function fetchUsersRequest() {
+  return {
+    type: types.FETCH_USERS_REQUEST
+  }
+}
+
+export function fetchUsersSuccess(profiles) {
+  return {
+    profiles: profiles,
+    type: types.FETCH_USERS_SUCCESS
+  }
+}
+
+export function fetchUsersFailure(error) {
+  return {
+    error_message: error,
+    type: types.FETCH_USERS_FAILURE
+  }
+}
+
+export function fetchFeedUsers(uuid) {
+  return dispatch => {
+    dispatch(fetchUsersRequest());
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          query feedUsers {
+            feedUsers (uuid: "${uuid}") {
+              id,
+              distance,
+              first_name,
+              last_name,
+              gender,
+              age,
+              address,
+              description,
+              hashtags {
+                content
+              },
+              pictures {
+                id,
+                path
+              }
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(fetchUsersSuccess(result.data.data.feedUsers))
+      } else {
+        console.log(result.data.errors);
+        dispatch(fetchUsersFailure(result.data.errors[0]))
+      }
+    })
+  }
+}

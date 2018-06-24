@@ -25,7 +25,10 @@ import {
   UPDATE_DESCRIPTION_SUCCESS,
   UPDATE_PWD,
   SUBMIT_PWD_FAILURE,
-  SUBMIT_PWD_SUCCESS
+  SUBMIT_PWD_SUCCESS,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_REQUEST,
+  FETCH_USERS_FAILURE
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -65,6 +68,11 @@ const initialState = {
     newPwd: '',
   },
   complete: false,
+  feed: {
+    loading: false,
+    fetched: false,
+    profiles: []
+  }
 }
 
 export default function appRed(state = initialState, action) {
@@ -75,6 +83,15 @@ export default function appRed(state = initialState, action) {
       newState = {...state, user: {...state.witness, address: state.user.address, description: state.user.description, pictures: [...state.user.pictures]}};
       return newState;
 
+    case FETCH_USERS_REQUEST:
+      newState = {...state, feed: { ...state.feed, loading: true }}
+      return newState;
+    case FETCH_USERS_SUCCESS:
+      newState = {...state, feed: {profiles: action.profiles, fetched: true, loading: false}}
+      return newState;
+    case FETCH_USERS_FAILURE:
+      newState = {...state, error: true, error_message: action.error_message};
+      return newState;
     case SUBMIT_PWD_FAILURE:
       newState = {...state, error: true, error_message: action.error_message};
       return newState;

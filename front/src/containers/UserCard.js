@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 class UserCard extends Component {
-
   handleUpdateMode = () => {
     this.props.setUpdateMode(this.props.infoBlock.updateMode);
   }

@@ -5,15 +5,16 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions/appActions';
 
 import AppHeader from '../components/AppHeader';
-import BrowsePeople from '../containers/BrowsePeople';
-import { Carousel } from 'react-responsive-carousel';
+
 import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
 import NewHashtag from '../components/NewHashtag';
+import Feed from '../containers/Feed';
 
 class Homepage extends Component {
   componentWillMount() {
-    if (!this.props.appUser.isFilled)
+    if (!this.props.appUser.isFilled) {
       this.props.actions.copyUser(this.props.userIn);
+    }
   }
 
   render() {
@@ -37,6 +38,10 @@ class Homepage extends Component {
               </Icon.Group>
             </Grid.Row>
             <Divider />
+            <Feed
+              fetchFeedUsers={this.props.actions.fetchFeedUsers}
+              fetched={this.props.feed ? this.props.feed.fetched : false}
+            />
             <NewHashtag />
           </Segment>
         </Container>
@@ -53,7 +58,8 @@ function mapStateToProps(state) {
   return {
     userIn: state.logSign.user,
     menu: state.app.menu,
-    appUser: state.app.user
+    appUser: state.app.user,
+    feed: state.feed
   };
 }
 

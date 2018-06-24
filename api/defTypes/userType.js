@@ -37,6 +37,8 @@ var userType = new GraphQLObjectType({
     lng: {type: GraphQLString },
     created_at: { type: GraphQLString },
     description: { type: GraphQLString },
+    counter: { type: GraphQLInt },
+    distance: { type: GraphQLString },
     hashtags: {
       type: new GraphQLList(hashtagType),
       resolve: async (User) => {

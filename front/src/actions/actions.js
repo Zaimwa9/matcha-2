@@ -187,7 +187,7 @@ export function isAuth() {
         }
       })
       .then(result => {
-        if (result.data.data.checkToken.uuid) {
+        if (result.data.data.checkToken && result.data.data.checkToken.uuid) {
           dispatch(checkAuthTrue(result.data.data.checkToken));
         } else {
           dispatch(checkAuthFalse())

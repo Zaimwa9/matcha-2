@@ -25,7 +25,7 @@ class DescCard extends Component {
           <TextArea
             name='description'
             maxLength="400"
-            value={this.props.appUser.description}
+            value={this.props.appUser.description ? this.props.appUser.description : ''}
             onChange={this.handleChange}
             autoHeight
             placeholder='Tell us more about yourself (400 characters max)'
@@ -39,7 +39,7 @@ class DescCard extends Component {
       return (
         <Container text>
           <p>
-            {this.props.appUser.description}
+            {this.props.appUser.description ? this.props.appUser.description : ''}
           </p>
         </Container>
       )
