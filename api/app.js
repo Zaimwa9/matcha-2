@@ -199,4 +199,17 @@ app.get('/setup', async function () {
 //  copy pictures(author_uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
 //copy pictures(uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
 
+/*
+with myUser as (
+  select * from users where uuid='5'
+)
+  select u.uuid, ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 as distance from users as u left join
+  myUser as mu
+  on ST_DISTANCE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 1000
+
+with myUser as ( select * from users where uuid='5' ) select u.uuid, ST_DISTANCE(ST_TRANSFORM(ST_POINT(u.lng::float, u.lat::float), 26986), ST_TRANSFORM(ST_POINT(mu.lng::float, mu.lat::float), 26986)) as distance from users as u left join myUser as mu on ST_DISTANCE(ST_TRANSFORM(ST_POINT(u.lng::float, u.lat::float), 26986), ST_TRANSFORM(ST_POINT(mu.lng::float, mu.lat::float),26986)) < 1000
+
+*/
+
+
 })

@@ -56,6 +56,7 @@ var queryType = new GraphQLObjectType({
         }
       }
     },
+
     users: {
       type: new GraphQLList(userType),
       resolve: async function () {
@@ -66,6 +67,13 @@ var queryType = new GraphQLObjectType({
         } catch (e) {
           return new Error('Database error: ' + e);
         }
+      }
+    },
+
+    feedUsers: {
+      type: new GraphQLList(userType),
+      resolve: async function () {
+        textQuery = ``
       }
     }
   }
