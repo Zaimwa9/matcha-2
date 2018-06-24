@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { Grid } from 'semantic-ui-react';
@@ -16,17 +17,19 @@ class Feed extends Component {
   }
 
   render() {
+
+    const profiles = (this.props.feed) ? this.props.feed.profiles : [];
+    const cards =
+      _.map(profiles, profile => {
+        return (
+          <Grid.Column key={profile.id}>
+            <FeedCard profile={profile} />
+          </Grid.Column>
+        )
+      })
     return (
-      <Grid columns='equal'>
-        <Grid.Column>
-          <FeedCard />
-        </Grid.Column>
-        <Grid.Column>
-          <FeedCard />
-        </Grid.Column>
-        <Grid.Column>
-          <FeedCard />
-        </Grid.Column>
+      <Grid columns={2} stackable>
+        {cards}
       </Grid>
     )
   }
@@ -40,7 +43,7 @@ function mapStateToProps(state) {
   return {
     userIn: state.logSign.user,
     appUser: state.app.user,
-    feed: state.feed
+    feed: state.app.feed
   };
 }
 

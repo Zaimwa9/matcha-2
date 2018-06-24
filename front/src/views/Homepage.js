@@ -42,7 +42,6 @@ class Homepage extends Component {
               fetchFeedUsers={this.props.actions.fetchFeedUsers}
               fetched={this.props.feed ? this.props.feed.fetched : false}
             />
-            <NewHashtag />
           </Segment>
         </Container>
       </Container>
@@ -59,7 +58,7 @@ function mapStateToProps(state) {
     userIn: state.logSign.user,
     menu: state.app.menu,
     appUser: state.app.user,
-    feed: state.feed
+    feed: state.app.feed
   };
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { Segment, Item, Divider, Popup, Icon } from 'semantic-ui-react';
+import { Segment, Item } from 'semantic-ui-react';
 
 class FeedCard extends Component {
   render() {
@@ -8,7 +9,7 @@ class FeedCard extends Component {
       <Segment>
         <Item.Group>
           <Item>
-            <Item.Image size='tiny' src='/annemo.jpg' />
+            <Item.Image size='small' src='/annemo.jpg' />
             <Item.Content>
               <Item.Header>Header</Item.Header>
               <Item.Meta>Popularity</Item.Meta>
@@ -21,6 +22,10 @@ class FeedCard extends Component {
         </Item.Group>
       </Segment>
     )
+  }
+
+  static propTypes = {
+    profile: PropTypes.object.isRequired
   }
 }
 
