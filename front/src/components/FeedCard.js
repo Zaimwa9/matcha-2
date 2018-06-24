@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
-import { Segment, Item, Modal } from 'semantic-ui-react';
+import { Segment, Item, Modal, Button } from 'semantic-ui-react';
 import BrowsePeople from '../containers/BrowsePeople';
 
 class FeedCard extends Component {
@@ -38,10 +38,20 @@ class FeedCard extends Component {
                 dimmer='blurring'
                 closeOnRootNodeClick={false}
                 closeIcon
+                centered={false}
               >
                 <Modal.Content>
-                  <BrowsePeople />
+                  <BrowsePeople profile={this.props.profile ? this.props.profile : ''}/>
                 </Modal.Content>
+
+                <Modal.Actions>
+                  <Button color='green' inverted size='large'>
+                    Like !
+                  </Button>
+                  <Button color='red' inverted size='large'>
+                    Block
+                  </Button>
+                </Modal.Actions>
               </Modal>
             </Item.Content>
           </Item>
