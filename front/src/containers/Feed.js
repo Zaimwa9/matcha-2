@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { Grid } from 'semantic-ui-react';
+import { Grid, Modal } from 'semantic-ui-react';
 
 import FeedCard from '../components/FeedCard';
 

@@ -1,22 +1,48 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Segment, Item } from 'semantic-ui-react';
+import _ from 'lodash';
+import { Segment, Item, Modal } from 'semantic-ui-react';
+import BrowsePeople from '../containers/BrowsePeople';
 
 class FeedCard extends Component {
+
   render() {
+    const hashtags =
+    this.props.profile ?
+    _.map(this.props.profile.hashtags, hash => {
+      return (` #${hash.content} `)
+    })
+    : '';
     return (
       <Segment>
         <Item.Group>
           <Item>
             <Item.Image size='small' src='/annemo.jpg' />
             <Item.Content>
-              <Item.Header>Header</Item.Header>
+              <Item.Header>{`${this.props.profile ? this.props.profile.first_name.substr(0, 1).toUpperCase() : ''}${this.props.profile ? this.props.profile.first_name.substr(1) : ''}`}</Item.Header>
+              <Item.Description>
+                {`${this.props.profile.gender.substr(0, 1).toUpperCase()}`}
+              </Item.Description>
               <Item.Meta>Popularity</Item.Meta>
               <Item.Description>
-                Hashtags viendront ici
+                <strong>{hashtags}</strong>
               </Item.Description>
-              <Item.Extra>Additional Details</Item.Extra>
+              <Item.Description>
+                {`${this.props.profile.description ? this.props.profile.description.substr(0, 50) + '...' : ''}`}
+              </Item.Description>
+
+              <Modal
+                trigger={<Item.Extra><p>See More</p></Item.Extra>}
+                size='large'
+                dimmer='blurring'
+                closeOnRootNodeClick={false}
+                closeIcon
+              >
+                <Modal.Content>
+                  <BrowsePeople />
+                </Modal.Content>
+              </Modal>
             </Item.Content>
           </Item>
         </Item.Group>
