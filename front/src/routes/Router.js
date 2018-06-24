@@ -18,7 +18,7 @@ class Router extends Component {
     this.props.actions.isAuth();
   }
 
-  renderRouter = () => {
+  renderRouter = (props) => {
     if (this.props.user.isAuth === false) {
       return (
         <Switch>
@@ -32,7 +32,7 @@ class Router extends Component {
     } else {
       return (
         <Switch>
-          <Route exact path='/' component={Homepage} location={this.props.location} />
+          <Route exact path='/' component={Homepage} location={this.props.location} client={props.client} />
           <Route exact path='/account' component={Profile} location={this.props.location} />
           <RenderPublic exact path='/signup' component={LogBox} location={this.props.location} />
           <RenderPublic exact path='/login' component={LogBox} location={this.props.location} />
@@ -46,7 +46,7 @@ class Router extends Component {
     if (this.props.checked === true) {
       return (
         <BrowserRouter>
-          {this.renderRouter()}
+          {this.renderRouter(this.props)}
         </BrowserRouter>
       )
     } else if (this.props.checked === false) {

@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "apollo-cache-inmemory": "^1.2.5",
+    "apollo-client": "^2.3.5",
+    "apollo-link-http": "^1.5.4",
+    "apollo-link-ws": "^1.0.8",
     "axios": "^0.18.0",
     "blob": "^0.0.4",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "react": "^16.4.0",
+    "react-apollo": "^2.1.6",
     "react-datepicker": "^1.5.0",
     "react-dom": "^16.4.0",
     "react-dropzone": "^4.2.11",
@@ -24,7 +31,8 @@
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.81.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "subscriptions-transport-ws": "^0.9.11"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",

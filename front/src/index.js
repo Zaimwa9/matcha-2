@@ -11,6 +11,8 @@ import rootReducer from './reducers/rootReducer';
 import { createStore, applyMiddleware } from 'redux';
 
 import { Provider } from 'react-redux';
+import client from './ApolloClient';
+import gql from "graphql-tag";
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -22,8 +24,8 @@ const store = createStore(
 
 const Root = () => {
   return (
-    <Provider store={store}>
-      <Router />
+    <Provider store={store} client={client}>
+      <Router client={client}/>
     </Provider>
   )
 }

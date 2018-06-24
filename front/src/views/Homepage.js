@@ -8,6 +8,7 @@ import AppHeader from '../components/AppHeader';
 import BrowsePeople from '../containers/BrowsePeople';
 import { Carousel } from 'react-responsive-carousel';
 import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
+import NewHashtag from '../components/NewHashtag';
 
 class Homepage extends Component {
   componentWillMount() {
@@ -36,7 +37,7 @@ class Homepage extends Component {
               </Icon.Group>
             </Grid.Row>
             <Divider />
-            <BrowsePeople />
+            <NewHashtag />
           </Segment>
         </Container>
       </Container>
