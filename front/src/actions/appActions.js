@@ -578,3 +578,36 @@ export function newVisit(visited_uuid) {
     })
   }
 }
+
+export function reportUser(uuid) {
+  return (dispatch, getState) => {
+    const reporter_uuid = getState().app.user.uuid;
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          mutation reportUser {
+            reportUser(uuid: "${uuid}", reporter_uuid: "${reporter_uuid}") {
+              uuid,
+              reporter_uuid,
+              reported_at
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        console.log('reported')
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}

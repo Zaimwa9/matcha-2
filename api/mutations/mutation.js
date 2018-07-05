@@ -312,7 +312,7 @@ var mutationType = new GraphQLObjectType({
                       ) VALUES (
                         '${args.uuid}',
                         '${args.reporter_uuid}'
-                      ) ON CONFLICT (visitor_uuid, visited_uuid)
+                      ) ON CONFLICT (uuid, reporter_uuid)
                       DO
                         UPDATE
                           SET reported_at=current_timestamp

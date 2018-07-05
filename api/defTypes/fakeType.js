@@ -15,7 +15,8 @@ var fakeType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLInt },
     uuid: { type: GraphQLString },
-    reported_count: { type: GraphQLInt },
+    reporter_uuid: { type: GraphQLString },
+    reported_at: { type: GraphQLString },
   }
 })
 

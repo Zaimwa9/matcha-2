@@ -26,6 +26,7 @@ class Feed extends Component {
             <FeedCard
               profile={profile}
               newVisit={this.props.newVisit}
+              reportUser={this.props.reportUser}
             />
           </Grid.Column>
         )

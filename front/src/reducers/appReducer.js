@@ -29,7 +29,8 @@ import {
   FETCH_USERS_SUCCESS,
   FETCH_USERS_REQUEST,
   FETCH_USERS_FAILURE,
-  NEW_VISIT
+  NEW_VISIT,
+  REPORT_USER,
 } from '../actions/appActionTypes';
 
 const initialState = {

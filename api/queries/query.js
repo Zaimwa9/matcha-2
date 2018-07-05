@@ -94,7 +94,7 @@ var queryType = new GraphQLObjectType({
         SELECT md.*, ch.counter FROM matchesbyDistance AS md
         LEFT JOIN count_hashtags AS ch ON md.uuid=ch.uuid
         WHERE md.uuid <> '${args.uuid}'
-        ORDER by counter desc`
+        ORDER by counter DESC`
         try {
           const data = await psql.query(textQuery);
           return data.rows;

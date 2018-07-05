@@ -7,8 +7,12 @@ import BrowsePeople from '../containers/BrowsePeople';
 
 class FeedCard extends Component {
 
-  handleModalClick = (e) => {
+  handleModalClick = () => {
     this.props.newVisit(this.props.profile.uuid)
+  }
+
+  handleReportUser = () => {
+    this.props.reportUser(this.props.profile.uuid)
   }
 
   render() {
@@ -55,6 +59,9 @@ class FeedCard extends Component {
                   </Button>
                   <Button color='red' inverted size='large'>
                     Block
+                  </Button>
+                  <Button onClick={this.handleReportUser} color='red' inverted size='small'>
+                    Report
                   </Button>
                 </Modal.Actions>
               </Modal>
