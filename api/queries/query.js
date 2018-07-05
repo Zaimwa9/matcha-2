@@ -77,23 +77,24 @@ var queryType = new GraphQLObjectType({
       },
       resolve: async function (root, args) {
         textQuery = `
-        with myUser as (
-          select * from users where uuid='${args.uuid}'
+        with myUser AS (
+          SELECT * FROM users WHERE uuid='${args.uuid}'
         ),
-        matchesbyDistance as (
-        select mu.uuid as user_uuid, u.*, ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 as distance
-          from users as u
-          left join myUser as mu
-          on ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 200
-          where ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 200
-          order by ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) ASC
+        matchesbyDistance AS (
+        SELECT mu.uuid AS user_uuid, u.*, ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 AS distance
+          FROM users AS u
+          LEFT JOIN myUser AS mu
+          ON ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 200
+          WHERE ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 200
+          ORDER by ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) ASC
         ),
-        count_hashtags as (
-        select h1.uuid, count(*) as counter from hashtags as h1 left join hashtags as h2 on h1.uuid='${args.uuid}' and h1.content = h2.content and h1.uuid <> h2.uuid where h2.uuid is not null group by 1
+        count_hashtags AS (
+        SELECT h1.uuid, count(*) AS counter FROM hashtags AS h1 LEFT JOIN hashtags AS h2 ON h1.uuid='${args.uuid}' and h1.content = h2.content and h1.uuid <> h2.uuid WHERE h2.uuid is not null group by 1
         )
-        select md.*, ch.counter from matchesbyDistance as md
-        left join count_hashtags as ch on md.uuid=ch.uuid
-        order by counter desc`
+        SELECT md.*, ch.counter FROM matchesbyDistance AS md
+        LEFT JOIN count_hashtags AS ch ON md.uuid=ch.uuid
+        WHERE md.uuid <> '${args.uuid}'
+        ORDER by counter desc`
         try {
           const data = await psql.query(textQuery);
           return data.rows;

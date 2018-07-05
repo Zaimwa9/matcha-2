@@ -193,9 +193,12 @@ app.get('/setup', async function () {
   var textQuery = "COPY users(email, first_name, last_name, password, uuid, gender, description, address, lat, lng) from '/home/wadii/Desktop/matcha/userscleaned.csv' delimiter ',';"
   await psql.query(textQuery);
 
-  var textQuery = "copy hashtags(uuid, content) from '/home/wadii/Desktop/matcha/hashtags.csv' delimiter ','"
+  var textQuery = "COPY hashtags(uuid, content) from '/home/wadii/Desktop/matcha/hashtags.csv' delimiter ','"
   await psql.query(textQuery);
 
+  var textQuery = "CREATE TABLE IF NOT EXISTS Visits(id SERIAL PRIMARY KEY, visitor_uuid TEXT NOT NULL, visited_uuid TEXT NOT NULL, visited_at TIMESTAMP DEFAULT now())"
+  await psql.query(textQuery);
+})
 //  copy pictures(author_uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
 //copy pictures(uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
 
@@ -221,6 +224,3 @@ select md.*, ch.counter from matchesbyDistance as md
 left join count_hashtags as ch on md.uuid=ch.uuid
 order by counter desc
 */
-
-
-})

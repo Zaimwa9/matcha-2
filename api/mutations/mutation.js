@@ -1,6 +1,7 @@
 const hashtagType = require('../defTypes/hashtagType');
 const userType = require('../defTypes/userType');
 const pictureType = require('../defTypes/pictureType');
+const visitType = require('../defTypes/visitType');
 
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
@@ -63,7 +64,13 @@ var mutationType = new GraphQLObjectType({
         password: { type: GraphQLString }
       },
       resolve: async function(root, args) {
-        textQuery = `SELECT * FROM users WHERE email='${args.email}' AND password='${args.password}'`
+        textQuery = `
+                      SELECT * FROM users
+                      WHERE
+                      email='${args.email}'
+                      AND
+                      password='${args.password}'
+                      `;
         try {
           var data = await psql.query(textQuery);
           if (data.rowCount === 0) {
@@ -127,9 +134,15 @@ var mutationType = new GraphQLObjectType({
         content: {type: GraphQLString}
       },
       resolve: async function(root, args) {
-        textQuery = `INSERT INTO hashtags(
-                    uuid, content
-                    ) VALUES ('${args.uuid}', '${args.content}') RETURNING *`;
+        textQuery = `
+                      INSERT INTO hashtags(
+                      uuid,
+                      content
+                      ) VALUES (
+                      '${args.uuid}',
+                      '${args.content}'
+                      ) RETURNING *
+                    `;
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
@@ -147,7 +160,11 @@ var mutationType = new GraphQLObjectType({
         id: {type: GraphQLInt}
       },
       resolve: async function(root, args) {
-        textQuery = `DELETE FROM hashtags WHERE id='${args.id}' RETURNING *`;
+        textQuery = `
+                      DELETE FROM hashtags
+                      WHERE id='${args.id}'
+                      RETURNING *
+                    `;
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
@@ -164,7 +181,11 @@ var mutationType = new GraphQLObjectType({
         id: {type: GraphQLInt}
       },
       resolve: async function(root, args) {
-        textQuery = `DELETE FROM pictures WHERE id='${args.id}' RETURNING *`;
+        textQuery = `
+                      DELETE FROM pictures
+                      WHERE id='${args.id}'
+                      RETURNING *
+                    `;
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
@@ -238,7 +259,39 @@ var mutationType = new GraphQLObjectType({
           return new Error('Error: ' + e);
         }
       }
-    }
+    },
+
+    newVisit: {
+      type: visitType,
+      args: {
+        visitor_uuid: {type: GraphQLString},
+        visited_uuid: {type: GraphQLString},
+      },
+      resolve: async function(root, args) {
+        textQuery = `
+                      INSERT INTO visits (
+                        visitor_uuid,
+                        visited_uuid
+                      ) VALUES (
+                        '${args.visitor_uuid}',
+                        '${args.visited_uuid}'
+                      )
+                      RETURNING *
+                    `;
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('Database Error');
+          } else {
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          console.log(e);
+          return new Error('Error: ' + e);
+        }
+      }
+    },
   }
 })
 

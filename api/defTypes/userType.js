@@ -13,6 +13,7 @@ const {
 const commentType = require('./commentType');
 const hashtagType = require('./hashtagType');
 const pictureType = require('./pictureType');
+const visitType = require('./visitType');
 
 const psql = require('../db/dbconnect.js');
 
@@ -62,7 +63,19 @@ var userType = new GraphQLObjectType({
           return new Error('Database error: ' + e)
         }
       }
-    }
+    },
+    visits: {
+      type: new GraphQLList(visitType),
+      resolve: async (User) => {
+        textQuery = `SELECT * FROM visits where visited_uuid='${User.uuid}' ORDER BY visited_at DESC LIMIT 15`
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows;
+        } catch (e) {
+          return new Error('Database error: ' + e)
+        }
+      }
+    },
 
     // messages: {
     //   type: new GraphQLList(commentType),

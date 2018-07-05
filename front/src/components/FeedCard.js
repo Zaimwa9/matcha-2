@@ -7,6 +7,10 @@ import BrowsePeople from '../containers/BrowsePeople';
 
 class FeedCard extends Component {
 
+  handleModalClick = (e) => {
+    console.log(e);
+  }
+
   render() {
     const hashtags =
     this.props.profile ?
@@ -14,6 +18,7 @@ class FeedCard extends Component {
       return (` #${hash.content} `)
     })
     : '';
+
     return (
       <Segment>
         <Item.Group>
@@ -33,7 +38,7 @@ class FeedCard extends Component {
               </Item.Description>
 
               <Modal
-                trigger={<Item.Extra><p>See More</p></Item.Extra>}
+                trigger={<Item.Extra><p onClick={this.handleModalClick}>See More</p></Item.Extra>}
                 size='large'
                 dimmer='blurring'
                 closeOnRootNodeClick={false}
