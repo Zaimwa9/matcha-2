@@ -76,6 +76,18 @@ var userType = new GraphQLObjectType({
         }
       }
     },
+    fakereports: {
+      type: GraphQLInt,
+      resolve: async (User) => {
+        textQuery = `SELECT COUNT(*) AS reports FROM fakes where uuid='${User.uuid}'`
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows[0].reports;
+        } catch (e) {
+          return new Error('Database error: ' + e)
+        }
+      }
+    }
 
     // messages: {
     //   type: new GraphQLList(commentType),

@@ -2,6 +2,8 @@ const hashtagType = require('../defTypes/hashtagType');
 const userType = require('../defTypes/userType');
 const pictureType = require('../defTypes/pictureType');
 const visitType = require('../defTypes/visitType');
+const fakeType = require('../defTypes/fakeType');
+
 
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
@@ -279,6 +281,41 @@ var mutationType = new GraphQLObjectType({
                       DO
                         UPDATE
                           SET visited_at=current_timestamp
+                      RETURNING *
+                    `;
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('Database Error');
+          } else {
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          console.log(e);
+          return new Error('Error: ' + e);
+        }
+      }
+    },
+
+    reportUser: {
+      type: fakeType,
+      args: {
+        uuid: {type: GraphQLString},
+        reporter_uuid: {type: GraphQLString},
+      },
+      resolve: async function(root, args) {
+        textQuery = `
+                      INSERT INTO fakes (
+                        uuid,
+                        reporter_uuid
+                      ) VALUES (
+                        '${args.uuid}',
+                        '${args.reporter_uuid}'
+                      ) ON CONFLICT (visitor_uuid, visited_uuid)
+                      DO
+                        UPDATE
+                          SET reported_at=current_timestamp
                       RETURNING *
                     `;
         try {
