@@ -3,7 +3,7 @@ const userType = require('../defTypes/userType');
 const pictureType = require('../defTypes/pictureType');
 const visitType = require('../defTypes/visitType');
 const fakeType = require('../defTypes/fakeType');
-
+const blockedType = require('../defTypes/blockedType');
 
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
@@ -316,6 +316,41 @@ var mutationType = new GraphQLObjectType({
                       DO
                         UPDATE
                           SET reported_at=current_timestamp
+                      RETURNING *
+                    `;
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('Database Error');
+          } else {
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          console.log(e);
+          return new Error('Error: ' + e);
+        }
+      }
+    },
+
+    blockUser: {
+      type: blockedType,
+      args: {
+        uuid: {type: GraphQLString},
+        blocked_uuid: {type: GraphQLString},
+      },
+      resolve: async function(root, args) {
+        textQuery = `
+                      INSERT INTO blocked (
+                        uuid,
+                        blocked_uuid
+                      ) VALUES (
+                        '${args.uuid}',
+                        '${args.blocked_uuid}'
+                      ) ON CONFLICT (uuid, blocked_uuid)
+                      DO
+                        UPDATE
+                          SET blocked_at=current_timestamp
                       RETURNING *
                     `;
         try {

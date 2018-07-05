@@ -202,6 +202,8 @@ app.get('/setup', async function () {
   var textQuery = "CREATE TABLE IF NOT EXISTS fakes(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, reporter_uuid TEXT NOT NULL, reported_at TIMESTAMP DEFAULT now(), unique(uuid, reporter_uuid))"
   await psql.query(textQuery);
 
+  var textQuery = "CREATE TABLE IF NOT EXISTS blocked(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, blocked_uuid TEXT NOT NULL, blocked_at TIMESTAMP DEFAULT now(), unique(uuid, blocked_uuid))"
+  await psql.query(textQuery);
 })
 //  copy pictures(author_uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
 //copy pictures(uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';

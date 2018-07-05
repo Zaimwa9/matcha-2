@@ -14,6 +14,7 @@ const commentType = require('./commentType');
 const hashtagType = require('./hashtagType');
 const pictureType = require('./pictureType');
 const visitType = require('./visitType');
+const blockedType = require('./blockedType');
 
 const psql = require('../db/dbconnect.js');
 
@@ -88,19 +89,6 @@ var userType = new GraphQLObjectType({
         }
       }
     }
-
-    // messages: {
-    //   type: new GraphQLList(commentType),
-    //   resolve: async (User) => {
-    //     textQuery = `SELECT * FROM messages where author=${User.id}`;
-    //     try {
-    //       const data = await psql.query(textQuery)
-    //       return data.rows;
-    //     } catch (e) {
-    //       return new Error('Database error: ' + e);
-    //     }
-    //   }
-    // },
   }
 })
 

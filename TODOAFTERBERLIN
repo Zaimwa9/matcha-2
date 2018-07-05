@@ -23,7 +23,8 @@
 10) (1h les tris + 1h le filtre, je pense que ça peut se gérer que front) Faire les tris + les filtres ("Elle devra aussi être filtrable par intervalle
 d’âge, localisation, intervalle de popularité et par tags.")
 
-11) (2h si c'est juste les boutons et requêtes + 1h en back) Faire la gestion des likes / unlikes / bloquages
+11) (4h-5h) Faire la gestion des likes / unlikes / bloquages
+11bis) METTRE UNE COULEUR POUR LES utilisateurs LIKES et bouton unlike
 
 12) (2h) Faire le tag des faux comptes (un petit schéma en base de donnée et une mutation qui ajoute un compteur et faire genre au bout de 10 le compte est suspendu)
 

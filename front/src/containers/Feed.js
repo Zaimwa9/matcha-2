@@ -18,7 +18,13 @@ class Feed extends Component {
 
   render() {
 
-    const profiles = (this.props.feed) ? this.props.feed.profiles : [];
+    const fetchedProfiles = (this.props.feed) ? this.props.feed.profiles : [];
+
+    const profiles = _.filter(fetchedProfiles, profile => {
+      // add completed profile
+      return (profile.pictures[0]);
+    })
+
     const cards =
       _.map(profiles, profile => {
         return (
