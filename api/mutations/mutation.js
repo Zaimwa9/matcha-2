@@ -4,6 +4,7 @@ const pictureType = require('../defTypes/pictureType');
 const visitType = require('../defTypes/visitType');
 const fakeType = require('../defTypes/fakeType');
 const blockedType = require('../defTypes/blockedType');
+const likeType = require('../defTypes/likeType');
 
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
@@ -351,6 +352,67 @@ var mutationType = new GraphQLObjectType({
                       DO
                         UPDATE
                           SET blocked_at=current_timestamp
+                      RETURNING *
+                    `;
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('Database Error');
+          } else {
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          console.log(e);
+          return new Error('Error: ' + e);
+        }
+      }
+    },
+
+    likeUser: {
+      type: likeType,
+      args: {
+        liker_uuid: {type: GraphQLString},
+        liked_uuid: {type: GraphQLString},
+      },
+      resolve: async function(root, args) {
+        textQuery = `
+                      INSERT INTO likes (
+                        liker_uuid,
+                        liked_uuid
+                      ) VALUES (
+                        '${args.liker_uuid}',
+                        '${args.liked_uuid}'
+                      ) ON CONFLICT (liker_uuid, liked_uuid)
+                      DO
+                        UPDATE
+                          SET liked_at=current_timestamp
+                      RETURNING *
+                    `;
+        try {
+          var data = await psql.query(textQuery);
+          if (data.rowCount === 0) {
+            throw new Error('Database Error');
+          } else {
+            data = data.rows[0];
+            return data;
+          }
+        } catch (e) {
+          console.log(e);
+          return new Error('Error: ' + e);
+        }
+      }
+    },
+
+    unlikeUser: {
+      type: likeType,
+      args: {
+        liker_uuid: {type: GraphQLString},
+        liked_uuid: {type: GraphQLString},
+      },
+      resolve: async function(root, args) {
+        textQuery = `
+                      DELETE FROM likes WHERE liker_uuid='${args.liker_uuid}' AND liked_uuid='${args.liked_uuid}'
                       RETURNING *
                     `;
         try {

@@ -32,8 +32,8 @@ d’âge, localisation, intervalle de popularité et par tags.")
 
 FIN) (4h) Gerer les validations Front et back mieux que dans camagru et vérifier les compatibilités
 
-
-
+POUR LES MATCHES RAJOUTER UN TYPE AVEC LE RESOLVE DU USER DEJA ECRIT
+FAIRE LES SUCCESS LIKES ET UNLIKE POUR GERER LE STATE CETTE FOIS CI
 
 
 3) DONE (1-2h) Faire les actions et mutations pour qu'à l'ouverture de la modale une visite soit activée

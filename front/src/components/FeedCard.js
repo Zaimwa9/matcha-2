@@ -19,6 +19,10 @@ class FeedCard extends Component {
     this.props.blockUser(this.props.profile.uuid);
   }
 
+  handleLikeUser = () => {
+    this.props.likeUser(this.props.profile.uuid);
+  }
+
   render() {
     const hashtags =
     this.props.profile ?
@@ -58,7 +62,7 @@ class FeedCard extends Component {
                 </Modal.Content>
 
                 <Modal.Actions>
-                  <Button color='green' inverted size='large'>
+                  <Button color='green' onClick={this.handleLikeUser} inverted size='large'>
                     Like !
                   </Button>
                   <Button color='red' onClick={this.handleBlockUser} inverted size='large'>

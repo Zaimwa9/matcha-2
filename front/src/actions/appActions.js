@@ -612,9 +612,9 @@ export function reportUser(uuid) {
   }
 }
 
-export function blockUser(uuid) {
+export function blockUser(blocked_uuid) {
   return (dispatch, getState) => {
-    const blocked_uuid = getState().app.user.uuid;
+    const uuid = getState().app.user.uuid;
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
@@ -638,6 +638,39 @@ export function blockUser(uuid) {
     .then(result => {
       if (!result.data.errors) {
         console.log('blocked')
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}
+
+export function likeUser(liked_uuid) {
+  return (dispatch, getState) => {
+    const liker_uuid = getState().app.user.uuid;
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          mutation likeUser {
+            likeUser(liker_uuid: "${liker_uuid}", liked_uuid: "${liked_uuid}") {
+              liker_uuid,
+              liked_uuid,
+              liked_at
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        console.log('liked')
       } else {
         console.log(result.data.errors);
       }

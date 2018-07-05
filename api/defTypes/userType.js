@@ -15,6 +15,8 @@ const hashtagType = require('./hashtagType');
 const pictureType = require('./pictureType');
 const visitType = require('./visitType');
 const blockedType = require('./blockedType');
+const likeType = require('./likeType');
+
 
 const psql = require('../db/dbconnect.js');
 
@@ -88,7 +90,22 @@ var userType = new GraphQLObjectType({
           return new Error('Database error: ' + e)
         }
       }
-    }
+    },/*
+    matches: {
+      type: new GraphQLList(userType),
+      resolve: async (User) => {
+        textQuery = `
+                      with prematches as (
+                      SELECT l2.liker_uuid as match_uuid FROM where likes as l1 WHERE l1.liker_uuid='${User.uuid}
+                      LEFT JOIN likes as l2 WHERE l2.liked_uuid='${User.uuid}' AND l2.liker_uuid=l1.liked_uuid
+                      WHERE l2.liker_uuid IS NOT NULL
+                      )
+                      SELECT * FROM users as u
+                      LEFT JOIN prematches as pm ON u.uuid=pm.match_uuid
+                      WHERE pm.match_uuid IS NOT NULL
+                    '`
+      }
+    }*/
   }
 })
 

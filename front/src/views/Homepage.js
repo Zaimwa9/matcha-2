@@ -44,6 +44,7 @@ class Homepage extends Component {
               newVisit={this.props.actions.newVisit}
               reportUser={this.props.actions.reportUser}
               blockUser={this.props.actions.blockUser}
+              likeUser={this.props.actions.likeUser}
             />
           </Segment>
         </Container>
