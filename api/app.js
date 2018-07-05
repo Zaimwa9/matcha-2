@@ -196,7 +196,7 @@ app.get('/setup', async function () {
   var textQuery = "COPY hashtags(uuid, content) from '/home/wadii/Desktop/matcha/hashtags.csv' delimiter ','"
   await psql.query(textQuery);
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS Visits(id SERIAL PRIMARY KEY, visitor_uuid TEXT NOT NULL, visited_uuid TEXT NOT NULL, visited_at TIMESTAMP DEFAULT now())"
+  var textQuery = "CREATE TABLE IF NOT EXISTS Visits(id SERIAL PRIMARY KEY, visitor_uuid TEXT NOT NULL, visited_uuid TEXT NOT NULL, visited_at TIMESTAMP DEFAULT now(), unique (visitor_uuid, visited_uuid))"
   await psql.query(textQuery);
 })
 //  copy pictures(author_uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';

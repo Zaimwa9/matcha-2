@@ -23,7 +23,10 @@ class Feed extends Component {
       _.map(profiles, profile => {
         return (
           <Grid.Column key={profile.id}>
-            <FeedCard profile={profile} />
+            <FeedCard
+              profile={profile}
+              newVisit={this.props.newVisit}
+            />
           </Grid.Column>
         )
       })

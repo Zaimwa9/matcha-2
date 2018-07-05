@@ -275,7 +275,10 @@ var mutationType = new GraphQLObjectType({
                       ) VALUES (
                         '${args.visitor_uuid}',
                         '${args.visited_uuid}'
-                      )
+                      ) ON CONFLICT (visitor_uuid, visited_uuid)
+                      DO
+                        UPDATE
+                          SET visited_at=current_timestamp
                       RETURNING *
                     `;
         try {

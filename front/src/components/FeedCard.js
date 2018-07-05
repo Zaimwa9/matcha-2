@@ -8,7 +8,7 @@ import BrowsePeople from '../containers/BrowsePeople';
 class FeedCard extends Component {
 
   handleModalClick = (e) => {
-    console.log(e);
+    this.props.newVisit(this.props.profile.uuid)
   }
 
   render() {

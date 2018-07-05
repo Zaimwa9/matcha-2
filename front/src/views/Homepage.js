@@ -41,6 +41,7 @@ class Homepage extends Component {
             <Feed
               fetchFeedUsers={this.props.actions.fetchFeedUsers}
               fetched={this.props.feed ? this.props.feed.fetched : false}
+              newVisit={this.props.actions.newVisit}
             />
           </Segment>
         </Container>

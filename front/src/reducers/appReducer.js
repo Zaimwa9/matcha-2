@@ -28,7 +28,8 @@ import {
   SUBMIT_PWD_SUCCESS,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_REQUEST,
-  FETCH_USERS_FAILURE
+  FETCH_USERS_FAILURE,
+  NEW_VISIT
 } from '../actions/appActionTypes';
 
 const initialState = {
