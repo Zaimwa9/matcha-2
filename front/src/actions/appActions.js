@@ -611,3 +611,36 @@ export function reportUser(uuid) {
     })
   }
 }
+
+export function blockUser(uuid) {
+  return (dispatch, getState) => {
+    const blocked_uuid = getState().app.user.uuid;
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          mutation blockUser {
+            blockUser(uuid: "${uuid}", blocked_uuid: "${blocked_uuid}") {
+              uuid,
+              blocked_uuid,
+              blocked_at
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        console.log('blocked')
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}

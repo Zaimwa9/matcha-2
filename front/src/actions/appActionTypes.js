@@ -38,6 +38,7 @@ export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 
 export const NEW_VISIT = 'NEW_VISIT';
 export const REPORT_USER = 'REPORT_USER';
+export const BLOCK_USER = 'BLOCK_USER';
 
 export const COPY_USER = 'COPY_USER';
 export const LOGOUT = 'LOGOUT';

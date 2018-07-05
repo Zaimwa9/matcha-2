@@ -8,11 +8,15 @@ import BrowsePeople from '../containers/BrowsePeople';
 class FeedCard extends Component {
 
   handleModalClick = () => {
-    this.props.newVisit(this.props.profile.uuid)
+    this.props.newVisit(this.props.profile.uuid);
   }
 
   handleReportUser = () => {
-    this.props.reportUser(this.props.profile.uuid)
+    this.props.reportUser(this.props.profile.uuid);
+  }
+
+  handleBlockUser = () => {
+    this.props.blockUser(this.props.profile.uuid);
   }
 
   render() {
@@ -57,7 +61,7 @@ class FeedCard extends Component {
                   <Button color='green' inverted size='large'>
                     Like !
                   </Button>
-                  <Button color='red' inverted size='large'>
+                  <Button color='red' onClick={this.handleBlockUser} inverted size='large'>
                     Block
                   </Button>
                   <Button onClick={this.handleReportUser} color='red' inverted size='small'>

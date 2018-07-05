@@ -22,7 +22,7 @@ var userType = new GraphQLObjectType({
   name: 'User',
   fields: {
     id: { type: GraphQLInt },
-    first_name: { type: new GraphQLNonNull(GraphQLString)},
+    first_name: { type: new GraphQLNonNull(GraphQLString) },
     last_name: { type: new GraphQLNonNull(GraphQLString) },
     password: {
       type: GraphQLString,

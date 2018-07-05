@@ -43,6 +43,7 @@ class Homepage extends Component {
               fetched={this.props.feed ? this.props.feed.fetched : false}
               newVisit={this.props.actions.newVisit}
               reportUser={this.props.actions.reportUser}
+              blockUser={this.props.actions.blockUser}
             />
           </Segment>
         </Container>

@@ -31,6 +31,7 @@ import {
   FETCH_USERS_FAILURE,
   NEW_VISIT,
   REPORT_USER,
+  BLOCK_USER
 } from '../actions/appActionTypes';
 
 const initialState = {
