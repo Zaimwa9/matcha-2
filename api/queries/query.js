@@ -108,6 +108,7 @@ var queryType = new GraphQLObjectType({
           const data = await psql.query(textQuery);
           return data.rows;
         } catch (e) {
+          console.log(e)
           return new Error('Database error: ' + e)
         }
       }

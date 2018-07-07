@@ -181,6 +181,8 @@ export function isAuth() {
                 uuid,
                 orientation,
                 gender,
+                lat,
+                lng,
                 age
               }
             }

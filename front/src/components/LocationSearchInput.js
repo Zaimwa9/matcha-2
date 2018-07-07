@@ -22,7 +22,6 @@ class LocationSearchInput extends React.Component {
       .then(latLng => {
         this.props.updateUserField(this.props.appUser, 'lat', latLng.lat);
         this.props.updateUserField(this.props.appUser, 'lng', latLng.lng);
-        console.log('Success', latLng)
       })
       .catch(error => console.error('Error', error))
   }
