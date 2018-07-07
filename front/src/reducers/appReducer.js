@@ -31,7 +31,7 @@ import {
   FETCH_USERS_FAILURE,
   NEW_VISIT,
   REPORT_USER,
-  BLOCK_USER,
+  BLOCKED_USER,
   LIKED_USER,
   UNLIKED_USER,
 } from '../actions/appActionTypes';
@@ -94,6 +94,10 @@ export default function appRed(state = initialState, action) {
     case UNLIKED_USER:
       newState = {...state, feed: {...action.feed}};
       return newState;
+    case BLOCKED_USER:
+      newState = {...state, feed: {...action.feed}};
+      return newState;
+
     case FETCH_USERS_REQUEST:
       newState = {...state, feed: {...state.feed, loading: true }}
       return newState;

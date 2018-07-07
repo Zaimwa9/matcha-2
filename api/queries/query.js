@@ -100,7 +100,9 @@ var queryType = new GraphQLObjectType({
         LEFT JOIN count_hashtags AS ch ON md.uuid=ch.uuid
         LEFT JOIN likes AS l on md.uuid=l.liked_uuid AND l.liker_uuid='${args.uuid}'
         LEFT JOIN likes as l2 on md.uuid=l2.liker_uuid AND l2.liked_uuid='${args.uuid}'
+        LEFT JOIN blocked as b on md.uuid=b.blocked_uuid AND b.uuid='${args.uuid}'
         WHERE md.uuid <> '${args.uuid}'
+        AND b.blocked_uuid IS NULL
         ORDER by counter DESC`
         try {
           const data = await psql.query(textQuery);

@@ -614,9 +614,20 @@ export function reportUser(uuid) {
   }
 }
 
+export function userBlocked(blocked_uuid, feed) {
+  _.remove(feed.profiles, item => {
+    return item.uuid === blocked_uuid;
+  })
+  return {
+    feed: feed,
+    type: types.BLOCKED_USER
+  }
+}
+
 export function blockUser(blocked_uuid) {
   return (dispatch, getState) => {
     const uuid = getState().app.user.uuid;
+    const feed = getState().app.feed;
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
@@ -639,6 +650,7 @@ export function blockUser(blocked_uuid) {
     })
     .then(result => {
       if (!result.data.errors) {
+        dispatch(userBlocked(blocked_uuid, feed));
         console.log('blocked')
       } else {
         console.log(result.data.errors);
