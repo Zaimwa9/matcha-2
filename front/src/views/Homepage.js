@@ -45,6 +45,7 @@ class Homepage extends Component {
               reportUser={this.props.actions.reportUser}
               blockUser={this.props.actions.blockUser}
               likeUser={this.props.actions.likeUser}
+              unLikeUser={this.props.actions.unLikeUser}
             />
           </Segment>
         </Container>

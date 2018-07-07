@@ -35,6 +35,7 @@ class Feed extends Component {
               reportUser={this.props.reportUser}
               blockUser={this.props.blockUser}
               likeUser={this.props.likeUser}
+              unLikeUser={this.props.unLikeUser}
             />
           </Grid.Column>
         )

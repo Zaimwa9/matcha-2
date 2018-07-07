@@ -523,6 +523,7 @@ export function fetchFeedUsers(uuid) {
               age,
               address,
               description,
+              is_liked,
               hashtags {
                 content
               },
@@ -645,9 +646,21 @@ export function blockUser(blocked_uuid) {
   }
 }
 
+export function userLiked(liked_uuid, feed) {
+  const index = _.findIndex(feed.profiles, item => {
+    return item.uuid === liked_uuid;
+  })
+  feed.profiles[index].is_liked = 1;
+  return {
+    feed: feed,
+    type: types.LIKED_USER
+  }
+}
+
 export function likeUser(liked_uuid) {
   return (dispatch, getState) => {
     const liker_uuid = getState().app.user.uuid;
+    const feed = getState().app.feed;
     axios({
       url: 'http://localhost:3000/graphql/',
       method: 'post',
@@ -671,6 +684,53 @@ export function likeUser(liked_uuid) {
     .then(result => {
       if (!result.data.errors) {
         console.log('liked')
+        dispatch(userLiked(liked_uuid, feed));
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}
+
+export function userUnliked(liked_uuid, feed) {
+  const index = _.findIndex(feed.profiles, item => {
+    return item.uuid === liked_uuid;
+  })
+  feed.profiles[index].is_liked = 0;
+  return {
+    feed: feed,
+    type: types.UNLIKED_USER
+  }
+}
+
+export function unLikeUser(liked_uuid) {
+  return (dispatch, getState) => {
+    const liker_uuid = getState().app.user.uuid;
+    const feed = getState().app.feed;
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          mutation unlikeUser {
+            unlikeUser(liker_uuid: "${liker_uuid}", liked_uuid: "${liked_uuid}") {
+              liker_uuid,
+              liked_uuid,
+              liked_at
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(userUnliked(liked_uuid, feed));
+        console.log('unliked')
       } else {
         console.log(result.data.errors);
       }

@@ -25,6 +25,8 @@ d’âge, localisation, intervalle de popularité et par tags.")
 
 11) (4h-5h) Faire la gestion des likes / unlikes / bloquages
 11bis) METTRE UNE COULEUR POUR LES utilisateurs LIKES et bouton unlike
+11ter) POUR LES MATCHES RAJOUTER UN TYPE AVEC LE RESOLVE DU USER DEJA ECRIT
+      FAIRE LES SUCCESS LIKES ET UNLIKE POUR GERER LE STATE CETTE FOIS CI
 
 12) (2h) Faire le tag des faux comptes (un petit schéma en base de donnée et une mutation qui ajoute un compteur et faire genre au bout de 10 le compte est suspendu)
 
@@ -32,8 +34,6 @@ d’âge, localisation, intervalle de popularité et par tags.")
 
 FIN) (4h) Gerer les validations Front et back mieux que dans camagru et vérifier les compatibilités
 
-POUR LES MATCHES RAJOUTER UN TYPE AVEC LE RESOLVE DU USER DEJA ECRIT
-FAIRE LES SUCCESS LIKES ET UNLIKE POUR GERER LE STATE CETTE FOIS CI
 
 
 3) DONE (1-2h) Faire les actions et mutations pour qu'à l'ouverture de la modale une visite soit activée

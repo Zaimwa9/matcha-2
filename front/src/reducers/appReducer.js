@@ -31,7 +31,9 @@ import {
   FETCH_USERS_FAILURE,
   NEW_VISIT,
   REPORT_USER,
-  BLOCK_USER
+  BLOCK_USER,
+  LIKED_USER,
+  UNLIKED_USER,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -86,8 +88,14 @@ export default function appRed(state = initialState, action) {
       newState = {...state, user: {...state.witness, address: state.user.address, description: state.user.description, pictures: [...state.user.pictures]}};
       return newState;
 
+    case LIKED_USER:
+      newState = {...state, feed: {...action.feed}};
+      return newState;
+    case UNLIKED_USER:
+      newState = {...state, feed: {...action.feed}};
+      return newState;
     case FETCH_USERS_REQUEST:
-      newState = {...state, feed: { ...state.feed, loading: true }}
+      newState = {...state, feed: {...state.feed, loading: true }}
       return newState;
     case FETCH_USERS_SUCCESS:
       newState = {...state, feed: {profiles: action.profiles, fetched: true, loading: false}}

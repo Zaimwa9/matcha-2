@@ -2,10 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
-import { Segment, Item, Modal, Button } from 'semantic-ui-react';
+import { Segment, Item, Modal, Icon, Button } from 'semantic-ui-react';
 import BrowsePeople from '../containers/BrowsePeople';
 
 class FeedCard extends Component {
+
+  likeButton = () => {
+    if (this.props.profile.is_liked === 0) {
+      return (
+        <Button color='green' onClick={this.handleLikeUser} inverted size='large'>
+          Like !
+        </Button>
+      )
+    } else {
+      return (
+        <Button color='blue' onClick={this.handleUnLikeUser} inverted size='large'>
+          Unlike !
+        </Button>
+      )
+    }
+  }
 
   handleModalClick = () => {
     this.props.newVisit(this.props.profile.uuid);
@@ -23,6 +39,10 @@ class FeedCard extends Component {
     this.props.likeUser(this.props.profile.uuid);
   }
 
+  handleUnLikeUser = () => {
+    this.props.unLikeUser(this.props.profile.uuid);
+  }
+
   render() {
     const hashtags =
     this.props.profile ?
@@ -38,6 +58,7 @@ class FeedCard extends Component {
             <Item.Image size='small' src='/annemo.jpg' />
             <Item.Content>
               <Item.Header>{`${this.props.profile ? this.props.profile.first_name.substr(0, 1).toUpperCase() : ''}${this.props.profile ? this.props.profile.first_name.substr(1) : ''}`}</Item.Header>
+              {this.props.profile && this.props.profile.is_liked === 1 ? <Icon name='heart' /> : ''}
               <Item.Description>
                 {`${this.props.profile.gender.substr(0, 1).toUpperCase()}`}
               </Item.Description>
@@ -62,9 +83,7 @@ class FeedCard extends Component {
                 </Modal.Content>
 
                 <Modal.Actions>
-                  <Button color='green' onClick={this.handleLikeUser} inverted size='large'>
-                    Like !
-                  </Button>
+                  {this.likeButton()}
                   <Button color='red' onClick={this.handleBlockUser} inverted size='large'>
                     Block
                   </Button>

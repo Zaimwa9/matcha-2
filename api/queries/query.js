@@ -91,8 +91,9 @@ var queryType = new GraphQLObjectType({
         count_hashtags AS (
         SELECT h1.uuid, count(*) AS counter FROM hashtags AS h1 LEFT JOIN hashtags AS h2 ON h1.uuid='${args.uuid}' and h1.content = h2.content and h1.uuid <> h2.uuid WHERE h2.uuid is not null group by 1
         )
-        SELECT md.*, ch.counter FROM matchesbyDistance AS md
+        SELECT md.*, ch.counter, CASE WHEN l.liked_uuid IS NOT NULL then 1 ELSE 0 END AS is_liked FROM matchesbyDistance AS md
         LEFT JOIN count_hashtags AS ch ON md.uuid=ch.uuid
+        LEFT JOIN likes AS l on md.uuid=l.liked_uuid AND l.liker_uuid='${args.uuid}'
         WHERE md.uuid <> '${args.uuid}'
         ORDER by counter DESC`
         try {
