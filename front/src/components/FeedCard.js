@@ -81,7 +81,6 @@ class FeedCard extends Component {
                 <Modal.Content>
                   <BrowsePeople profile={this.props.profile ? this.props.profile : ''}/>
                 </Modal.Content>
-
                 <Modal.Actions>
                   {this.likeButton()}
                   <Button color='red' onClick={this.handleBlockUser} inverted size='large'>

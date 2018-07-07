@@ -31,6 +31,14 @@ function SampleNextArrow(props) {
 
 class BrowsePeople extends Component {
 
+  likesYou = () => {
+    if (this.props.profile.likesyou === 1) {
+      return (
+        <Header as='h3' style={{marginTop: '0em'}}>Pssst, I like you ;)</Header>
+      )
+    }
+  }
+
   render() {
     const pictures = _.map(this.props.profile.pictures, picture => {
       return (
@@ -55,7 +63,8 @@ class BrowsePeople extends Component {
     };
     return (
       <div style={{maxWidth: '60%', marginRight: 'auto', marginLeft: 'auto'}}>
-        <Header>{`${this.props.profile ? this.props.profile.first_name.substr(0, 1).toUpperCase() : ''}${this.props.profile ? this.props.profile.first_name.substr(1) : ''}`}</Header>
+        <Header as='h1'>{`${this.props.profile ? this.props.profile.first_name.substr(0, 1).toUpperCase() : ''}${this.props.profile ? this.props.profile.first_name.substr(1) : ''}`}</Header>
+        {this.likesYou()}
         <Slider {...settings}>
           {pictures}
         </Slider>

@@ -524,6 +524,7 @@ export function fetchFeedUsers(uuid) {
               address,
               description,
               is_liked,
+              likesyou,
               hashtags {
                 content
               },
