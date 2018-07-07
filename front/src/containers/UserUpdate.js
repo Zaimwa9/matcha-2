@@ -137,8 +137,8 @@ class UserUpdate extends Component {
                       label='Orientation'
                       name='orientation'
                       options={orientation}
-                      value='Bi'
-                      placeholder='Bi'
+                      value={this.props.appUser.orientation}
+                      placeholder={this.props.appUser.orientation}
                       onChange={this.handleChange}
                     />
                 </Form.Field>
