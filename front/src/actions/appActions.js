@@ -106,7 +106,7 @@ export function submitUpdateUser(data) {
       data: {
         query: `
           mutation updateUser {
-            updateUser(age: ${data.age}, email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}", address: "${data.address}", lat: "${data.lat}", lng: "${data.lng}") {
+            updateUser(age: ${data.age}, orientation: "${data.orientation}", email: "${data.email}", first_name: "${data.first_name}", last_name: "${data.last_name}", gender: "${data.gender}", uuid: "${data.uuid}", address: "${data.address}", lat: "${data.lat}", lng: "${data.lng}") {
               uuid,
               first_name,
               last_name,
