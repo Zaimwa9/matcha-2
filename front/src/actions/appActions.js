@@ -133,11 +133,13 @@ export function submitUpdateUser(data) {
 }
 
 export function fetchHashSuccess(data) {
+  console.log(data);
   return {
     address: data.address,
     description: data.description,
     pictures: data.pictures,
     hashtags: data.hashtags,
+    orientation: data.orientation,
     type: types.FETCH_HASHTAGS_SUCCESS
   }
 }
@@ -166,6 +168,7 @@ export function fetchHashtags(uuid) {
               address,
               lat,
               lng,
+              orientation,
               hashtags {
                 id,
                 content

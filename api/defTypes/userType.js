@@ -45,6 +45,7 @@ var userType = new GraphQLObjectType({
     distance: { type: GraphQLString },
     is_liked: { type: GraphQLInt },
     likesyou: { type: GraphQLInt },
+    orientation: { type: GraphQLString },
     hashtags: {
       type: new GraphQLList(hashtagType),
       resolve: async (User) => {

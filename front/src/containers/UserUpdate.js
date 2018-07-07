@@ -63,6 +63,12 @@ class UserUpdate extends Component {
       { key: 'f', text: 'Female', value: 'female' },
     ]
 
+    const orientation = [
+      { key: 'bi', text: 'Bi', value: 'Bi' },
+      { key: 'hetero', text: 'Hetero', value: 'Hetero' },
+      { key: 'gay', text: 'Gay', value: 'Gay' },
+    ]
+
     const hashtags = (this.props.appUser.hashtags ? this.props.appUser.hashtags : [])
 
     return (
@@ -92,8 +98,6 @@ class UserUpdate extends Component {
                   name='first_name'
                   onChange={this.handleChange}
                 />
-              </Form.Group>
-              <Form.Group style={{justifyContent:'center'}}>
                 <Form.Input
                   width={6}
                   style={{maxHeight: 30}}
@@ -103,6 +107,17 @@ class UserUpdate extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Group>
+  {/*            <Form.Group style={{justifyContent:'center'}}>
+                <Form.Input
+                  width={6}
+                  style={{maxHeight: 30}}
+                  label='Last Name'
+                  value={this.props.appUser.last_name}
+                  name='last_name'
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+  */}
               <Form.Group style={{justifyContent:'center'}}>
                 <Form.Input
                   width={6}
@@ -112,6 +127,21 @@ class UserUpdate extends Component {
                   name='email'
                   onChange={this.handleChange}
                 />
+                <Form.Field
+                  onChange={this.handleChange}
+                  width={4}
+                  style={{maxHeight: 30}}>
+                    <label>Orientation</label>
+                    <Select
+                      width={2}
+                      label='Orientation'
+                      name='orientation'
+                      options={orientation}
+                      value='Bi'
+                      placeholder='Bi'
+                      onChange={this.handleChange}
+                    />
+                </Form.Field>
               </Form.Group>
               <Form.Group style={{justifyContent:'center'}}>
                 <Form.Field>
