@@ -52,13 +52,14 @@ class FeedCard extends Component {
     : '';
 
     return (
-      <Segment>
+      <Segment color={this.props.profile && this.props.profile.is_liked === 1 && this.props.profile.likesyou === 1 ? 'pink' : 'grey'}>
         <Item.Group>
           <Item>
             <Item.Image size='small' src='/annemo.jpg' />
             <Item.Content>
               <Item.Header>{`${this.props.profile ? this.props.profile.first_name.substr(0, 1).toUpperCase() : ''}${this.props.profile ? this.props.profile.first_name.substr(1) : ''}`}</Item.Header>
-              {this.props.profile && this.props.profile.is_liked === 1 ? <Icon name='heart' /> : ''}
+              {this.props.profile && this.props.profile.is_liked === 1 && this.props.profile.likesyou === 0 ? <Icon name='heart' style={{marginLeft: '1em'}} /> : ''}
+              {this.props.profile && this.props.profile.is_liked === 1 && this.props.profile.likesyou === 1 ? <Icon name='heart' style={{marginLeft: '1em'}} color='pink'/> : ''}
               <Item.Description>
                 {`${this.props.profile.gender.substr(0, 1).toUpperCase()}`}
               </Item.Description>
