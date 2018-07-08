@@ -30,7 +30,7 @@ class Feed extends Component {
     })
 
     var sortOrder;
-    if (sortingBy === 'popularity' || sortingBy === 'hashtags') {
+    if (sortingBy === 'popularity' || sortingBy === 'count_hashtags') {
       sortOrder = 'desc';
     } else {
       sortOrder = 'asc';
@@ -81,7 +81,7 @@ class Feed extends Component {
             <Dropdown
               inline
               options={sortOptions}
-              value={this.props.sortBy.value ? this.props.sortBy.value : sortOptions[0].value}
+              value={this.props.sortBy.text ? this.props.sortBy.text : sortOptions[0].value}
               onChange={this.handleDropChange}
             />
           </span>

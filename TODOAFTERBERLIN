@@ -18,6 +18,8 @@
 
 13) (4h) Faire le chat
 
+14) Y'a des trucs a gérer sur les hashtags pour les récuperer et tout
+
 FIN) (4h) Gerer les validations Front et back mieux que dans camagru et vérifier les compatibilités
 
 
@@ -41,3 +43,11 @@ ___________________________________________________________________
 FAIRE LES SUCCESS LIKES ET UNLIKE POUR GERER LE STATE CETTE FOIS CI
 
 12) (2h) Faire le tag des faux comptes (un petit schéma en base de donnée et une mutation qui ajoute un compteur et faire genre au bout de 10 le compte est suspendu)
+
+
+SELECT h1.uuid, count(*) AS count_hashtags
+FROM hashtags AS h1
+LEFT JOIN hashtags AS h2 ON h1.uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a'
+AND h1.content = h2.content AND h1.uuid <> h2.uuid
+WHERE h2.uuid IS NOT NULL
+GROUP BY 1

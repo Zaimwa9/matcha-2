@@ -46,6 +46,7 @@ var userType = new GraphQLObjectType({
     is_liked: { type: GraphQLInt },
     likesyou: { type: GraphQLInt },
     orientation: { type: GraphQLString },
+    count_hashtags: { type: GraphQLInt },
     popularity: {
       type: GraphQLInt,
       resolve: async (User) => {

@@ -529,6 +529,7 @@ export function fetchFeedUsers(uuid) {
               description,
               popularity,
               is_liked,
+              count_hashtags,
               likesyou,
               hashtags {
                 content
@@ -757,9 +758,11 @@ export function unLikeUser(liked_uuid) {
 }
 
 export function updateDropdown(value) {
+  var text = value;
+  value = value === 'hashtags' ? 'count_hashtags' : value;
   return {
     sortBy: {
-      text: value,
+      text: text,
       value: value
     },
     type: types.UPDATE_DROPDOWN
