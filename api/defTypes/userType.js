@@ -46,6 +46,50 @@ var userType = new GraphQLObjectType({
     is_liked: { type: GraphQLInt },
     likesyou: { type: GraphQLInt },
     orientation: { type: GraphQLString },
+    popularity: {
+      type: GraphQLInt,
+      resolve: async (User) => {
+        textQuery = `
+          with visitmetric as (
+            SELECT
+              '${User.uuid}' as user_uuid,
+              SUM(CASE WHEN visited_uuid='${User.uuid}' THEN 1 ELSE 0 END) as visits_received,
+              SUM(CASE WHEN visitor_uuid='${User.uuid}' THEN 1 ELSE 0 END) as visits_given
+            FROM visits
+            WHERE (visited_uuid='${User.uuid}' OR visitor_uuid='${User.uuid}')
+            AND visited_at >= current_date - INTERVAL '1 week'
+            GROUP BY 1
+          ),
+          likemetric as (
+            SELECT
+              '${User.uuid}' as user_uuid,
+              SUM(CASE WHEN liked_uuid='${User.uuid}' THEN 1 ELSE 0 END) as likes_received,
+              SUM(CASE WHEN liker_uuid='${User.uuid}' THEN 1 ELSE 0 END) as likes_given
+            FROM likes
+            WHERE (liker_uuid='${User.uuid}' OR liked_uuid='${User.uuid}')
+            AND liked_at >= current_date - INTERVAL '1 week'
+            GROUP BY 1
+          )
+          SELECT
+            '${User.uuid}' as user_uuid,
+            v.visits_received,
+            v.visits_given,
+            l.likes_received,
+            l.likes_given
+          FROM visitmetric as v
+          LEFT JOIN likemetric as l on v.user_uuid=l.user_uuid
+        `;
+        try {
+          var data = await psql.query(textQuery);
+          data = data.rows[0];
+          //var likeScore = 
+          return 12;
+          //return data.rows;
+        } catch (e) {
+          return new Error('Database error: ' + e)
+        }
+      }
+    },
     hashtags: {
       type: new GraphQLList(hashtagType),
       resolve: async (User) => {

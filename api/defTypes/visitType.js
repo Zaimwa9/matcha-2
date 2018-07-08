@@ -17,6 +17,7 @@ var visitType = new GraphQLObjectType({
     visitor_uuid: { type: GraphQLString },
     visited_uuid: { type: GraphQLString },
     visited_at: { type: GraphQLString },
+    visit_count: { type: GraphQLInt }
   }
 })
 

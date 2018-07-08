@@ -32,9 +32,13 @@ function SampleNextArrow(props) {
 class BrowsePeople extends Component {
 
   likesYou = () => {
-    if (this.props.profile.likesyou === 1) {
+    if (this.props.profile.likesyou === 1 && this.props.profile.is_liked === 0) {
       return (
-        <Header as='h3' style={{marginTop: '0em'}}>Pssst, I like you ;)</Header>
+        <p style={{marginTop: '0em'}}>Pssst, I like you ;)</p>
+      )
+    } else if (this.props.profile.likesyou === 1 && this.props.profile.is_liked === 1) {
+      return (
+        <p style={{marginTop: '0em'}}>We matched !</p>
       )
     }
   }

@@ -196,7 +196,7 @@ app.get('/setup', async function () {
   var textQuery = "COPY hashtags(uuid, content) from '/home/wadii/Desktop/matcha/hashtags.csv' delimiter ','"
   await psql.query(textQuery);
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS Visits(id SERIAL PRIMARY KEY, visitor_uuid TEXT NOT NULL, visited_uuid TEXT NOT NULL, visited_at TIMESTAMP DEFAULT now(), unique (visitor_uuid, visited_uuid))"
+  var textQuery = "CREATE TABLE IF NOT EXISTS visits(id SERIAL PRIMARY KEY, visitor_uuid TEXT NOT NULL, visited_uuid TEXT NOT NULL, visited_at TIMESTAMP DEFAULT now(), unique (visitor_uuid, visited_uuid), visit_count NUMERIC DEFAULT 0)"
   await psql.query(textQuery);
 
   var textQuery = "CREATE TABLE IF NOT EXISTS fakes(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, reporter_uuid TEXT NOT NULL, reported_at TIMESTAMP DEFAULT now(), unique(uuid, reporter_uuid))"
