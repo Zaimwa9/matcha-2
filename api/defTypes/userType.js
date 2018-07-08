@@ -119,11 +119,10 @@ var userType = new GraphQLObjectType({
           const visitsReceived = data.visits_received > 100 ? 100 : data.visits_received;
           const visitsGiven = data.visits_given > 100 ? 100 : data.visits_given;
           visitScore += (visitsReceived / 100) * 0.6 + (visitsGiven / 100) * 0.2;
-          const blockPenalty = (data.blocked_count / 100) > 0.2 ? 0.2 : data.blocked_count / 100;
+          const blockPenalty = (data.blocked_count / 100) > 0.3 ? 0.3 : data.blocked_count / 100;
           const reportPenalty =  data.reported_count / 50;
           const seniority = (moment(User.created_at).isBefore(moment().subtract(6, 'months'))) ? 0.1 : 0;
           const popularity = Math.round(100 * (0.5 - blockPenalty - reportPenalty + seniority + visitScore * 0.2 + likeScore * 0.2));
-          console.log(likeScore * 0.2, visitScore * 0.2)
           return popularity;
         } catch (e) {
           return new Error('Database error: ' + e)
