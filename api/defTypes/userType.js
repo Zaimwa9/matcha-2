@@ -90,16 +90,17 @@ var userType = new GraphQLObjectType({
           )
           SELECT
             '${User.uuid}' as user_uuid,
-            v.visits_received,
-            v.visits_given,
-            l.likes_received,
-            l.likes_given,
-            b.blocked_count,
+            COALESCE(v.visits_received, 0) as visits_received,
+            COALESCE(v.visits_given, 0) as visits_given,
+            COALESCE(l.likes_received, 0) as likes_received,
+            COALESCE(l.likes_given, 0) as likes_given,
+            COALESCE(b.blocked_count, 0) as blocked_count,
             COALESCE(r.reported_count, 0) as reported_count
-          FROM visitmetric as v
-          LEFT JOIN likemetric as l on v.user_uuid=l.user_uuid
-          LEFT JOIN blockmetric as b on v.user_uuid=b.user_uuid
-          LEFT JOIN reportedmetric as r on v.user_uuid=r.user_uuid
+          FROM user as u
+          LEFT JOIN visitmetric as v on v.user_uuid='${User.uuid}'
+          LEFT JOIN likemetric as l on l.user_uuid = '${User.uuid}'
+          LEFT JOIN blockmetric as b on b.user_uuid = '${User.uuid}'
+          LEFT JOIN reportedmetric as r on r.user_uuid ='${User.uuid}'
         `;
         try {
           var data = await psql.query(textQuery);
@@ -121,7 +122,8 @@ var userType = new GraphQLObjectType({
           const blockPenalty = (data.blocked_count / 100) > 0.2 ? 0.2 : data.blocked_count / 100;
           const reportPenalty =  data.reported_count / 50;
           const seniority = (moment(User.created_at).isBefore(moment().subtract(6, 'months'))) ? 0.1 : 0;
-          const popularity = Math.round(100 * (0.5 - blockPenalty -reportPenalty + seniority + (visitScore + likeScore) * 0.4));
+          const popularity = Math.round(100 * (0.5 - blockPenalty - reportPenalty + seniority + visitScore * 0.2 + likeScore * 0.2));
+          console.log(likeScore * 0.2, visitScore * 0.2)
           return popularity;
         } catch (e) {
           return new Error('Database error: ' + e)
