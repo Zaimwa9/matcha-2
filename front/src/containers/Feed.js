@@ -30,10 +30,10 @@ class Feed extends Component {
     })
 
     var sortOrder;
-    if (sortingBy === 'popularity' || sortingBy === 'count_hashtags') {
-      sortOrder = 'desc';
-    } else {
+    if (sortingBy === 'distance') {
       sortOrder = 'asc';
+    } else {
+      sortOrder = 'desc';
     }
 
     profiles = _.orderBy(profiles, [sortingBy], [sortOrder]);

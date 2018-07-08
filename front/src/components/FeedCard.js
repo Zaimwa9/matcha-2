@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
+import moment from 'moment';
+
 import { Segment, Item, Modal, Icon, Rating, Button } from 'semantic-ui-react';
 import BrowsePeople from '../containers/BrowsePeople';
 
@@ -65,6 +67,11 @@ class FeedCard extends Component {
               <Item.Description>
                 {`${this.props.profile.gender.substr(0, 1).toUpperCase()}${this.props.profile.gender.substr(1)}`}
               </Item.Description>
+
+              <Item.Description>
+                {moment().diff(moment.unix(this.props.profile.age), 'years')}
+              </Item.Description>
+
               <Item.Meta><Rating icon='heart' disabled defaultRating={rating} maxRating={5}/></Item.Meta>
               <Item.Description>
                 <strong>{hashtags}</strong>
