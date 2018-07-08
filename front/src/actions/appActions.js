@@ -755,3 +755,13 @@ export function unLikeUser(liked_uuid) {
     })
   }
 }
+
+export function updateDropdown(value) {
+  return {
+    sortBy: {
+      text: value,
+      value: value
+    },
+    type: types.UPDATE_DROPDOWN
+  }
+}

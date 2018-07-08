@@ -34,6 +34,7 @@ import {
   BLOCKED_USER,
   LIKED_USER,
   UNLIKED_USER,
+  UPDATE_DROPDOWN
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -78,6 +79,11 @@ const initialState = {
     loading: false,
     fetched: false,
     profiles: []
+  },
+  sortBy:
+  {
+    text: 'popularity',
+    value: 'popularity'
   }
 }
 
@@ -97,6 +103,9 @@ export default function appRed(state = initialState, action) {
       return newState;
     case BLOCKED_USER:
       newState = {...state, feed: {...action.feed}};
+      return newState;
+    case UPDATE_DROPDOWN:
+      newState = {...state, sortBy: {...action.sortBy}}
       return newState;
 
     case FETCH_USERS_REQUEST:

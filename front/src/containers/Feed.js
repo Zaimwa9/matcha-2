@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { Grid, Modal } from 'semantic-ui-react';
+import { Grid, Modal, Dropdown } from 'semantic-ui-react';
 
 import FeedCard from '../components/FeedCard';
 
@@ -16,14 +16,27 @@ class Feed extends Component {
     }
   }
 
+  handleDropChange = (event, {value}) => {
+    this.props.updateDropdown(value);
+  }
+
   render() {
-
     const fetchedProfiles = (this.props.feed) ? this.props.feed.profiles : [];
+    const sortingBy = this.props.sortBy ? this.props.sortBy.value : sortOptions[0].value;
 
-    const profiles = _.filter(fetchedProfiles, profile => {
+    var profiles = _.filter(fetchedProfiles, profile => {
       // add completed profile
       return (profile.pictures[0]);
     })
+
+    var sortOrder;
+    if (sortingBy === 'popularity' || sortingBy === 'hashtags') {
+      sortOrder = 'desc';
+    } else {
+      sortOrder = 'asc';
+    }
+
+    profiles = _.orderBy(profiles, [sortingBy], [sortOrder]);
 
     const cards =
       _.map(profiles, profile => {
@@ -40,10 +53,38 @@ class Feed extends Component {
           </Grid.Column>
         )
       })
+
+    const sortOptions = [
+      {
+        text: 'popularity',
+        value: 'popularity'
+      },
+      {
+        text: 'distance',
+        value: 'distance'
+      },
+      {
+        text: 'age',
+        value: 'age'
+      },
+      {
+        text: 'hashtags',
+        value: 'hashtags'
+      }
+    ]
+
     return (
       <Grid columns={2} stackable>
         <Grid.Column width={16}>
-          Hello
+          <span>
+            Sort by{' '}
+            <Dropdown
+              inline
+              options={sortOptions}
+              value={this.props.sortBy.value ? this.props.sortBy.value : sortOptions[0].value}
+              onChange={this.handleDropChange}
+            />
+          </span>
         </Grid.Column>
         {cards}
       </Grid>
@@ -59,7 +100,8 @@ function mapStateToProps(state) {
   return {
     userIn: state.logSign.user,
     appUser: state.app.user,
-    feed: state.app.feed
+    feed: state.app.feed,
+    sortBy: state.app.sortBy
   };
 }
 
