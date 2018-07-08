@@ -67,7 +67,25 @@ var userType = new GraphQLObjectType({
               SUM(CASE WHEN liker_uuid='${User.uuid}' THEN 1 ELSE 0 END) as likes_given
             FROM likes
             WHERE (liker_uuid='${User.uuid}' OR liked_uuid='${User.uuid}')
-            AND liked_at >= current_date - INTERVAL '1 week'
+            AND liked_at >= current_date - INTERVAL '1 month'
+            GROUP BY 1
+          ),
+          blockmetric as (
+            SELECT
+              '${User.uuid}' as user_uuid,
+              COUNT(*) as blocked_count
+            FROM blocked
+            WHERE blocked_uuid='${User.uuid}'
+            AND blocked_at >= current_date - INTERVAL '3 months'
+            GROUP BY 1
+          ),
+          reportedmetric as (
+            SELECT
+              '${User.uuid}' as user_uuid,
+              SUM(CASE WHEN uuid='${User.uuid}' THEN 1 ELSE 0 END) as reported_count
+            FROM fakes
+            WHERE uuid='${User.uuid}'
+            AND reported_at >= current_date - INTERVAL '3 months'
             GROUP BY 1
           )
           SELECT
@@ -75,16 +93,36 @@ var userType = new GraphQLObjectType({
             v.visits_received,
             v.visits_given,
             l.likes_received,
-            l.likes_given
+            l.likes_given,
+            b.blocked_count,
+            COALESCE(r.reported_count, 0) as reported_count
           FROM visitmetric as v
           LEFT JOIN likemetric as l on v.user_uuid=l.user_uuid
+          LEFT JOIN blockmetric as b on v.user_uuid=b.user_uuid
+          LEFT JOIN reportedmetric as r on v.user_uuid=r.user_uuid
         `;
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
-          //var likeScore = 
-          return 12;
-          //return data.rows;
+          console.log(data);
+          var likeScore = 0;
+          var visitScore = 0;
+          if (data.likes_given < data.likes_received) {
+            likeScore = 0.2;
+          };
+          const likesReceived = data.likes_received > 100 ? 100 : data.likes_received;
+          const likesGiven = data.likes_given > 100 ? 100 : data.likes_given;
+          likeScore += (likesReceived / 100) * 0.6 + (likesGiven / 100) * 0.2;
+          if (data.visits_given < data.visits_received) {
+            visitScore = 0.2;
+          }
+          const visitsReceived = data.visits_received > 100 ? 100 : data.visits_received;
+          const visitsGiven = data.visits_given > 100 ? 100 : data.visits_given;
+          visitScore += (visitsReceived / 100) * 0.6 + (visitsGiven / 100) * 0.2;
+          const blockPenalty = (data.blocked_count / 100) > 0.2 ? 0.2 : data.blocked_count / 100;
+          const reportPenalty =  data.reported_count / 50;
+          const popularity = Math.round(100 * (0.5 - blockPenalty -reportPenalty + (visitScore + likeScore) * 0.4));
+          return popularity;
         } catch (e) {
           return new Error('Database error: ' + e)
         }
