@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const moment = require('moment');
 
 const {
   GraphQLInt,
@@ -16,7 +17,6 @@ const pictureType = require('./pictureType');
 const visitType = require('./visitType');
 const blockedType = require('./blockedType');
 const likeType = require('./likeType');
-
 
 const psql = require('../db/dbconnect.js');
 
@@ -104,7 +104,6 @@ var userType = new GraphQLObjectType({
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
-          console.log(data);
           var likeScore = 0;
           var visitScore = 0;
           if (data.likes_given < data.likes_received) {
@@ -121,7 +120,8 @@ var userType = new GraphQLObjectType({
           visitScore += (visitsReceived / 100) * 0.6 + (visitsGiven / 100) * 0.2;
           const blockPenalty = (data.blocked_count / 100) > 0.2 ? 0.2 : data.blocked_count / 100;
           const reportPenalty =  data.reported_count / 50;
-          const popularity = Math.round(100 * (0.5 - blockPenalty -reportPenalty + (visitScore + likeScore) * 0.4));
+          const seniority = (moment(User.created_at).isBefore(moment().subtract(6, 'months'))) ? 0.1 : 0;
+          const popularity = Math.round(100 * (0.5 - blockPenalty -reportPenalty + seniority + (visitScore + likeScore) * 0.4));
           return popularity;
         } catch (e) {
           return new Error('Database error: ' + e)
