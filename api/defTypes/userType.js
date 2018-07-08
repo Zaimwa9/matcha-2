@@ -122,8 +122,8 @@ var userType = new GraphQLObjectType({
           const blockPenalty = (data.blocked_count / 100) > 0.3 ? 0.3 : data.blocked_count / 100;
           const reportPenalty =  data.reported_count / 50;
           const seniority = (moment(User.created_at).isBefore(moment().subtract(6, 'months'))) ? 0.1 : 0;
-          const popularity = Math.round(100 * (0.5 - blockPenalty - reportPenalty + seniority + visitScore * 0.2 + likeScore * 0.2));
-          return popularity;
+          const popularity = Math.round(100 * (0.5 - blockPenalty - reportPenalty + seniority + visitScore * 0.5 + likeScore));
+          return Math.min(popularity, 100);
         } catch (e) {
           return new Error('Database error: ' + e)
         }

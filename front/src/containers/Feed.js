@@ -42,6 +42,9 @@ class Feed extends Component {
       })
     return (
       <Grid columns={2} stackable>
+        <Grid.Column width={16}>
+          Hello
+        </Grid.Column>
         {cards}
       </Grid>
     )

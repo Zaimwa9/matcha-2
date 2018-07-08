@@ -76,12 +76,9 @@ class BrowsePeople extends Component {
           <Item>
             <Item.Content>
               <Item.Description>
-                {`${this.props.profile.gender.substr(0, 1).toUpperCase()}`}
+                {`${this.props.profile.gender.substr(0, 1).toUpperCase()}${this.props.profile.gender.substr(1)}`}
               </Item.Description>
-              <Item.Meta>{this.props.profile.popularity}</Item.Meta>
-              <Item.Description>
-                <strong></strong>
-              </Item.Description>
+              <Item.Meta>Overall popularity: {this.props.profile.popularity}</Item.Meta>
               <Item.Description>
                 {`${this.props.profile.description ? this.props.profile.description : ''}`}
               </Item.Description>

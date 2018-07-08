@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
-import { Segment, Item, Modal, Icon, Button } from 'semantic-ui-react';
+import { Segment, Item, Modal, Icon, Rating, Button } from 'semantic-ui-react';
 import BrowsePeople from '../containers/BrowsePeople';
 
 class FeedCard extends Component {
@@ -51,6 +51,8 @@ class FeedCard extends Component {
     })
     : '';
 
+    const rating = Math.round((this.props.profile.popularity / 100 * 5) * 2) / 2;
+
     return (
       <Segment color={this.props.profile && this.props.profile.is_liked === 1 && this.props.profile.likesyou === 1 ? 'pink' : 'grey'}>
         <Item.Group>
@@ -61,9 +63,9 @@ class FeedCard extends Component {
               {this.props.profile && this.props.profile.is_liked === 1 && this.props.profile.likesyou === 0 ? <Icon name='heart' style={{marginLeft: '1em'}} /> : ''}
               {this.props.profile && this.props.profile.is_liked === 1 && this.props.profile.likesyou === 1 ? <Icon name='heart' style={{marginLeft: '1em'}} color='pink'/> : ''}
               <Item.Description>
-                {`${this.props.profile.gender.substr(0, 1).toUpperCase()}`}
+                {`${this.props.profile.gender.substr(0, 1).toUpperCase()}${this.props.profile.gender.substr(1)}`}
               </Item.Description>
-              <Item.Meta>Popularity</Item.Meta>
+              <Item.Meta><Rating icon='heart' disabled defaultRating={rating} maxRating={5}/></Item.Meta>
               <Item.Description>
                 <strong>{hashtags}</strong>
               </Item.Description>
