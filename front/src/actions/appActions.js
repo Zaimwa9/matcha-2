@@ -527,6 +527,7 @@ export function fetchFeedUsers(uuid) {
               age,
               address,
               description,
+              popularity,
               is_liked,
               likesyou,
               hashtags {

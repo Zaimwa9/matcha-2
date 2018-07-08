@@ -14,12 +14,7 @@
 
 6) (Si a la zeub: 3h) Faire un onglet pour personnes visitées .. (Mettre dans la table des visites une colonne compteur)
 
-
 9) (2h) Desactiver l'app tant que le profil n'est pas rempli
-
-
-
-12) (2h) Faire le tag des faux comptes (un petit schéma en base de donnée et une mutation qui ajoute un compteur et faire genre au bout de 10 le compte est suspendu)
 
 13) (4h) Faire le chat
 
@@ -28,12 +23,13 @@ FIN) (4h) Gerer les validations Front et back mieux que dans camagru et vérifie
 
 _______________________________EN COURS____________________________
 
-7) (30min) Faire un resolver pour la popularité côté back (calculée à chaque fois que le profil est fetché)
 
 10) (1h les tris + 1h le filtre, je pense que ça peut se gérer que front) Faire les tris + les filtres ("Elle devra aussi être filtrable par intervalle
 d’âge, localisation, intervalle de popularité et par tags.")
 
 ___________________________________________________________________
+
+7) (30min) Faire un resolver pour la popularité côté back (calculée à chaque fois que le profil est fetché)
 
 8) (2h) Faire l'orientation sexuelle ... et par défaut bisexuel
 
@@ -44,27 +40,4 @@ ___________________________________________________________________
 11ter) POUR LES MATCHES RAJOUTER UN TYPE AVEC LE RESOLVE DU USER DEJA ECRIT
 FAIRE LES SUCCESS LIKES ET UNLIKE POUR GERER LE STATE CETTE FOIS CI
 
-
-
-with visitmetric as (
-  SELECT
-    'd8866ba8-ec6d-4239-af34-e93b28ef785a' as user_uuid,
-    SUM(CASE WHEN visited_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' THEN 1 ELSE 0 END) as visits_received,
-    SUM(CASE WHEN visitor_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' THEN 1 ELSE 0 END) as visits_given
-  FROM visits WHERE visited_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' OR visitor_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' GROUP BY 1
-),
-likemetric as (
-  SELECT
-    'd8866ba8-ec6d-4239-af34-e93b28ef785a' as user_uuid,
-    SUM(CASE WHEN liked_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' THEN 1 ELSE 0 END) as likes_received,
-    SUM(CASE WHEN liker_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' THEN 1 ELSE 0 END) as likes_given
-  FROM likes WHERE liker_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' OR liked_uuid='d8866ba8-ec6d-4239-af34-e93b28ef785a' GROUP BY 1
-)
-SELECT
-  'd8866ba8-ec6d-4239-af34-e93b28ef785a' as user_uuid,
-  v.visits_received,
-  v.visits_given,
-  l.likes_received,
-  l.likes_given
-FROM visitmetric as v
-LEFT JOIN likemetric as l on v.user_uuid=l.user_uuid
+12) (2h) Faire le tag des faux comptes (un petit schéma en base de donnée et une mutation qui ajoute un compteur et faire genre au bout de 10 le compte est suspendu)

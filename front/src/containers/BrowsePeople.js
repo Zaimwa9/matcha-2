@@ -78,7 +78,7 @@ class BrowsePeople extends Component {
               <Item.Description>
                 {`${this.props.profile.gender.substr(0, 1).toUpperCase()}`}
               </Item.Description>
-              <Item.Meta>Popularity</Item.Meta>
+              <Item.Meta>{this.props.profile.popularity}</Item.Meta>
               <Item.Description>
                 <strong></strong>
               </Item.Description>
