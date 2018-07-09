@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Carousel } from 'react-responsive-carousel';
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Slider from "react-slick";
 import _ from 'lodash';
-import { Image, Icon, Header, Item } from 'semantic-ui-react';
+
+import { Image, Header, Item } from 'semantic-ui-react';
 
 function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
@@ -88,6 +86,10 @@ class BrowsePeople extends Component {
         </Item.Group>
       </div>
     );
+  }
+
+  static propTypes = {
+    profile: PropTypes.object.isRequired
   }
 }
 

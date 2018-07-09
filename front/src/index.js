@@ -12,7 +12,7 @@ import { createStore, applyMiddleware } from 'redux';
 
 import { Provider } from 'react-redux';
 import client from './ApolloClient';
-import gql from "graphql-tag";
+//import gql from "graphql-tag";
 
 import 'semantic-ui-css/semantic.min.css';
 

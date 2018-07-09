@@ -7,7 +7,7 @@ import * as actions from '../actions/appActions';
 import AppHeader from '../components/AppHeader';
 
 import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
-import NewHashtag from '../components/NewHashtag';
+//import NewHashtag from '../components/NewHashtag';
 import Feed from '../containers/Feed';
 import Visits from '../containers/Visits';
 

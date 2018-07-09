@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { Grid, Modal, Dropdown } from 'semantic-ui-react';
+import { Grid, Dropdown } from 'semantic-ui-react';
 
 import FeedCard from '../components/FeedCard';
 
@@ -21,6 +21,25 @@ class Feed extends Component {
   }
 
   render() {
+    const sortOptions = [
+      {
+        text: 'popularity',
+        value: 'popularity'
+      },
+      {
+        text: 'distance',
+        value: 'distance'
+      },
+      {
+        text: 'age',
+        value: 'age'
+      },
+      {
+        text: 'hashtags',
+        value: 'hashtags'
+      }
+    ]
+
     const fetchedProfiles = (this.props.feed) ? this.props.feed.profiles : [];
     const sortingBy = this.props.sortBy ? this.props.sortBy.value : sortOptions[0].value;
 
@@ -53,25 +72,6 @@ class Feed extends Component {
           </Grid.Column>
         )
       })
-
-    const sortOptions = [
-      {
-        text: 'popularity',
-        value: 'popularity'
-      },
-      {
-        text: 'distance',
-        value: 'distance'
-      },
-      {
-        text: 'age',
-        value: 'age'
-      },
-      {
-        text: 'hashtags',
-        value: 'hashtags'
-      }
-    ]
 
     return (
       <Grid columns={2} stackable>
