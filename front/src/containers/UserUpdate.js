@@ -217,7 +217,7 @@ class UserUpdate extends Component {
                 name='addinghash'
                 placeholder={hashtags.length >= 8 ? 'Max 8 tags' : 'Add Hashtag...'}
                 size='small'
-                value={this.props.appUser.addinghash}
+                value={this.props.appUser.addinghash ? this.props.appUser.addinghash: ''}
                 onChange={this.handleChange}
               />
             </Item>

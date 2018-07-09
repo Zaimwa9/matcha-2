@@ -94,7 +94,7 @@ export default function appRed(state = initialState, action) {
 
   switch (action.type) {
     case RESET_UPDATE:
-      newState = {...state, user: {...state.witness, address: state.user.address, description: state.user.description, pictures: [...state.user.pictures]}};
+      newState = {...state, user: {...state.witness, address: state.user.address, description: state.user.description, pictures: [...state.user.pictures]}, appBox: ''};
       return newState;
 
     case SWITCH_VIEW:

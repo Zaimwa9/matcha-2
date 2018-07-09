@@ -55,7 +55,7 @@ class DescCard extends Component {
               <Item.Header as='h2'>Biography</Item.Header>
               <Icon
                 className='actionIcon'
-                  name={this.props.descBlock.editMode ? "cancel" : "edit"}
+                name={this.props.descBlock.editMode ? "cancel" : "edit"}
                 color='black'
                 style={{float: 'right'}}
                 onClick={this.handleEditing}

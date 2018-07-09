@@ -14,10 +14,9 @@ import { Container, Grid } from 'semantic-ui-react';
 
 class Profile extends Component {
   componentWillMount() {
-    if (!this.props.complete) {
-      console.log('firing');
+    //if (!this.props.complete) {
       this.props.actions.fetchHashtags(this.props.userIn.uuid);
-    }
+    //}
     if (!this.props.appUser.isFilled)
       this.props.actions.copyUser(this.props.userIn);
   }
