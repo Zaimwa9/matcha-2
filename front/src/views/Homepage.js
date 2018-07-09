@@ -9,6 +9,7 @@ import AppHeader from '../components/AppHeader';
 import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
 import NewHashtag from '../components/NewHashtag';
 import Feed from '../containers/Feed';
+import Visits from '../containers/Visits';
 
 class Homepage extends Component {
   componentWillMount() {
@@ -22,11 +23,24 @@ class Homepage extends Component {
   }
 
   renderBox = () => {
-    if (this.props.appBox !== 'visits' && this.props.appBox !== 'chat') {
+    if (this.props.appBox !== 'chat' && this.props.appBox !== 'visits') {
       return (
         <Feed
           fetchFeedUsers={this.props.actions.fetchFeedUsers}
-          fetched={this.props.feed ? this.props.feed.fetched : false}
+          fetched={this.props.appBox ? this.props.feed.fetched : false}
+          newVisit={this.props.actions.newVisit}
+          reportUser={this.props.actions.reportUser}
+          blockUser={this.props.actions.blockUser}
+          likeUser={this.props.actions.likeUser}
+          unLikeUser={this.props.actions.unLikeUser}
+          updateDropdown={this.props.actions.updateDropdown}
+        />
+      )
+    } else if (this.props.appBox === 'visits') {
+      return (
+        <Visits
+          fetchFeedUsers={this.props.actions.fetchFeedVisits}
+          fetched={this.props.appBox ? this.props.feed.fetched : false}
           newVisit={this.props.actions.newVisit}
           reportUser={this.props.actions.reportUser}
           blockUser={this.props.actions.blockUser}

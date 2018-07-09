@@ -7,7 +7,7 @@ import { Grid, Modal, Dropdown } from 'semantic-ui-react';
 
 import FeedCard from '../components/FeedCard';
 
-class Feed extends Component {
+class Visits extends Component {
   componentWillMount() {
     if (this.props.appUser.isFilled && !this.props.feed.fetched) {
       this.props.fetchFeedUsers(this.props.appUser.uuid)
@@ -107,4 +107,4 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-)(Feed);
+)(Visits);

@@ -98,7 +98,7 @@ export default function appRed(state = initialState, action) {
       return newState;
 
     case SWITCH_VIEW:
-      newState = {...state, appBox: action.appBox}
+      newState = {...state, appBox: action.appBox, feed: {...state.feed, profiles: [], fetched: false}}
       return newState;
 
     case LIKED_USER:

@@ -119,7 +119,35 @@ var queryType = new GraphQLObjectType({
           return new Error('Database error: ' + e)
         }
       }
-    }
+    },
+
+    visitUsers: {
+      type: new GraphQLList(userType),
+      args: {
+        uuid: { type: GraphQLString}
+      },
+      resolve: async function (root, args) {
+        textQuery = `
+          SELECT v.visitor_uuid, u.*
+          FROM visits AS v
+          LEFT JOIN blocked b on v.visitor_uuid=b.blocked_uuid AND uuid='${args.uuid}'
+          LEFT JOIN users as u
+            ON v.visitor_uuid=u.uuid
+            AND v.visited_uuid='${args.uuid}'
+          WHERE v.visited_uuid='${args.uuid}' and b.blocked_uuid IS NULL
+          ORDER BY v.visited_at DESC
+          LIMIT 10
+        `;
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows;
+        } catch (e) {
+          console.log(e)
+          return new Error('Database error: ' + e)
+        }
+      }
+    },
+
   }
 });
 

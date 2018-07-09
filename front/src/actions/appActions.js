@@ -554,6 +554,57 @@ export function fetchFeedUsers(uuid) {
   }
 }
 
+export function fetchFeedVisits(uuid) {
+  return dispatch => {
+    dispatch(fetchUsersRequest());
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          query visitUsers {
+            visitUsers (uuid: "${uuid}") {
+              uuid,
+              id,
+              distance,
+              first_name,
+              last_name,
+              gender,
+              age,
+              address,
+              description,
+              popularity,
+              is_liked,
+              count_hashtags,
+              likesyou,
+              hashtags {
+                content
+              },
+              pictures {
+                id,
+                path
+              }
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(fetchUsersSuccess(result.data.data.visitUsers))
+      } else {
+        console.log(result.data.errors);
+        dispatch(fetchUsersFailure(result.data.errors[0]))
+      }
+    })
+  }
+}
+
 export function newVisit(visited_uuid) {
   return (dispatch, getState) => {
     const visitor_uuid = getState().app.user.uuid;
