@@ -768,3 +768,10 @@ export function updateDropdown(value) {
     type: types.UPDATE_DROPDOWN
   }
 }
+
+export function switchView(appBox) {
+  return {
+    appBox: appBox,
+    type: types.SWITCH_VIEW
+  }
+}

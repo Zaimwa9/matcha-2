@@ -72,6 +72,10 @@ class FeedCard extends Component {
                 {moment().diff(moment.unix(this.props.profile.age), 'years')}
               </Item.Description>
 
+              <Item.Description>
+                {Math.round(this.props.profile.distance)} km away
+              </Item.Description>
+
               <Item.Meta><Rating icon='heart' disabled defaultRating={rating} maxRating={5}/></Item.Meta>
               <Item.Description>
                 <strong>{hashtags}</strong>

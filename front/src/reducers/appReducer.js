@@ -34,7 +34,8 @@ import {
   BLOCKED_USER,
   LIKED_USER,
   UNLIKED_USER,
-  UPDATE_DROPDOWN
+  UPDATE_DROPDOWN,
+  SWITCH_VIEW
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -84,7 +85,8 @@ const initialState = {
   {
     text: 'popularity',
     value: 'popularity'
-  }
+  },
+  appBox: ''
 }
 
 export default function appRed(state = initialState, action) {
@@ -93,6 +95,10 @@ export default function appRed(state = initialState, action) {
   switch (action.type) {
     case RESET_UPDATE:
       newState = {...state, user: {...state.witness, address: state.user.address, description: state.user.description, pictures: [...state.user.pictures]}};
+      return newState;
+
+    case SWITCH_VIEW:
+      newState = {...state, appBox: action.appBox}
       return newState;
 
     case LIKED_USER:

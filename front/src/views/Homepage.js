@@ -17,6 +17,27 @@ class Homepage extends Component {
     }
   }
 
+  handleAppBox = (appBox) => {
+    this.props.actions.switchView(appBox);
+  }
+
+  renderBox = () => {
+    if (this.props.appBox !== 'visits' && this.props.appBox !== 'chat') {
+      return (
+        <Feed
+          fetchFeedUsers={this.props.actions.fetchFeedUsers}
+          fetched={this.props.feed ? this.props.feed.fetched : false}
+          newVisit={this.props.actions.newVisit}
+          reportUser={this.props.actions.reportUser}
+          blockUser={this.props.actions.blockUser}
+          likeUser={this.props.actions.likeUser}
+          unLikeUser={this.props.actions.unLikeUser}
+          updateDropdown={this.props.actions.updateDropdown}
+        />
+      )
+    }
+  }
+
   render() {
     return (
       <Container fluid>
@@ -31,23 +52,24 @@ class Homepage extends Component {
               <Icon
                 name='venus mars'
                 size='big'
+                onClick={() => this.handleAppBox('feed')}
               />
-              <Icon.Group size='big'>
+              <Icon.Group
+                size='big'
+                onClick={() => this.handleAppBox('chat')}
+              >
                 <Icon name='chat' />
                 <Icon corner name='mail' />
               </Icon.Group>
+              <Icon.Group
+                size='big'
+                onClick={() => this.handleAppBox('visits')}
+              >
+                <Icon name='low vision' />
+              </Icon.Group>
             </Grid.Row>
             <Divider />
-            <Feed
-              fetchFeedUsers={this.props.actions.fetchFeedUsers}
-              fetched={this.props.feed ? this.props.feed.fetched : false}
-              newVisit={this.props.actions.newVisit}
-              reportUser={this.props.actions.reportUser}
-              blockUser={this.props.actions.blockUser}
-              likeUser={this.props.actions.likeUser}
-              unLikeUser={this.props.actions.unLikeUser}
-              updateDropdown={this.props.actions.updateDropdown}
-            />
+            {this.renderBox()}
           </Segment>
         </Container>
       </Container>
@@ -64,7 +86,8 @@ function mapStateToProps(state) {
     userIn: state.logSign.user,
     menu: state.app.menu,
     appUser: state.app.user,
-    feed: state.app.feed
+    feed: state.app.feed,
+    appBox: state.app.appBox
   };
 }
 
