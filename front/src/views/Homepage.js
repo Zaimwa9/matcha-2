@@ -19,7 +19,9 @@ class Homepage extends Component {
   }
 
   handleAppBox = (appBox) => {
-    this.props.actions.switchView(appBox);
+    if (this.props.appBox !== appBox) {
+      this.props.actions.switchView(appBox);
+    }
   }
 
   renderBox = () => {
