@@ -114,12 +114,14 @@ var userType = new GraphQLObjectType({
           const likesReceived = data.likes_received > 100 ? 100 : data.likes_received;
           const likesGiven = data.likes_given > 100 ? 100 : data.likes_given;
           likeScore += (likesReceived / 100) * 0.6 + (likesGiven / 100) * 0.2;
+          likeScore >= 0.4 ? 0.4 : likeScore;
           if (data.visits_given < data.visits_received) {
             visitScore = 0.2;
           }
           const visitsReceived = data.visits_received > 100 ? 100 : data.visits_received;
           const visitsGiven = data.visits_given > 100 ? 100 : data.visits_given;
           visitScore += (visitsReceived / 100) * 0.6 + (visitsGiven / 100) * 0.2;
+          visitScore >= 0.4 ? 0.4 : visitScore;
           const blockPenalty = (data.blocked_count / 100) > 0.3 ? 0.3 : data.blocked_count / 100;
           const reportPenalty =  data.reported_count / 50;
           const seniority = (moment(User.created_at).isBefore(moment().subtract(6, 'months'))) ? 0.1 : 0;
