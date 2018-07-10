@@ -826,3 +826,22 @@ export function switchView(appBox) {
     type: types.SWITCH_VIEW
   }
 }
+
+export function updateSearch(field, value) {
+  if (field === 'age') {
+    value.min = Math.max(18, value.min);
+    value.max = Math.min(99, value.max);
+  }
+  if (field === 'popularity') {
+    value.min = Math.max(25, value.min);
+    value.max = Math.min(100, value.max);
+  }
+  if (field === 'distance') {
+    value = Math.min(500, value)
+  }
+  return {
+    field: field,
+    value: value,
+    type: types.UPDATE_SEARCH
+  }
+}

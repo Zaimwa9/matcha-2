@@ -36,6 +36,7 @@ class Homepage extends Component {
           likeUser={this.props.actions.likeUser}
           unLikeUser={this.props.actions.unLikeUser}
           updateDropdown={this.props.actions.updateDropdown}
+          updateSearch={this.props.actions.updateSearch}
         />
       )
     } else if (this.props.appBox === 'visits') {

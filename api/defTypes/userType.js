@@ -113,8 +113,6 @@ var userType = new GraphQLObjectType({
           };
           const likesReceived = data.likes_received > 100 ? 100 : data.likes_received;
           const likesGiven = data.likes_given > 100 ? 100 : data.likes_given;
-          console.log(likesGiven)
-          console.log(likesReceived)
           likeScore += (likesReceived / 100) * 0.6 + (likesGiven / 100) * 0.2;
           likeScore >= 0.5 ? 0.5 : likeScore;
           if (data.visits_given < data.visits_received) {

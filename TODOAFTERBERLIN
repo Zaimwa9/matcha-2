@@ -6,6 +6,7 @@
 2ter) Pas con de faire un onglet spécial notif
 
 15) Status en ligne pas en ligne
+15bis) A CHAQUE RENDER D'UN COMPONENT OU QUOI DANS COMPONENT DID MOUNT, BALANCER UN LAST ACTION
 
 4) (2h) Silence tous les logs et warnings etc ... FRONT ET background
 4 bis) GERER LES FOCUS DES BOUTONS DE LA MODAL ON CLICK

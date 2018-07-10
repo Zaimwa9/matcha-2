@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { connect } from 'react-redux';
 
+import _ from 'lodash';
+import moment from 'moment';
+
 import { Grid, Dropdown } from 'semantic-ui-react';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
 
 import FeedCard from '../components/FeedCard';
 
@@ -18,6 +22,10 @@ class Feed extends Component {
 
   handleDropChange = (event, {value}) => {
     this.props.updateDropdown(value);
+  }
+
+  handleSearchField = (field, value) => {
+    this.props.updateSearch(field, value)
   }
 
   render() {
@@ -57,6 +65,17 @@ class Feed extends Component {
 
     profiles = _.orderBy(profiles, [sortingBy], [sortOrder]);
 
+    if (this.props.search) {
+      profiles = _.filter(profiles, profile => {
+        const age = moment().diff(moment.unix(profile.age), 'years');
+        return (
+          (age >= this.props.search.age.min && age <= this.props.search.age.max)
+          && (profile.popularity >= this.props.search.popularity.min && profile.popularity <= this.props.search.popularity.max)
+          && (profile.distance <= this.props.search.distance)
+        )
+      })
+    }
+
     const cards =
       _.map(profiles, profile => {
         return (
@@ -75,7 +94,7 @@ class Feed extends Component {
 
     return (
       <Grid columns={2} stackable>
-        <Grid.Column width={16}>
+        <Grid.Column width={3}>
           <span>
             Sort by{' '}
             <Dropdown
@@ -85,6 +104,36 @@ class Feed extends Component {
               onChange={this.handleDropChange}
             />
           </span>
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <p style={{textAlign: 'center'}}>Age</p>
+          <InputRange
+            minValue={18}
+            maxValue={99}
+            value={this.props.search ? this.props.search.age: {min: 18, max: 99}}
+            onChange={(value) => this.handleSearchField('age', value)}
+          />
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <p style={{textAlign: 'center'}}>Popularity</p>
+          <InputRange
+            minValue={25}
+            maxValue={100}
+            value={this.props.search ? this.props.search.popularity: {min: 25, max: 100}}
+            onChange={(value) => this.handleSearchField('popularity', value)}
+          />
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <p style={{textAlign: 'center'}}>Distance</p>
+          <InputRange
+            minValue={0}
+            maxValue={500}
+            value={this.props.search ? this.props.search.distance: 500}
+            onChange={(value) => this.handleSearchField('distance', value)}
+          />
+        </Grid.Column>
+        <Grid.Column width={3}>
+        Hashtags
         </Grid.Column>
         {cards}
       </Grid>
@@ -101,7 +150,8 @@ function mapStateToProps(state) {
     userIn: state.logSign.user,
     appUser: state.app.user,
     feed: state.app.feed,
-    sortBy: state.app.sortBy
+    sortBy: state.app.sortBy,
+    search: state.app.search
   };
 }
 

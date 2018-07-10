@@ -35,7 +35,8 @@ import {
   LIKED_USER,
   UNLIKED_USER,
   UPDATE_DROPDOWN,
-  SWITCH_VIEW
+  SWITCH_VIEW,
+  UPDATE_SEARCH,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -86,7 +87,18 @@ const initialState = {
     text: 'popularity',
     value: 'popularity'
   },
-  appBox: ''
+  appBox: '',
+  search: {
+    age: {
+      min: 18,
+      max: 99
+    },
+    popularity: {
+      min: 25,
+      max: 100
+    },
+    distance: 500
+  }
 }
 
 export default function appRed(state = initialState, action) {
@@ -100,7 +112,9 @@ export default function appRed(state = initialState, action) {
     case SWITCH_VIEW:
       newState = {...state, appBox: action.appBox, feed: {...state.feed, profiles: [], fetched: false}}
       return newState;
-
+    case UPDATE_SEARCH:
+      newState = {...state, search: {...state.search, [action.field]: action.value}}
+      return newState;
     case LIKED_USER:
       newState = {...state, feed: {...action.feed}};
       return newState;
@@ -127,7 +141,6 @@ export default function appRed(state = initialState, action) {
       newState = {...state, error: true, error_message: action.error_message};
       return newState;
     case SUBMIT_PWD_SUCCESS:
-      console.log('success update');
       newState = {...state};
       return newState;
 
