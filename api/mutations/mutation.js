@@ -397,6 +397,41 @@ var mutationType = new GraphQLObjectType({
             throw new Error('Database Error');
           } else {
             data = data.rows[0];
+
+            var textQueryBis = `
+            SELECT *
+            FROM likes
+            WHERE (liker_uuid='${args.liker_uuid}' AND liked_uuid='${args.liked_uuid}')
+            OR (liker_uuid='${args.liked_uuid}' AND liked_uuid='${args.liker_uuid}')
+            `
+            try {
+              var dataIsMatch = await psql.query(textQueryBis);
+              if (dataIsMatch.rowCount === 2) {
+                // Add record in match
+                var textQueryTer = `
+                  INSERT INTO matches (
+                    match_uuid,
+                    match_bis_uuid
+                  ) VALUES (
+                    '${args.liker_uuid}',
+                    '${args.liked_uuid}'
+                  ) ON CONFLICT (match_uuid, match_bis_uuid)
+                  DO
+                    UPDATE
+                      SET matched_at=current_timestamp
+                  RETURNING *
+                `;
+                try {
+                  var dataAddMatch = await psql.query(textQueryTer);
+                  return data
+                } catch (e) {
+                  return new Error('Error inserting newMatch')
+                }
+              }
+            } catch (e) {
+              return new Error('Error in checking if newMatch')
+            }
+            // Returning first initial set of data
             return data;
           }
         } catch (e) {
