@@ -73,12 +73,12 @@ class Feed extends Component {
           flag = true;
         } else {
           const hash = _.split(this.props.search.hashtags, ' ');
-          if (_.includes(hash, profile.hashtags[0].content)
-                || _.includes(hash, profile.hashtags[1].content)
-                  || _.includes(hash, profile.hashtags[2].content)
-                    || _.includes(hash, profile.hashtags[3].content)
-                      || _.includes(hash, profile.hashtags[4].content)) {
-            flag = true;
+          if (profile.hashtags) {
+            _.forEach(profile.hashtags, (item) => {
+               if (_.includes(hash, item.content)) {
+                 flag = true;
+               }
+            })
           }
         }
         const age = moment().diff(moment.unix(profile.age), 'years');

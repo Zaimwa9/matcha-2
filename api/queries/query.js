@@ -84,8 +84,8 @@ var queryType = new GraphQLObjectType({
         SELECT mu.uuid AS user_uuid, u.*, ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 AS distance
           FROM users AS u
           LEFT JOIN myUser AS mu
-          ON ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 200
-          WHERE ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 200
+          ON ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 500
+          WHERE ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) / 1000 < 500
           ORDER by ST_DISTANCE_SPHERE(ST_POINT(u.lng::float, u.lat::float), ST_POINT(mu.lng::float, mu.lat::float)) ASC
         ),
         count_hashtags AS (
@@ -110,7 +110,8 @@ var queryType = new GraphQLObjectType({
         LEFT JOIN blocked as b on md.uuid=b.blocked_uuid AND b.uuid='${args.uuid}'
         WHERE md.uuid <> '${args.uuid}'
         AND b.blocked_uuid IS NULL
-        ORDER by counter DESC`
+        ORDER by counter DESC
+        LIMIT 150`
         try {
           const data = await psql.query(textQuery);
           return data.rows;

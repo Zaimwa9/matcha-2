@@ -22,10 +22,11 @@ FIN) (4h) Gerer les validations Front et back mieux que dans camagru et vérifie
 
 _______________________________EN COURS____________________________
 
-10) (1h les tris + 1h le filtre, je pense que ça peut se gérer que front) Faire les tris + les filtres ("Elle devra aussi être filtrable par intervalle
-d’âge, localisation, intervalle de popularité et par tags.")
 
 ___________________________________________________________________
+
+10) (1h les tris + 1h le filtre, je pense que ça peut se gérer que front) Faire les tris + les filtres ("Elle devra aussi être filtrable par intervalle
+d’âge, localisation, intervalle de popularité et par tags.")
 
 6) (Si a la zeub: 3h) Faire un onglet pour personnes visitées .. (Mettre dans la table des visites une colonne compteur)
 
