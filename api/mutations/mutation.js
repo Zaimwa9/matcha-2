@@ -449,7 +449,10 @@ var mutationType = new GraphQLObjectType({
       },
       resolve: async function(root, args) {
         textQuery = `
-                      DELETE FROM likes WHERE liker_uuid='${args.liker_uuid}' AND liked_uuid='${args.liked_uuid}'
+                      DELETE
+                      FROM likes
+                      WHERE liker_uuid='${args.liker_uuid}'
+                      AND liked_uuid='${args.liked_uuid}'
                       RETURNING *
                     `;
         try {
@@ -458,6 +461,32 @@ var mutationType = new GraphQLObjectType({
             throw new Error('Database Error');
           } else {
             data = data.rows[0];
+
+            var textQueryBis = `
+            SELECT *
+            FROM matches
+            WHERE (match_uuid='${args.liker_uuid}' AND match_bis_uuid='${args.liked_uuid}')
+            OR (match_uuid='${args.liked_uuid}' AND match_bis_uuid='${args.liker_uuid}')
+            `
+            try {
+              var dataIsMatch = await psql.query(textQueryBis);
+              if (dataIsMatch.rowCount !== 0) {
+                var textQueryTer = `
+                  DELETE
+                  FROM matches
+                  WHERE (match_uuid='${args.liker_uuid}' AND match_bis_uuid='${args.liked_uuid}')
+                  OR (match_uuid='${args.liked_uuid}' AND match_bis_uuid='${args.liker_uuid}')
+                `
+                try {
+                  var dataRemoveMatch = await psql.query(textQueryTer);
+                  return data
+                } catch (e) {
+                  return new Error('Error deleting match');
+                }
+              }
+            } catch (e) {
+              return new Error('Error querying matches');
+            }
             return data;
           }
         } catch (e) {
