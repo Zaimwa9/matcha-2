@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import moment from 'moment';
 
-import { Grid, Dropdown } from 'semantic-ui-react';
+import { Grid, Dropdown, Input } from 'semantic-ui-react';
+
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 
@@ -67,11 +68,25 @@ class Feed extends Component {
 
     if (this.props.search) {
       profiles = _.filter(profiles, profile => {
+        var flag = false;
+        if (this.props.search.hashtags === '') {
+          flag = true;
+        } else {
+          const hash = _.split(this.props.search.hashtags, ' ');
+          if (_.includes(hash, profile.hashtags[0].content)
+                || _.includes(hash, profile.hashtags[1].content)
+                  || _.includes(hash, profile.hashtags[2].content)
+                    || _.includes(hash, profile.hashtags[3].content)
+                      || _.includes(hash, profile.hashtags[4].content)) {
+            flag = true;
+          }
+        }
         const age = moment().diff(moment.unix(profile.age), 'years');
         return (
           (age >= this.props.search.age.min && age <= this.props.search.age.max)
           && (profile.popularity >= this.props.search.popularity.min && profile.popularity <= this.props.search.popularity.max)
           && (profile.distance <= this.props.search.distance)
+          && (flag === true)
         )
       })
     }
@@ -94,7 +109,7 @@ class Feed extends Component {
 
     return (
       <Grid columns={2} stackable>
-        <Grid.Column width={3}>
+        <Grid.Column verticalAlign='bottom' width={3}>
           <span>
             Sort by{' '}
             <Dropdown
@@ -132,8 +147,14 @@ class Feed extends Component {
             onChange={(value) => this.handleSearchField('distance', value)}
           />
         </Grid.Column>
-        <Grid.Column width={3}>
-        Hashtags
+        <Grid.Column width={4} verticalAlign='bottom' style={{textAlign: 'center'}}>
+          <Input
+            icon='search'
+            iconPosition='left'
+            placeholder='Search hashtags...'
+            value={this.props.search ? this.props.search.hashtags : ''}
+            onChange={(event, {value}) => this.handleSearchField('hashtags', value)}
+          />
         </Grid.Column>
         {cards}
       </Grid>

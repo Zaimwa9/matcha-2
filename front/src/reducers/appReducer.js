@@ -97,7 +97,8 @@ const initialState = {
       min: 25,
       max: 100
     },
-    distance: 500
+    distance: 500,
+    hashtags: ''
   }
 }
 
@@ -115,6 +116,7 @@ export default function appRed(state = initialState, action) {
     case UPDATE_SEARCH:
       newState = {...state, search: {...state.search, [action.field]: action.value}}
       return newState;
+
     case LIKED_USER:
       newState = {...state, feed: {...action.feed}};
       return newState;
