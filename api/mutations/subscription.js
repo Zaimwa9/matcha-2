@@ -83,21 +83,22 @@ var subscriptionType = new GraphQLObjectType({
       }
     },
     unMatch: {
-      type: new GraphQLList(userType),
+      type: userType,
       args: {
         user_uuid: {type: GraphQLString}
       },
       subscribe: () => pubsub.asyncIterator('unMatch'),
       resolve: async (root, args, context) => {
-        if (args.user_uuid === root.match_uuid || args.user_uuid === root.match_bis_uuid) {
+        if (args.user_uuid === root.liked_uuid) {
           var textQuery = `
             SELECT *
             FROM users
-            WHERE uuid='${root.match_uuid}' OR uuid='${root.match_bis_uuid}'
+            WHERE uuid='${root.liker_uuid}'
           `
           try {
             var data = await psql.query(textQuery);
-            return data.rows;
+            data = data.rows[0]
+            return data;
           } catch (e) {
             return new Error('Error on subscription unmatch request' + e);
           }

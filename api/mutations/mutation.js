@@ -496,7 +496,7 @@ var mutationType = new GraphQLObjectType({
                 `
                 try {
                   var dataRemoveMatch = await psql.query(textQueryTer);
-                  pubsub.publish('unMatch', {match_uuid: dataRemoveMatch.rows[0].match_uuid, match_bis_uuid:  dataRemoveMatch.rows[0].match_bis_uuid});
+                  pubsub.publish('unMatch', {liker_uuid: args.liker_uuid, liked_uuid: args.liked_uuid});
                   return data
                 } catch (e) {
                   return new Error('Error deleting match');
