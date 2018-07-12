@@ -438,7 +438,6 @@ var mutationType = new GraphQLObjectType({
                 `;
                 try {
                   var dataAddMatch = await psql.query(textQueryTer);
-                  console.log(dataAddMatch)
                   pubsub.publish('newMatch', {match_uuid: dataAddMatch.rows[0].match_uuid, match_bis_uuid:  dataAddMatch.rows[0].match_bis_uuid});
                   return data
                 } catch (e) {
@@ -493,9 +492,11 @@ var mutationType = new GraphQLObjectType({
                   FROM matches
                   WHERE (match_uuid='${args.liker_uuid}' AND match_bis_uuid='${args.liked_uuid}')
                   OR (match_uuid='${args.liked_uuid}' AND match_bis_uuid='${args.liker_uuid}')
+                  RETURNING *
                 `
                 try {
                   var dataRemoveMatch = await psql.query(textQueryTer);
+                  pubsub.publish('unMatch', {match_uuid: dataRemoveMatch.rows[0].match_uuid, match_bis_uuid:  dataRemoveMatch.rows[0].match_bis_uuid});
                   return data
                 } catch (e) {
                   return new Error('Error deleting match');
@@ -507,7 +508,6 @@ var mutationType = new GraphQLObjectType({
             return data;
           }
         } catch (e) {
-          console.log(e);
           return new Error('Error: ' + e);
         }
       }

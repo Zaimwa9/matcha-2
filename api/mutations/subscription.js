@@ -67,7 +67,6 @@ var subscriptionType = new GraphQLObjectType({
       },
       subscribe: () => pubsub.asyncIterator('newMatch'),
       resolve: async (root, args, context) => {
-        console.log(root, args)
         if (args.user_uuid === root.match_uuid || args.user_uuid === root.match_bis_uuid) {
           var textQuery = `
             SELECT *
@@ -79,6 +78,28 @@ var subscriptionType = new GraphQLObjectType({
             return data.rows;
           } catch (e) {
             return new Error('Error on subscription match request' + e);
+          }
+        }
+      }
+    },
+    unMatch: {
+      type: new GraphQLList(userType),
+      args: {
+        user_uuid: {type: GraphQLString}
+      },
+      subscribe: () => pubsub.asyncIterator('unMatch'),
+      resolve: async (root, args, context) => {
+        if (args.user_uuid === root.match_uuid || args.user_uuid === root.match_bis_uuid) {
+          var textQuery = `
+            SELECT *
+            FROM users
+            WHERE uuid='${root.match_uuid}' OR uuid='${root.match_bis_uuid}'
+          `
+          try {
+            var data = await psql.query(textQuery);
+            return data.rows;
+          } catch (e) {
+            return new Error('Error on subscription unmatch request' + e);
           }
         }
       }
