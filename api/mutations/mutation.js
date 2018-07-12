@@ -292,6 +292,21 @@ var mutationType = new GraphQLObjectType({
             throw new Error('Database Error');
           } else {
             data = data.rows[0];
+            var textQueryBis = `
+              SELECT *
+              FROM users
+              WHERE uuid='${args.visitor_uuid}'
+              UNION
+              SELECT * from users
+              WHERE uuid='${args.visited_uuid}'
+              `
+            try {
+              var databis = await psql.query(textQueryBis);
+              pubsub.publish('newVisit', databis.rows)
+              return data;
+            } catch (e) {
+              return new Error('Error looking for visitor' + e)
+            }
             return data;
           }
         } catch (e) {
@@ -397,7 +412,7 @@ var mutationType = new GraphQLObjectType({
             throw new Error('Database Error');
           } else {
             data = data.rows[0];
-
+            pubsub.publish('newLike', {liker_uuid: args.liker_uuid, liked_uuid: args.liked_uuid});
             var textQueryBis = `
             SELECT *
             FROM likes
@@ -423,6 +438,8 @@ var mutationType = new GraphQLObjectType({
                 `;
                 try {
                   var dataAddMatch = await psql.query(textQueryTer);
+                  console.log(dataAddMatch)
+                  pubsub.publish('newMatch', {match_uuid: dataAddMatch.rows[0].match_uuid, match_bis_uuid:  dataAddMatch.rows[0].match_bis_uuid});
                   return data
                 } catch (e) {
                   return new Error('Error inserting newMatch')
