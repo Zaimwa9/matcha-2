@@ -88,7 +88,9 @@ class Homepage extends Component {
             <Divider />
             <Grid>
               <Grid.Column width={4}>
-                <Notifications />
+                <Notifications
+                  fetchNotifs={this.props.actions.fetchNotifs}
+                />
               </Grid.Column>
               <Grid.Column width={12}>
                 {this.renderBox()}

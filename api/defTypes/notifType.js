@@ -19,6 +19,7 @@ var notifType = new GraphQLObjectType({
     type: { type: GraphQLString },
     receiver_uuid: { type: GraphQLString },
     sender_uuid: { type: GraphQLString },
+    received_at: { type: GraphQLString },
     sender_profile: {
       type: userType,
       resolve: async (notif) => {

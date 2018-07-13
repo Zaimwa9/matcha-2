@@ -845,3 +845,66 @@ export function updateSearch(field, value) {
     type: types.UPDATE_SEARCH
   }
 }
+
+export function fetchNotifs(uuid) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          query getNotifs {
+            getNotifs(uuid: "${uuid}") {
+              id,
+              receiver_uuid,
+              sender_uuid,
+              type,
+              received_at,
+              sender_profile {
+                uuid,
+                id,
+                distance,
+                first_name,
+                last_name,
+                gender,
+                age,
+                address,
+                description,
+                popularity,
+                is_liked,
+                count_hashtags,
+                likesyou,
+                hashtags {
+                  content
+                },
+                pictures {
+                  id,
+                  path
+                }
+              }
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(fetchNotifsSuccess(result.data.data.getNotifs));
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}
+
+export function fetchNotifsSuccess(notifs) {
+  return {
+    notifs: notifs,
+    type: types.FETCH_NOTIFS,
+  }
+}

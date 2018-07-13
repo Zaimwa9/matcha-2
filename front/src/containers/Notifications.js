@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-
+import _ from 'lodash';
 import { connect } from "react-redux";
 
 import { graphql } from 'react-apollo';
 import client from '../ApolloClient';
 import gql from "graphql-tag";
 
-import { Divider, Segment, Grid} from 'semantic-ui-react';
+import { Divider, Segment, Grid, Header, Item } from 'semantic-ui-react';
 
 class Notifications extends Component {
 
   componentWillMount() {
+    this.props.fetchNotifs(this.props.userIn.uuid);
+
     const sub = gql `
       subscription {
         newLike (user_uuid: "${this.props.userIn.uuid}"){
@@ -28,21 +30,46 @@ class Notifications extends Component {
     })
   }
 
+  generateText = (name, type, date) => {
+    switch (type) {
+      case 'like':
+        return `${name} liked you on date!`;
+      case 'match':
+        return `Wow! You and ${name} matched!`;
+      case 'unmatch':
+        return `Too bad... ${name} unliked you`;
+      case 'visit':
+        return `${name} visited your profil on date`;
+    }
+  }
+
+
   render () {
+
+    const myNotifs = this.props.notifs;
+    const notifs =
+      _.map(myNotifs, notif => {
+      return (
+        <Grid.Row key={notif.id}>
+        <Item.Group>
+          <Item>
+            {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
+            <Item.Content>
+              <Item.Description>
+                {this.generateText(notif.sender_profile.first_name, notif.type, notif.received_at)}
+              </Item.Description>
+            </Item.Content>
+          </Item>
+          </Item.Group>
+          <Divider/>
+        </Grid.Row>
+        )
+      })
+
     return (
-      <Segment>
-        <Grid.Row>
-          FirstNotifications will
-        </Grid.Row>
-        <Grid.Row>
-          FirstNotifications will
-        </Grid.Row>
-        <Grid.Row>
-        FirstNotifications will come hereFirstNotifications will come hereFirstNotifications will come here
-        </Grid.Row>
-        <Grid.Row>
-        FirstNotifications will come hereFirstNotifications will come hereFirstNotifications will come here
-        </Grid.Row>
+      <Segment style={{marginTop: '2em'}}>
+        <Header>Latest Notifications</Header>
+        {notifs}
       </Segment>
     )
   }
@@ -54,7 +81,8 @@ function mapStateToProps(state) {
     menu: state.app.menu,
     appUser: state.app.user,
     feed: state.app.feed,
-    appBox: state.app.appBox
+    appBox: state.app.appBox,
+    notifs: state.app.notifs
   };
 }
 

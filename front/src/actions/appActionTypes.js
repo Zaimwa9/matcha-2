@@ -47,5 +47,7 @@ export const UNLIKED_USER = 'UNLIKED_USER';
 export const SWITCH_VIEW = 'SWITCH_VIEW';
 export const UPDATE_SEARCH = 'UPDATE_SEARCH';
 
+export const FETCH_NOTIFS = 'FETCH_NOTIFS';
+
 export const COPY_USER = 'COPY_USER';
 export const LOGOUT = 'LOGOUT';

@@ -37,6 +37,7 @@ import {
   UPDATE_DROPDOWN,
   SWITCH_VIEW,
   UPDATE_SEARCH,
+  FETCH_NOTIFS
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -99,7 +100,8 @@ const initialState = {
     },
     distance: 500,
     hashtags: ''
-  }
+  },
+  notifs: []
 }
 
 export default function appRed(state = initialState, action) {
@@ -115,6 +117,10 @@ export default function appRed(state = initialState, action) {
       return newState;
     case UPDATE_SEARCH:
       newState = {...state, search: {...state.search, [action.field]: action.value}}
+      return newState;
+
+    case FETCH_NOTIFS:
+      newState = {...state, notifs: [...action.notifs]}
       return newState;
 
     case LIKED_USER:
