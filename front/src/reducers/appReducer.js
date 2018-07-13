@@ -37,7 +37,8 @@ import {
   UPDATE_DROPDOWN,
   SWITCH_VIEW,
   UPDATE_SEARCH,
-  FETCH_NOTIFS
+  FETCH_NOTIFS,
+  NEW_NOTIF
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -121,6 +122,9 @@ export default function appRed(state = initialState, action) {
 
     case FETCH_NOTIFS:
       newState = {...state, notifs: [...action.notifs]}
+      return newState;
+    case NEW_NOTIF:
+      newState = {...state, notifs: [...state.notifs, {...action.notif}]}
       return newState;
 
     case LIKED_USER:

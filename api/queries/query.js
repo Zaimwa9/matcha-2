@@ -160,7 +160,9 @@ var queryType = new GraphQLObjectType({
           SELECT *
           FROM notifs
           WHERE receiver_uuid='${args.uuid}'
-          LIMIT 15
+          OR ((receiver_uuid='${args.uuid}' OR sender_uuid='${args.uuid}') AND type='match')
+          ORDER BY received_at DESC
+          LIMIT 30
         `;
         try {
           const data = await psql.query(textQuery);

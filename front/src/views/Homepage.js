@@ -94,6 +94,7 @@ class Homepage extends Component {
               <Grid.Column width={4}>
                 <Notifications
                   fetchNotifs={this.props.actions.fetchNotifs}
+                  newNotif={this.props.actions.newNotif}
                 />
               </Grid.Column>
               <Grid.Column width={1}>

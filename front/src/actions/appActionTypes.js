@@ -49,5 +49,7 @@ export const UPDATE_SEARCH = 'UPDATE_SEARCH';
 
 export const FETCH_NOTIFS = 'FETCH_NOTIFS';
 
+export const NEW_NOTIF = 'NEW_NOTIF';
+
 export const COPY_USER = 'COPY_USER';
 export const LOGOUT = 'LOGOUT';

@@ -23,11 +23,18 @@ var notifType = new GraphQLObjectType({
     sender_profile: {
       type: userType,
       resolve: async (notif) => {
-        var textQuery = `
+        var textQuery = notif.type === 'match' ?
+        `
           SELECT * FROM users
           WHERE uuid='${notif.sender_uuid}'
-        `;
+        `
+        :
+        `
+          SELECT * FROM users
+          WHERE uuid='${notif.sender_uuid}'
+        `
         try {
+          console.log(textQuery)
           var data = await psql.query(textQuery);
           if (data.rowCount !== 0) {
             data = data.rows[0];

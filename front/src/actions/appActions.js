@@ -908,3 +908,10 @@ export function fetchNotifsSuccess(notifs) {
     type: types.FETCH_NOTIFS,
   }
 }
+
+export function newNotif(notif) {
+  return {
+    notif: notif,
+    type: types.NEW_NOTIF
+  }
+}

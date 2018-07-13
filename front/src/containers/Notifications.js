@@ -25,7 +25,7 @@ class Notifications extends Component {
       query: sub
     }).subscribe({
       next(data) {
-        console.log(data)
+        console.log(data.data.newLike)
       }
     })
   }
@@ -37,6 +37,8 @@ class Notifications extends Component {
       case 'match':
         return `Wow! You and ${name} matched!`;
       case 'unmatch':
+        return `Too bad... ${name} unmatched you`;
+      case 'unlike':
         return `Too bad... ${name} unliked you`;
       case 'visit':
         return `${name} visited your profil on date`;

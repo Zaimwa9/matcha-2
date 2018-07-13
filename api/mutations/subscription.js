@@ -95,7 +95,7 @@ var subscriptionType = new GraphQLObjectType({
           var textQueryInsert = `
             INSERT INTO notifs
             (receiver_uuid, sender_uuid, type) VALUES (
-              '${root.match_uuid}',
+              '${root.match_bis_uuid}',
               '${root.match_uuid}',
               'match'
             )`
