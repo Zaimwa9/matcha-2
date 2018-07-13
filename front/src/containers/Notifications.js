@@ -79,7 +79,7 @@ class Notifications extends Component {
       _.map(myNotifs, notif => {
       return (
         <Grid.Row key={notif.id}>
-        <Item.Group >
+        <Item.Group className={notif.new ? 'newNotif' : ''}>
           <Item>
             {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
             <Item.Content>

@@ -138,3 +138,7 @@ body {
 .search-input > input:focus {
   outline: none;
 }
+
+.newNotif {
+  background-color: red
+}
