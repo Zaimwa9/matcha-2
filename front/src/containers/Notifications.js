@@ -9,15 +9,40 @@ import gql from "graphql-tag";
 import { Divider, Segment, Grid, Header, Item } from 'semantic-ui-react';
 
 class Notifications extends Component {
+  constructor(props) {
+    super(props);
+  }
 
   componentWillMount() {
     this.props.fetchNotifs(this.props.userIn.uuid);
-
+  }
+  componentDidMount() {
+    const myFunc = this.props.newNotif;
     const sub = gql `
       subscription {
         newLike (user_uuid: "${this.props.userIn.uuid}"){
           first_name,
-          last_name
+          last_name,
+          uuid,
+          id,
+          distance,
+          first_name,
+          last_name,
+          gender,
+          age,
+          address,
+          description,
+          popularity,
+          is_liked,
+          count_hashtags,
+          likesyou,
+          hashtags {
+            content
+          },
+          pictures {
+            id,
+            path
+          }
         }
       }
     `;
@@ -25,6 +50,7 @@ class Notifications extends Component {
       query: sub
     }).subscribe({
       next(data) {
+        myFunc(data.data.newLike, 'like');
         console.log(data.data.newLike)
       }
     })
@@ -53,7 +79,7 @@ class Notifications extends Component {
       _.map(myNotifs, notif => {
       return (
         <Grid.Row key={notif.id}>
-        <Item.Group>
+        <Item.Group >
           <Item>
             {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
             <Item.Content>

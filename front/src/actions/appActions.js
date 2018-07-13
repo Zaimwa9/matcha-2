@@ -909,9 +909,9 @@ export function fetchNotifsSuccess(notifs) {
   }
 }
 
-export function newNotif(notif) {
+export function newNotif(notif, type) {
   return {
-    notif: notif,
+    notif: {new: true, type: type, id: notif.id, sender_profile: {...notif}, /*received_at: timestamp*/},
     type: types.NEW_NOTIF
   }
 }

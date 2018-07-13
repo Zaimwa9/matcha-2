@@ -124,7 +124,7 @@ export default function appRed(state = initialState, action) {
       newState = {...state, notifs: [...action.notifs]}
       return newState;
     case NEW_NOTIF:
-      newState = {...state, notifs: [...state.notifs, {...action.notif}]}
+      newState = {...state, notifs: [{...action.notif}, ...state.notifs]}
       return newState;
 
     case LIKED_USER:
