@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const userType = require('../defTypes/userType');
+const notifType = require('../defTypes/notifType');
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
 
@@ -125,7 +126,7 @@ var queryType = new GraphQLObjectType({
     visitUsers: {
       type: new GraphQLList(userType),
       args: {
-        uuid: { type: GraphQLString}
+        uuid: { type: GraphQLString }
       },
       resolve: async function (root, args) {
         textQuery = `
@@ -149,6 +150,27 @@ var queryType = new GraphQLObjectType({
       }
     },
 
+    getNotifs: {
+      type: new GraphQLList(notifType),
+      args: {
+        uuid: { type: GraphQLString }
+      },
+      resolve: async function (root, args) {
+        textQuery = `
+          SELECT *
+          FROM notifs
+          WHERE receiver_uuid='${args.uuid}'
+          LIMIT 15
+        `;
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows;
+        } catch (e) {
+          console.log(e)
+          return new Error('Database error: ' + e)
+        }
+      }
+    }
   }
 });
 
