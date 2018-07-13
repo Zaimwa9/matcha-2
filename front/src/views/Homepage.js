@@ -64,21 +64,25 @@ class Homepage extends Component {
           {...this.props}
         />
         <Container fluid>
-        <Segment>
-            <Grid.Row>
-              <Icon
-                name='venus mars'
-                size='big'
-                onClick={() => this.handleAppBox('feed')}
-              />
+        <Segment  style={{minHeight: '94vh'}}>
+            <Grid.Row style={{textAlign: 'right'}}>
+              <Icon.Group style={{cursor: 'pointer', marginLeft: '1em'}}>
+                <Icon
+                  name='venus mars'
+                  size='big'
+                  onClick={() => this.handleAppBox('feed')}
+                />
+              </Icon.Group>
               <Icon.Group
+                style={{cursor: 'pointer', marginLeft: '1em'}}
                 size='big'
                 onClick={() => this.handleAppBox('chat')}
               >
                 <Icon name='chat' />
-                <Icon corner name='mail' />
+                {/*<Icon corner name='pointer' />*/}
               </Icon.Group>
               <Icon.Group
+                style={{cursor: 'pointer', marginLeft: '1em'}}
                 size='big'
                 onClick={() => this.handleAppBox('visits')}
               >
@@ -92,7 +96,9 @@ class Homepage extends Component {
                   fetchNotifs={this.props.actions.fetchNotifs}
                 />
               </Grid.Column>
-              <Grid.Column width={12}>
+              <Grid.Column width={1}>
+              </Grid.Column>
+              <Grid.Column width={11}>
                 {this.renderBox()}
               </Grid.Column>
             </Grid>

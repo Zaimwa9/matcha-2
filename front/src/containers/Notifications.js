@@ -67,7 +67,7 @@ class Notifications extends Component {
       })
 
     return (
-      <Segment style={{marginTop: '2em'}}>
+      <Segment style={{width: 'inherit', position: 'fixed', marginTop: '1em', marginLeft: '1em', overflowY: 'scroll', height: '600px'}}>
         <Header>Latest Notifications</Header>
         {notifs}
       </Segment>
