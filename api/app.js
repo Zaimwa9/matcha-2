@@ -210,6 +210,9 @@ app.get('/setup', async function () {
 
   var textQuery = "CREATE TABLE IF NOT EXISTS matches(id SERIAL PRIMARY KEY, match_uuid TEXT NOT NULL, match_bis_uuid TEXT NOT NULL, matched_at TIMESTAMP DEFAULT now(), unique(match_uuid, matched_uuid))"
   await psql.query(textQuery);
+
+  var textQuery = "CREATE TABLE IF NOT EXISTS notifs(id SERIAL PRIMARY KEY, receiver_uuid TEXT NOT NULL, sender_uuid TEXT NOT NULL, type TEXT NOT NULL, received_at TIMESTAMP DEFAULT now())"
+  await psql.query(textQuery);
 })
 //  copy pictures(author_uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
 //copy pictures(uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';

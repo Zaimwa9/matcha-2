@@ -31,8 +31,20 @@ var subscriptionType = new GraphQLObjectType({
         user_uuid: {type: GraphQLString}
       },
       subscribe: () => pubsub.asyncIterator('newVisit'),
-      resolve: (root, args, context) => {
+      resolve: async (root, args, context) => {
         if (args.user_uuid === root[1].uuid) {
+          var textQueryInsert = `
+            INSERT INTO notifs
+            (receiver_uuid, sender_uuid, type) VALUES (
+              '${root[1].uuid}',
+              '${root[0].uuid}',
+              'visit'
+            )`
+          try {
+            var data = await psql.query(textQueryInsert);
+          } catch (e) {
+            return new Error('Error inserting new visit notif');
+          }
           return root;
         }
       }
@@ -45,6 +57,18 @@ var subscriptionType = new GraphQLObjectType({
       subscribe: () => pubsub.asyncIterator('newLike'),
       resolve: async (root, args, context) => {
         if (args.user_uuid === root.liked_uuid) {
+          var textQueryInsert = `
+            INSERT INTO notifs
+            (receiver_uuid, sender_uuid, type) VALUES (
+              '${root.liked_uuid}',
+              '${root.liker_uuid}',
+              'like'
+            )`
+          try {
+            var data = await psql.query(textQueryInsert);
+          } catch (e) {
+            return new Error('Error inserting new like notif');
+          }
           var textQuery = `
             SELECT *
             FROM users
@@ -68,6 +92,18 @@ var subscriptionType = new GraphQLObjectType({
       subscribe: () => pubsub.asyncIterator('newMatch'),
       resolve: async (root, args, context) => {
         if (args.user_uuid === root.match_uuid || args.user_uuid === root.match_bis_uuid) {
+          var textQueryInsert = `
+            INSERT INTO notifs
+            (receiver_uuid, sender_uuid, type) VALUES (
+              '${root.match_uuid}',
+              '${root.match_uuid}',
+              'match'
+            )`
+          try {
+            var data = await psql.query(textQueryInsert);
+          } catch (e) {
+            return new Error('Error inserting new match notif');
+          }
           var textQuery = `
             SELECT *
             FROM users
@@ -90,6 +126,18 @@ var subscriptionType = new GraphQLObjectType({
       subscribe: () => pubsub.asyncIterator('unMatch'),
       resolve: async (root, args, context) => {
         if (args.user_uuid === root.liked_uuid) {
+          var textQueryInsert = `
+            INSERT INTO notifs
+            (receiver_uuid, sender_uuid, type) VALUES (
+              '${root.liked_uuid}',
+              '${root.liker_uuid}',
+              'unmatch'
+            )`
+          try {
+            var data = await psql.query(textQueryInsert);
+          } catch (e) {
+            return new Error('Error inserting new match notif');
+          }
           var textQuery = `
             SELECT *
             FROM users

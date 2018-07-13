@@ -10,7 +10,7 @@ import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
 //import NewHashtag from '../components/NewHashtag';
 import Feed from '../containers/Feed';
 import Visits from '../containers/Visits';
-
+import Notifications from '../containers/Notifications';
 class Homepage extends Component {
   componentWillMount() {
     if (!this.props.appUser.isFilled) {
@@ -86,7 +86,14 @@ class Homepage extends Component {
               </Icon.Group>
             </Grid.Row>
             <Divider />
-            {this.renderBox()}
+            <Grid>
+              <Grid.Column width={4}>
+                <Notifications />
+              </Grid.Column>
+              <Grid.Column width={12}>
+                {this.renderBox()}
+              </Grid.Column>
+            </Grid>
           </Segment>
         </Container>
       </Container>
