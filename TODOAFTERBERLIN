@@ -24,6 +24,12 @@ _______________________________EN COURS____________________________
 
 PENSER A CHECKER POURQUOI IL Y A PAS LES MATCHES/LIKES SUR VISITES
 
+Pour le chat:
+le mieux serait peut être d'avoir un state chat: {active_chat_user: ..., messages: []}
+et d'aller fetch a chaque montage les messages
+Il faudra également rajouter un state: matches qui se proc une premiere fois en même temps que les hashtags {
+}
+pour les nouveaux match on rajoute le gars au state quand y'a u
 ___________________________________________________________________
 
 10) (1h les tris + 1h le filtre, je pense que ça peut se gérer que front) Faire les tris + les filtres ("Elle devra aussi être filtrable par intervalle

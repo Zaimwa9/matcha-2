@@ -11,6 +11,8 @@ import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
 import Feed from '../containers/Feed';
 import Visits from '../containers/Visits';
 import Notifications from '../containers/Notifications';
+import Chat from '../containers/Chat';
+
 class Homepage extends Component {
   componentWillMount() {
     if (!this.props.appUser.isFilled) {
@@ -51,6 +53,10 @@ class Homepage extends Component {
           unLikeUser={this.props.actions.unLikeUser}
           updateDropdown={this.props.actions.updateDropdown}
         />
+      )
+    } else if (this.props.appBox === 'chat') {
+      return (
+        <Chat />
       )
     }
   }

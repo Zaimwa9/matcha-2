@@ -172,7 +172,37 @@ var queryType = new GraphQLObjectType({
           return new Error('Database error: ' + e)
         }
       }
-    }
+    },
+
+    getMatches: {
+      type: new GraphQLList(userType),
+      args: {
+        uuid: { type: GraphQLString }
+      },
+      resolve: async function (root, args) {
+        textQuery = `
+          with fmatches_uuid as (
+            SELECT match_bis_uuid as matches_uuid
+            FROM matches
+            WHERE match_uuid='${args.uuid}'
+            UNION
+            SELECT match_uuid as matches_uuid
+            FROM matches
+            WHERE match_bis_uuid='${args.uuid}'
+          )
+          SELECT *
+          FROM fmatches_uuid
+          LEFT JOIN users on matches_uuid=uuid
+        `;
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows;
+        } catch (e) {
+          console.log(e)
+          return new Error('Database error: ' + e)
+        }
+      }
+    },
   }
 });
 
