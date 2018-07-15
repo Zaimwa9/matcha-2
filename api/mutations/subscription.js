@@ -26,26 +26,37 @@ var subscriptionType = new GraphQLObjectType({
       },
     },
     newVisit: {
-      type: new GraphQLList(userType),
+      type: userType,
       args: {
         user_uuid: {type: GraphQLString}
       },
       subscribe: () => pubsub.asyncIterator('newVisit'),
       resolve: async (root, args, context) => {
-        if (args.user_uuid === root[1].uuid) {
+        if (args.user_uuid === root.visited_uuid) {
           var textQueryInsert = `
             INSERT INTO notifs
             (receiver_uuid, sender_uuid, type) VALUES (
-              '${root[1].uuid}',
-              '${root[0].uuid}',
+              '${root.visited_uuid}',
+              '${root.visitor_uuid}',
               'visit'
             )`
           try {
             var data = await psql.query(textQueryInsert);
+            var textQueryBis = `
+              SELECT * FROM users
+              WHERE uuid='${root.visitor_uuid}'
+              `
+            try {
+              var databis = await psql.query(textQueryBis);
+              databis = databis.rows[0];
+              return databis;
+            } catch (e) {
+              return new Error('Error fetching visitor profile' + e);
+            }
           } catch (e) {
             return new Error('Error inserting new visit notif');
           }
-          return root;
+          return databis;
         }
       }
     },

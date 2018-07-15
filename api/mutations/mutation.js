@@ -301,7 +301,7 @@ var mutationType = new GraphQLObjectType({
               `
             try {
               var databis = await psql.query(textQueryBis);
-              pubsub.publish('newVisit', databis.rows)
+              pubsub.publish('newVisit', {visitor_uuid: args.visitor_uuid, visited_uuid: args.visited_uuid})
               return data;
             } catch (e) {
               return new Error('Error looking for visitor' + e)

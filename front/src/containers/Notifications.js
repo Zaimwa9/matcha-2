@@ -84,10 +84,9 @@ class Notifications extends Component {
       query: sub_visit
     }).subscribe({
       next(data) {
-        const visitor = _.filter(data.data.newVisit, user => {
-          return user.uuid !== uuid
-        })
-        newNotif(visitor[0], 'visit');
+        if (data.data.newVisit && data.data.newVisit.uuid !== uuid) {
+          newNotif(data.data.newVisit, 'visit');
+        }
       }
     })
 
@@ -185,7 +184,7 @@ class Notifications extends Component {
 
   render () {
 
-    const myNotifs = this.props.notifs;
+    const myNotifs = _.chunk(this.props.notifs, 30)[0];
     const notifs =
       _.map(myNotifs, notif => {
       return (
