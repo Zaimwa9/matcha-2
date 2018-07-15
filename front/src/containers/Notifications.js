@@ -48,7 +48,9 @@ class Notifications extends Component {
       query: sub_like
     }).subscribe({
       next(data) {
-        newNotif(data.data.newLike, 'like');
+        if (data.data.newLike && data.data.newLike.uuid !== uuid) {
+          newNotif(data.data.newLike, 'like');
+        }
       }
     })
 
@@ -161,7 +163,9 @@ class Notifications extends Component {
       query: sub_unmatch
     }).subscribe({
       next(data) {
-        newNotif(data.data.unMatch, 'unmatch');
+        if (data.data.unmatch && data.data.unMatch.uuid !== uuid) {
+          newNotif(data.data.unMatch, 'unmatch')
+        }
       }
     })
   }
