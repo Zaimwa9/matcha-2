@@ -912,7 +912,7 @@ export function fetchNotifsSuccess(notifs) {
 export function newNotif(notif, type) {
   const id = Math.random() * 1000;
   return {
-    notif: {new: true, type: type, id: notif.id, sender_profile: {...notif}, /*received_at: timestamp*/},
+    notif: {new: true, type: type, id: id, sender_profile: {...notif}, /*received_at: timestamp*/},
     type: types.NEW_NOTIF
   }
 }

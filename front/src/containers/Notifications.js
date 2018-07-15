@@ -129,6 +129,42 @@ class Notifications extends Component {
         newNotif(match[0], 'match');
       }
     })
+
+    const sub_unmatch = gql `
+    subscription {
+      unMatch (user_uuid: "${this.props.userIn.uuid}"){
+        first_name,
+        last_name,
+        uuid,
+        id,
+        distance,
+        first_name,
+        last_name,
+        gender,
+        age,
+        address,
+        description,
+        popularity,
+        is_liked,
+        count_hashtags,
+        likesyou,
+        hashtags {
+          content
+        },
+        pictures {
+          id,
+          path
+        }
+      }
+    }
+    `;
+    client.subscribe({
+      query: sub_unmatch
+    }).subscribe({
+      next(data) {
+        newNotif(data.data.unMatch, 'unmatch');
+      }
+    })
   }
 
   generateText = (name, type, date) => {
@@ -154,15 +190,15 @@ class Notifications extends Component {
       _.map(myNotifs, notif => {
       return (
         <Grid.Row key={notif.id}>
-        <Item.Group className={notif.new ? 'newNotif' : ''}>
-          <Item>
-            {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
-            <Item.Content>
-              <Item.Description>
-                {this.generateText(notif.sender_profile.first_name, notif.type, notif.received_at)}
-              </Item.Description>
-            </Item.Content>
-          </Item>
+          <Item.Group className={notif.new ? 'newNotif' : ''}>
+            <Item>
+              {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
+              <Item.Content>
+                <Item.Description>
+                  {this.generateText(notif.sender_profile.first_name, notif.type, notif.received_at)}
+                </Item.Description>
+              </Item.Content>
+            </Item>
           </Item.Group>
           <Divider/>
         </Grid.Row>
