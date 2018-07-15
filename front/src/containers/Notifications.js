@@ -48,7 +48,6 @@ class Notifications extends Component {
       query: sub_like
     }).subscribe({
       next(data) {
-        console.log(data.data.newLike)
         newNotif(data.data.newLike, 'like');
       }
     })
@@ -91,7 +90,47 @@ class Notifications extends Component {
         newNotif(visitor[0], 'visit');
       }
     })
+
+    const sub_match = gql `
+    subscription {
+      newMatch (user_uuid: "${this.props.userIn.uuid}"){
+        first_name,
+        last_name,
+        uuid,
+        id,
+        distance,
+        first_name,
+        last_name,
+        gender,
+        age,
+        address,
+        description,
+        popularity,
+        is_liked,
+        count_hashtags,
+        likesyou,
+        hashtags {
+          content
+        },
+        pictures {
+          id,
+          path
+        }
+      }
+    }
+    `;
+    client.subscribe({
+      query: sub_match
+    }).subscribe({
+      next(data) {
+        const match = _.filter(data.data.newMatch, user => {
+          return user.uuid !== uuid
+        })
+        newNotif(match[0], 'match');
+      }
+    })
   }
+
   generateText = (name, type, date) => {
     switch (type) {
       case 'like':
