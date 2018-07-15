@@ -9,16 +9,14 @@ import gql from "graphql-tag";
 import { Divider, Segment, Grid, Header, Item } from 'semantic-ui-react';
 
 class Notifications extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
     this.props.fetchNotifs(this.props.userIn.uuid);
   }
   componentDidMount() {
-    const myFunc = this.props.newNotif;
-    const sub = gql `
+    const newNotif = this.props.newNotif;
+    const uuid = this.props.userIn.uuid;
+    const sub_like = gql `
       subscription {
         newLike (user_uuid: "${this.props.userIn.uuid}"){
           first_name,
@@ -47,15 +45,53 @@ class Notifications extends Component {
       }
     `;
     client.subscribe({
-      query: sub
+      query: sub_like
     }).subscribe({
       next(data) {
-        myFunc(data.data.newLike, 'like');
         console.log(data.data.newLike)
+        newNotif(data.data.newLike, 'like');
+      }
+    })
+
+    const sub_visit = gql `
+    subscription {
+      newVisit (user_uuid: "${this.props.userIn.uuid}"){
+        first_name,
+        last_name,
+        uuid,
+        id,
+        distance,
+        first_name,
+        last_name,
+        gender,
+        age,
+        address,
+        description,
+        popularity,
+        is_liked,
+        count_hashtags,
+        likesyou,
+        hashtags {
+          content
+        },
+        pictures {
+          id,
+          path
+        }
+      }
+    }
+    `;
+    client.subscribe({
+      query: sub_visit
+    }).subscribe({
+      next(data) {
+        const visitor = _.filter(data.data.newVisit, user => {
+          return user.uuid !== uuid
+        })
+        newNotif(visitor[0], 'visit');
       }
     })
   }
-
   generateText = (name, type, date) => {
     switch (type) {
       case 'like':
