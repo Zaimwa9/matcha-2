@@ -525,11 +525,11 @@ var mutationType = new GraphQLObjectType({
           INSERT INTO messages(
             author_uuid,
             receiver_uuid,
-            content_uuid
+            content
           ) VALUES (
-            '${args.author_uuid}'
-            '${args.receiver_uuid}'
-            '${args.content_uuid}'
+            '${args.author_uuid}',
+            '${args.receiver_uuid}',
+            '${args.content}'
           )
           RETURNING *
         `;

@@ -34,7 +34,6 @@ var notifType = new GraphQLObjectType({
           WHERE uuid='${notif.sender_uuid}'
         `
         try {
-          console.log(textQuery)
           var data = await psql.query(textQuery);
           if (data.rowCount !== 0) {
             data = data.rows[0];

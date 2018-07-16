@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const userType = require('../defTypes/userType');
 const notifType = require('../defTypes/notifType');
+const messageType = require('../defTypes/messageType');
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
 
@@ -203,6 +204,27 @@ var queryType = new GraphQLObjectType({
         }
       }
     },
+
+    getMessages: {
+      type: new GraphQLList(messageType),
+      args: {
+        uuid: { type: GraphQLString }
+      },
+      resolve: async function (root, args) {
+        textQuery = `
+          SELECT *
+          FROM messages
+          WHERE author_uuid='${args.uuid}' OR receiver_uuid='${args.uuid}'
+        `;
+        try {
+          const data = await psql.query(textQuery);
+          return data.rows;
+        } catch (e) {
+          console.log(e)
+          return new Error('Database error: ' + e)
+        }
+      }
+    }
   }
 });
 
