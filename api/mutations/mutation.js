@@ -5,6 +5,7 @@ const visitType = require('../defTypes/visitType');
 const fakeType = require('../defTypes/fakeType');
 const blockedType = require('../defTypes/blockedType');
 const likeType = require('../defTypes/likeType');
+const messageType = require('../defTypes/messageType');
 
 const psql = require('../db/dbconnect.js');
 const jwt = require('jsonwebtoken');
@@ -511,6 +512,37 @@ var mutationType = new GraphQLObjectType({
         }
       }
     },
+
+    postMessage: {
+      type: messageType,
+      args: {
+        author_uuid: { type: GraphQLString },
+        receiver_uuid: { type: GraphQLString },
+        content: { type: GraphQLString },
+      },
+      resolve: async function(root, args) {
+        var textQuery = `
+          INSERT INTO messages(
+            author_uuid,
+            receiver_uuid,
+            content_uuid
+          ) VALUES (
+            '${args.author_uuid}'
+            '${args.receiver_uuid}'
+            '${args.content_uuid}'
+          )
+          RETURNING *
+        `;
+        try {
+          var data = await psql.query(textQuery);
+          data = data.rows[0];
+          return data;
+        } catch (e) {
+          return new Error('Error posting message:' + e);
+        }
+      }
+    }
+
   }
 })
 

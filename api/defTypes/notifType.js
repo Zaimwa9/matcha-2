@@ -26,7 +26,7 @@ var notifType = new GraphQLObjectType({
         var textQuery = notif.type === 'match' ?
         `
           SELECT * FROM users
-          WHERE uuid='${notif.sender_uuid}'
+          WHERE uuid='${notif.receiver_uuid}'
         `
         :
         `

@@ -11,7 +11,6 @@ const {
   GraphQLSchema,
 } = require('graphql');
 
-const commentType = require('./commentType');
 const hashtagType = require('./hashtagType');
 const pictureType = require('./pictureType');
 const visitType = require('./visitType');
