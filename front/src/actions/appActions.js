@@ -916,3 +916,104 @@ export function newNotif(notif, type) {
     type: types.NEW_NOTIF
   }
 }
+
+export function getMatches(uuid) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          query getMatches {
+            getMatches(uuid: "${uuid}") {
+              id,
+              uuid,
+              first_name,
+              last_name,
+              pictures {
+                id,
+                path
+              }
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(fetchMatches(result.data.data.getMatches));
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}
+
+export function fetchMatches(matches) {
+  return {
+    matches: matches,
+    type: types.FETCH_MATCHES
+  }
+}
+
+export function setChatUuid(uuid) {
+  return {
+    chatUuid: uuid,
+    type: types.SET_CHAT_UUID,
+  }
+}
+
+export function switchChat(uuid) {
+  return dispatch => {
+    dispatch(setChatUuid(uuid));
+  }
+}
+
+export function writeMessage(content) {
+  return {
+    content: content,
+    type: types.WRITE_MESSAGE,
+  }
+}
+
+export function postMessage(author_uuid, content, receiver_uuid) {
+  content = content.replace(/"/g, '\\"');
+  content = content.replace("'", "''");
+  console.log(content)
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          mutation postMessage {
+            postMessage(author_uuid: "${author_uuid}", receiver_uuid: "${receiver_uuid}", content: "${content}") {
+              id,
+              author_uuid,
+              receiver_uuid,
+              content,
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      console.log(result)
+      if (!result.data.errors) {
+//        dispatch(addMessage(result.data.data.postMessage));
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}

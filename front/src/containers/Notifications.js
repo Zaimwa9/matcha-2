@@ -13,6 +13,7 @@ class Notifications extends Component {
   componentWillMount() {
     this.props.fetchNotifs(this.props.userIn.uuid);
   }
+
   componentDidMount() {
     const newNotif = this.props.newNotif;
     const uuid = this.props.userIn.uuid;
@@ -182,6 +183,8 @@ class Notifications extends Component {
         return `Too bad... ${name} unliked you`;
       case 'visit':
         return `${name} visited your profil on date`;
+      default:
+        return ``
     }
   }
 
@@ -191,21 +194,23 @@ class Notifications extends Component {
     const myNotifs = _.chunk(this.props.notifs, 30)[0];
     const notifs =
       _.map(myNotifs, notif => {
-      return (
-        <Grid.Row key={notif.id}>
-          <Item.Group className={notif.new ? 'newNotif' : ''}>
-            <Item>
-              {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
-              <Item.Content>
-                <Item.Description>
-                  {this.generateText(notif.sender_profile.first_name, notif.type, notif.received_at)}
-                </Item.Description>
-              </Item.Content>
-            </Item>
-          </Item.Group>
-          <Divider/>
-        </Grid.Row>
-        )
+        if (notif.sender_profile && notif.sender_profile.uuid !== this.props.userIn.uuid) {
+          return (
+            <Grid.Row key={notif.id}>
+              <Item.Group className={notif.new ? 'newNotif' : ''}>
+                <Item>
+                  {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
+                  <Item.Content>
+                    <Item.Description>
+                      {this.generateText(notif.sender_profile.first_name, notif.type, notif.received_at)}
+                    </Item.Description>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+              <Divider/>
+            </Grid.Row>
+          )
+        }
       })
 
     return (

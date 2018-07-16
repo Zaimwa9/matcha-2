@@ -38,7 +38,10 @@ import {
   SWITCH_VIEW,
   UPDATE_SEARCH,
   FETCH_NOTIFS,
-  NEW_NOTIF
+  NEW_NOTIF,
+  FETCH_MATCHES,
+  WRITE_MESSAGE,
+  SET_CHAT_UUID,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -102,7 +105,13 @@ const initialState = {
     distance: 500,
     hashtags: ''
   },
-  notifs: []
+  notifs: [],
+  matches: [],
+  chatBox: {
+    match_uuid: '',
+    messages: [],
+    content: ''
+  }
 }
 
 export default function appRed(state = initialState, action) {
@@ -123,6 +132,17 @@ export default function appRed(state = initialState, action) {
     case FETCH_NOTIFS:
       newState = {...state, notifs: [...action.notifs]}
       return newState;
+    case FETCH_MATCHES:
+      newState = {...state, matches: action.matches}
+      return newState;
+
+    case WRITE_MESSAGE:
+      newState = {...state, chatBox: {...state.chatBox, content: action.content}}
+      return newState;
+    case SET_CHAT_UUID:
+      newState = {...state, chatBox: {match_uuid: action.chatUuid, messages: [], content: ''}}
+      return newState;
+
     case NEW_NOTIF:
       newState = {...state, notifs: [{...action.notif}, ...state.notifs]}
       return newState;

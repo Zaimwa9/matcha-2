@@ -56,7 +56,12 @@ class Homepage extends Component {
       )
     } else if (this.props.appBox === 'chat') {
       return (
-        <Chat />
+        <Chat
+          getMatches={this.props.actions.getMatches}
+          writeMessage={this.props.actions.writeMessage}
+          postMessage={this.props.actions.postMessage}
+          switchChat={this.props.actions.switchChat}
+        />
       )
     }
   }
