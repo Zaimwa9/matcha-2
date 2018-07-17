@@ -61,6 +61,7 @@ class Homepage extends Component {
           writeMessage={this.props.actions.writeMessage}
           postMessage={this.props.actions.postMessage}
           switchChat={this.props.actions.switchChat}
+          getMessages={this.props.actions.getMessages}
         />
       )
     }

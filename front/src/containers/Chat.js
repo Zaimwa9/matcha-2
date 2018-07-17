@@ -23,6 +23,7 @@ class Chat extends Component {
 
   handleClick = (uuid) => {
     this.props.switchChat(uuid);
+    this.props.getMessages(uuid);
   }
 
   render() {
@@ -46,11 +47,42 @@ class Chat extends Component {
         )
       })
 
+    const myPreMessages = this.props.messages;
+    const myMessages = _.orderBy(myPreMessages, ['sent_at'], ['asc']);
+    const messages =
+      _.map(myMessages, message => {
+        if (message.author_uuid === this.props.userIn.uuid) {
+          return (
+            <Grid.Column key={message.id} style={{backgroundColor: 'green', textAlign:'right'}}>
+              <Divider />
+                <Item.Group>
+                  <Item.Content>
+                    <p style={{fontSize: 14}}>
+                      {message.content}
+                    </p>
+                    <Item.Extra floated='right'>
+                      posted_atr
+                    </Item.Extra>
+                  </Item.Content>
+                </Item.Group>
+              <Divider />
+            </Grid.Column>
+          )
+        } else {
+          return (
+            <Grid.Column key={message.id} style={{backgroundColor: 'blue'}}>
+              <p>{message.content}</p>
+            </Grid.Column>
+          )
+        }
+      })
+
     return (
       <Grid style={{maxHeight: '85vh'}}>
         <Grid.Column width={11}>
-          <Segment style={{height: '80vh', overflowY: 'scroll'}}>
-            <Grid.Row style={{height: '60vh', backgroundColor: 'red'}}>
+          <Segment style={{height: '80vh'}}>
+            <Grid.Row style={{height: '60vh', overflow: 'auto'}} width={2}>
+              {messages}
             </Grid.Row>
             <Grid.Row style={{marginTop: '1em', height: '15vh'}}>
               <Form onSubmit={this.handleSubmit}>
@@ -74,7 +106,7 @@ class Chat extends Component {
           </Segment>
         </Grid.Column>
         <Grid.Column width={5}>
-          <Segment style={{height: '80vh', overflowY: 'scroll'}}>
+          <Segment style={{height: '80vh', overflow: 'auto'}}>
             {matchCards}
           </Segment>
         </Grid.Column>
@@ -88,7 +120,8 @@ function mapStateToProps(state) {
     userIn: state.logSign.user,
     appUser: state.app.user,
     matches: state.app.matches,
-    chatBox: state.app.chatBox
+    chatBox: state.app.chatBox,
+    messages: state.app.chatBox.messages
   };
 }
 

@@ -42,6 +42,8 @@ import {
   FETCH_MATCHES,
   WRITE_MESSAGE,
   SET_CHAT_UUID,
+  FETCH_MESSAGES,
+  ADD_MESSAGE
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -136,11 +138,19 @@ export default function appRed(state = initialState, action) {
       newState = {...state, matches: action.matches}
       return newState;
 
+    case ADD_MESSAGE:
+      newState = {...state, chatBox: {...state.chatBox, messages: [...state.chatBox.messages, {...action.message}]}}
+      return newState;
+
     case WRITE_MESSAGE:
       newState = {...state, chatBox: {...state.chatBox, content: action.content}}
       return newState;
     case SET_CHAT_UUID:
       newState = {...state, chatBox: {match_uuid: action.chatUuid, messages: [], content: ''}}
+      return newState;
+
+    case FETCH_MESSAGES:
+      newState = {...state, chatBox: {...state.chatBox, messages: action.messages}};
       return newState;
 
     case NEW_NOTIF:
@@ -178,7 +188,6 @@ export default function appRed(state = initialState, action) {
 
     case UPLOAD_PICTURE_SUCCESS:
       newState = {...state, user: {...state.user, pictures: [...state.user.pictures, {...action.picture}]}}
-      console.log(newState.user)
       return newState;
     case ADD_HASHTAG:
       newState = {...state, user: {...state.user, addinghash: '', hashtags: [...state.user.hashtags, {...action.data}]}}
@@ -246,6 +255,7 @@ export default function appRed(state = initialState, action) {
       localStorage.removeItem('token');
       newState.user.isAuth = false;
       return newState;
+
     default:
       return state;
   }

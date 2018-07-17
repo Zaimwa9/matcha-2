@@ -54,6 +54,8 @@ export const NEW_NOTIF = 'NEW_NOTIF';
 
 export const SET_CHAT_UUID = 'SET_CHAT_UUID';
 export const WRITE_MESSAGE = 'WRITE_MESSAGE';
+export const FETCH_MESSAGES = 'FETCH_MESSAGES';
+export const ADD_MESSAGE = 'ADD_MESSAGE';
 
 export const COPY_USER = 'COPY_USER';
 export const LOGOUT = 'LOGOUT';

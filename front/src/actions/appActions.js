@@ -981,10 +981,16 @@ export function writeMessage(content) {
   }
 }
 
+export function addMessage(message) {
+  return {
+    message: message,
+    type: types.ADD_MESSAGE
+  }
+}
+
 export function postMessage(author_uuid, content, receiver_uuid) {
   content = content.replace(/"/g, '\\"');
   content = content.replace("'", "''");
-  console.log(content)
   return dispatch => {
     axios({
       url: 'http://localhost:3000/graphql/',
@@ -1008,9 +1014,49 @@ export function postMessage(author_uuid, content, receiver_uuid) {
       }
     })
     .then(result => {
-      console.log(result)
       if (!result.data.errors) {
-//        dispatch(addMessage(result.data.data.postMessage));
+        dispatch(addMessage(result.data.data.postMessage));
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}
+
+export function fetchMessages(messages) {
+  return {
+    messages: messages,
+    type: types.FETCH_MESSAGES
+  }
+}
+
+export function getMessages(uuid) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          query getMessages {
+            getMessages(uuid: "${uuid}") {
+              id,
+              author_uuid,
+              receiver_uuid,
+              content,
+              sent_at
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(fetchMessages(result.data.data.getMessages));
       } else {
         console.log(result.data.errors);
       }
