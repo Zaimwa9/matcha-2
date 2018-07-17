@@ -512,7 +512,6 @@ var mutationType = new GraphQLObjectType({
         }
       }
     },
-
     postMessage: {
       type: messageType,
       args: {
@@ -536,6 +535,7 @@ var mutationType = new GraphQLObjectType({
         try {
           var data = await psql.query(textQuery);
           data = data.rows[0];
+          pubsub.publish('newMessage', data)
           return data;
         } catch (e) {
           return new Error('Error posting message:' + e);

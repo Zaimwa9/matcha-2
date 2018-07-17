@@ -214,7 +214,8 @@ var queryType = new GraphQLObjectType({
         textQuery = `
           SELECT *
           FROM messages
-          WHERE author_uuid='${args.uuid}' OR receiver_uuid='${args.uuid}'
+          WHERE author_uuid='${args.uuid}' OR receiver_uuid='${args.uuid}
+          LIMIT 50'
         `;
         try {
           const data = await psql.query(textQuery);

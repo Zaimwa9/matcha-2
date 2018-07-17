@@ -16,6 +16,8 @@ class Notifications extends Component {
 
   componentDidMount() {
     const newNotif = this.props.newNotif;
+    const messageReceived = this.props.messageReceived;
+
     const uuid = this.props.userIn.uuid;
     const sub_like = gql `
       subscription {
@@ -93,6 +95,38 @@ class Notifications extends Component {
       }
     })
 
+    const sub_message = gql `
+    subscription {
+      newMessage (user_uuid: "${this.props.userIn.uuid}"){
+        id,
+        content,
+        author_uuid,
+        receiver_uuid,
+        sent_at,
+        author {
+          first_name,
+          pictures {
+            id,
+            path
+          }
+        },
+        receiver {
+          first_name
+        }
+      }
+    }
+    `;
+    client.subscribe({
+      query: sub_message
+    }).subscribe({
+      next(data) {
+        if (data.data.newMessage && data.data.newMessage.receiver_uuid === uuid) {
+          newNotif(data.data.newMessage, 'message');
+          messageReceived(data.data.newMessage);
+        }
+      }
+    })
+
     const sub_match = gql `
     subscription {
       newMatch (user_uuid: "${this.props.userIn.uuid}"){
@@ -165,7 +199,7 @@ class Notifications extends Component {
     }).subscribe({
       next(data) {
         if (data.data.unmatch && data.data.unMatch.uuid !== uuid) {
-          newNotif(data.data.unMatch, 'unmatch')
+          newNotif(data.data.unMatch, 'unmatch');
         }
       }
     })
@@ -183,6 +217,8 @@ class Notifications extends Component {
         return `Too bad... ${name} unliked you`;
       case 'visit':
         return `${name} visited your profil on date`;
+      case 'message':
+        return `${name} sent you a message!`
       default:
         return ``
     }

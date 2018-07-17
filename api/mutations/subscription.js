@@ -2,7 +2,8 @@ const hashType= require('../defTypes/hashtagType');
 const NewHash = require('./newHash');
 const pubsub = require('./serverConfig');
 const { withFilter } = require('graphql-subscriptions');
-const userType = require('../defTypes/userType')
+const userType = require('../defTypes/userType');
+const messageType = require('../defTypes/messageType');
 const psql = require('../db/dbconnect.js');
 
 const {
@@ -163,7 +164,19 @@ var subscriptionType = new GraphQLObjectType({
           }
         }
       }
-    }
+    },
+    newMessage: {
+      type: messageType,
+      args: {
+        user_uuid: {type: GraphQLString}
+      },
+      subscribe: () => pubsub.asyncIterator('newMessage'),
+      resolve: async (root, args, context) => {
+        if (args.user_uuid === root.author_uuid || args.user_uuid === root.receiver_uuid) {
+          return root;
+        }
+      }
+    },
   },
 })
 

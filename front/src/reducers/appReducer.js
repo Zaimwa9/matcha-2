@@ -43,7 +43,8 @@ import {
   WRITE_MESSAGE,
   SET_CHAT_UUID,
   FETCH_MESSAGES,
-  ADD_MESSAGE
+  ADD_MESSAGE,
+  MESSAGE_RECEIVED,
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -139,6 +140,9 @@ export default function appRed(state = initialState, action) {
       return newState;
 
     case ADD_MESSAGE:
+      newState = {...state, chatBox: {...state.chatBox, messages: [...state.chatBox.messages, {...action.message}]}}
+      return newState;
+    case MESSAGE_RECEIVED:
       newState = {...state, chatBox: {...state.chatBox, messages: [...state.chatBox.messages, {...action.message}]}}
       return newState;
 

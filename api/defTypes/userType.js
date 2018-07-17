@@ -27,7 +27,7 @@ var userType = new GraphQLObjectType({
     last_name: { type: new GraphQLNonNull(GraphQLString) },
     password: {
       type: GraphQLString,
-      resolve : async () => null
+      resolve: async () => null
     },
     email: { type: new GraphQLNonNull(GraphQLString) },
     gender: { type: GraphQLString },

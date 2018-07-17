@@ -910,10 +910,17 @@ export function fetchNotifsSuccess(notifs) {
 }
 
 export function newNotif(notif, type) {
-  const id = Math.random() * 1000;
-  return {
-    notif: {new: true, type: type, id: id, sender_profile: {...notif}, /*received_at: timestamp*/},
-    type: types.NEW_NOTIF
+  if (type !== 'message') {
+    const id = Math.random() * 1000;
+    return {
+      notif: {new: true, type: type, id: id, sender_profile: {...notif}, /*received_at: timestamp*/},
+      type: types.NEW_NOTIF
+    }
+  } else {
+    return {
+      notif: {new: true, type: type, id: notif.id, sender_profile: {...notif.author}},
+      type: types.NEW_NOTIF
+    }
   }
 }
 
@@ -1061,5 +1068,12 @@ export function getMessages(uuid) {
         console.log(result.data.errors);
       }
     })
+  }
+}
+
+export function messageReceived(message) {
+  return {
+    message: {content: message.content, id: message.id, sent_at: message.sent_at, receiver_uuid: message.receiver_uuid, author_uuid: message.author_uuid},
+    type: types.MESSAGE_RECEIVED
   }
 }
