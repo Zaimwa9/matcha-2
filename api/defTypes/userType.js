@@ -46,6 +46,29 @@ var userType = new GraphQLObjectType({
     likesyou: { type: GraphQLInt },
     orientation: { type: GraphQLString },
     count_hashtags: { type: GraphQLInt },
+    completed: {
+      type: GraphQLInt,
+      resolve: async (User) => {
+        if (User.address && User.gender && User.age && User.orientation) {
+          var textQuery = `
+            SELECT count(*) as pic
+            FROM pictures
+            WHERE author_uuid='${User.uuid}'
+          `;
+          try {
+            var data = await psql.query(textQuery);
+            data = data.rows[0];
+            if (data.pic > 0) {
+              return 1;
+            } else {
+              return 0;
+            }
+          } catch (e) {
+            return new Error('Error completed profile' + e)
+          }
+        }
+      }
+    },
     active: {
       type: GraphQLString,
       resolve: async (User) => {
