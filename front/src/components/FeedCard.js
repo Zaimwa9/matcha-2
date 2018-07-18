@@ -46,6 +46,7 @@ class FeedCard extends Component {
   }
 
   render() {
+
     const hashtags =
     this.props.profile ?
     _.map(this.props.profile.hashtags, hash => {

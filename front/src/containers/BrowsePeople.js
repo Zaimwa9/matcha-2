@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
 import _ from 'lodash';
+import moment from 'moment';
 
 import { Image, Header, Item } from 'semantic-ui-react';
 
@@ -42,6 +43,16 @@ class BrowsePeople extends Component {
   }
 
   render() {
+    var active = ''
+    if (moment().diff(moment(this.props.profile.active), 'minutes') < 2) {
+      active = 'Active'
+    } else if (moment().diff(moment(this.props.profile.active), 'minutes') > 2
+        && moment().diff(moment(this.props.profile.active), 'minutes') < 60) {
+          active = `Last seen: ${moment().diff(moment(this.props.profile.active), 'minutes')} minutes ago`;
+    } else {
+      active = `Last seen: More than an hour ago`;
+    }
+
     const pictures = _.map(this.props.profile.pictures, picture => {
       return (
         <div key={picture.id}>
@@ -80,7 +91,9 @@ class BrowsePeople extends Component {
               <Item.Description>
                 {`${this.props.profile.description ? this.props.profile.description : ''}`}
               </Item.Description>
-
+              <Item.Description>
+                {active ? active : ''}
+              </Item.Description>
             </Item.Content>
           </Item>
         </Item.Group>

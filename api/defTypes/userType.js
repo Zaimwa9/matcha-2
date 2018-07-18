@@ -46,10 +46,27 @@ var userType = new GraphQLObjectType({
     likesyou: { type: GraphQLInt },
     orientation: { type: GraphQLString },
     count_hashtags: { type: GraphQLInt },
+    active: {
+      type: GraphQLString,
+      resolve: async (User) => {
+        var textQuery = `
+          SELECT MAX(received_at) as active
+          FROM notifs
+          WHERE sender_uuid='${User.uuid}'
+        `;
+        try {
+          var data = await psql.query(textQuery);
+          data = data.rows[0];
+          return data.active;
+        } catch (e) {
+          return new Error('Error fetching active' + e);
+        }
+      }
+    },
     popularity: {
       type: GraphQLInt,
       resolve: async (User) => {
-        textQuery = `
+        var textQuery = `
           with visitmetric as (
             SELECT
               '${User.uuid}' as user_uuid,

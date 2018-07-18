@@ -1,13 +1,3 @@
-1) (5-6h) Gerer le socket (subscription, côté front il faut à chaque fois importer le client Apollo
-(cf le fichier newHashtag)
-
-2) (4-6h) Grâce à ça gérer les notifications et les messages (pourquoi pas dans le header ou directement dans un flux de notifs rss à gauche)
-2bis) Pour les notifs: les mettre à défaut comme non lu et au componentWillMount ou du compo de la notif, les mettre comme lues (afficher les XX dernieres)
-2ter) Pas con de faire un onglet spécial notif
-
-15) Status en ligne pas en ligne
-15bis) A CHAQUE RENDER D'UN COMPONENT OU QUOI DANS COMPONENT DID MOUNT, BALANCER UN LAST ACTION
-
 4) (2h) Silence tous les logs et warnings etc ... FRONT ET background
 4 bis) GERER LES FOCUS DES BOUTONS DE LA MODAL ON CLICK
 
@@ -15,25 +5,37 @@
 
 9) (2h) Desactiver l'app tant que le profil n'est pas rempli
 
-13) (4h) Faire le chat
-
 FIN) (4h) Gerer les validations Front et back mieux que dans camagru et vérifier les compatibilités
 
 
 _______________________________EN COURS____________________________
 
+15) Status en ligne pas en ligne
+15bis) A CHAQUE RENDER D'UN COMPONENT OU QUOI DANS COMPONENT DID MOUNT, BALANCER UN LAST ACTION
+
+Regarder la derniere notif du mec et point barre
+___________________________________________________________________
+
 PENSER A CHECKER POURQUOI IL Y A PAS LES MATCHES/LIKES SUR VISITES
+
+2) (4-6h) Grâce à ça gérer les notifications et les messages (pourquoi pas dans le header ou directement dans un flux de notifs rss à gauche)
+2bis) Pour les notifs: les mettre à défaut comme non lu et au componentWillMount ou du compo de la notif, les mettre comme lues (afficher les XX dernieres)
+2ter) Pas con de faire un onglet spécial notif
 
 Pour le chat:
 le mieux serait peut être d'avoir un state chat: {active_chat_user: ..., messages: []}
 et d'aller fetch a chaque montage les messages
 Il faudra également rajouter un state: matches qui se proc une premiere fois en même temps que les hashtags {
 }
+
 pour les nouveaux match on rajoute le gars au state quand y'a u
-___________________________________________________________________
+1) (5-6h) Gerer le socket (subscription, côté front il faut à chaque fois importer le client Apollo
+(cf le fichier newHashtag)
 
 10) (1h les tris + 1h le filtre, je pense que ça peut se gérer que front) Faire les tris + les filtres ("Elle devra aussi être filtrable par intervalle
 d’âge, localisation, intervalle de popularité et par tags.")
+
+13) (4h) Faire le chat
 
 6) (Si a la zeub: 3h) Faire un onglet pour personnes visitées .. (Mettre dans la table des visites une colonne compteur)
 

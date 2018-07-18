@@ -519,6 +519,7 @@ export function fetchFeedUsers(uuid) {
           query feedUsers {
             feedUsers (uuid: "${uuid}") {
               uuid,
+              active,
               id,
               distance,
               first_name,

@@ -208,7 +208,7 @@ class Notifications extends Component {
   generateText = (name, type, date) => {
     switch (type) {
       case 'like':
-        return `${name} liked you on date!`;
+        return `${name} liked you!`;
       case 'match':
         return `Wow! You and ${name} matched!`;
       case 'unmatch':
