@@ -75,7 +75,7 @@ var queryType = new GraphQLObjectType({
     feedUsers: {
       type: new GraphQLList(userType),
       args: {
-        uuid: { type: GraphQLString}
+        uuid: { type: GraphQLString },
       },
       resolve: async function (root, args) {
         textQuery = `

@@ -53,8 +53,19 @@ class Feed extends Component {
     const sortingBy = this.props.sortBy ? this.props.sortBy.value : sortOptions[0].value;
 
     var profiles = _.filter(fetchedProfiles, profile => {
-      // add completed profile
       return (profile.pictures[0]);
+    });
+
+    profiles = _.filter(fetchedProfiles, profile => {
+      if (this.props.appUser.orientation === 'Bi') {
+        return profile;
+      } else if (this.props.appUser.orientation === 'Hetero') {
+        var sex = this.props.appUser.gender === 'male' ? 'female' : 'male';
+        return profile.gender === sex;
+      } else if (this.props.appUser.orientation === 'Gay') {
+        var sex = this.props.appUser.gender === 'male' ? 'male' : 'female';
+        return profile.gender === sex;
+      }
     })
 
     var sortOrder;
