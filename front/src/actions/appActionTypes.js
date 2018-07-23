@@ -58,5 +58,7 @@ export const FETCH_MESSAGES = 'FETCH_MESSAGES';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 
+export const CHECK_COMPLETED = 'CHECK_COMPLETED';
+
 export const COPY_USER = 'COPY_USER';
 export const LOGOUT = 'LOGOUT';

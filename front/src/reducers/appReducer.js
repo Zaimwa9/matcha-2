@@ -45,6 +45,7 @@ import {
   FETCH_MESSAGES,
   ADD_MESSAGE,
   MESSAGE_RECEIVED,
+  CHECK_COMPLETED
 } from '../actions/appActionTypes';
 
 const initialState = {
@@ -54,6 +55,7 @@ const initialState = {
     email: '',
     gender: '',
     age: '',
+    completed: 0,
     description: 'youpi',
     hashtags: [],
     pictures: [],
@@ -130,6 +132,10 @@ export default function appRed(state = initialState, action) {
       return newState;
     case UPDATE_SEARCH:
       newState = {...state, search: {...state.search, [action.field]: action.value}}
+      return newState;
+
+    case CHECK_COMPLETED:
+      newState = {...state, user: {...state.user, completed: action.completed}};
       return newState;
 
     case FETCH_NOTIFS:

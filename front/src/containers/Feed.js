@@ -57,13 +57,14 @@ class Feed extends Component {
     });
 
     profiles = _.filter(fetchedProfiles, profile => {
+      var sex;
       if (this.props.appUser.orientation === 'Bi') {
         return profile;
       } else if (this.props.appUser.orientation === 'Hetero') {
-        var sex = this.props.appUser.gender === 'male' ? 'female' : 'male';
+        sex = this.props.appUser.gender === 'male' ? 'female' : 'male';
         return profile.gender === sex;
       } else if (this.props.appUser.orientation === 'Gay') {
-        var sex = this.props.appUser.gender === 'male' ? 'male' : 'female';
+        sex = this.props.appUser.gender === 'male' ? 'male' : 'female';
         return profile.gender === sex;
       }
     })

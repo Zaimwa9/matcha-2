@@ -1078,3 +1078,40 @@ export function messageReceived(message) {
     type: types.MESSAGE_RECEIVED
   }
 }
+
+export function isCompleted(user) {
+  return {
+    completed: user.completed,
+    type: types.CHECK_COMPLETED
+  }
+}
+
+export function checkCompleted(uuid) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query:
+        `
+          query user {
+            user(uuid: "${uuid}") {
+              completed
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      if (!result.data.errors) {
+        dispatch(isCompleted(result.data.data.user));
+      } else {
+        console.log(result.data.errors);
+      }
+    })
+  }
+}

@@ -6,7 +6,7 @@ import * as actions from '../actions/appActions';
 
 import AppHeader from '../components/AppHeader';
 
-import { Divider, Container, Segment, Grid, Icon } from 'semantic-ui-react';
+import { Header, Divider, Container, Segment, Grid, Icon, Dimmer } from 'semantic-ui-react';
 //import NewHashtag from '../components/NewHashtag';
 import Feed from '../containers/Feed';
 import Visits from '../containers/Visits';
@@ -15,6 +15,9 @@ import Chat from '../containers/Chat';
 
 class Homepage extends Component {
   componentWillMount() {
+    if (!this.props.userIn.completed) {
+      this.props.actions.checkComplete(this.props.userIn.uuid);
+    }
     if (!this.props.appUser.isFilled) {
       this.props.actions.copyUser(this.props.userIn);
     }
@@ -67,6 +70,67 @@ class Homepage extends Component {
     }
   }
 
+  renderApp() {
+    return (
+      <Segment style={{minHeight: '94vh'}}>
+        <Grid.Row style={{textAlign: 'right'}}>
+          <Icon.Group style={{cursor: 'pointer', marginLeft: '1em'}}>
+            <Icon
+              name='venus mars'
+              size='big'
+              onClick={() => this.handleAppBox('feed')}
+            />
+          </Icon.Group>
+          <Icon.Group
+            style={{cursor: 'pointer', marginLeft: '1em'}}
+            size='big'
+            onClick={() => this.handleAppBox('chat')}
+          >
+            <Icon name='chat' />
+            {/*<Icon corner name='pointer' />*/}
+          </Icon.Group>
+          <Icon.Group
+            style={{cursor: 'pointer', marginLeft: '1em'}}
+            size='big'
+            onClick={() => this.handleAppBox('visits')}
+          >
+            <Icon name='low vision' />
+          </Icon.Group>
+        </Grid.Row>
+        <Divider />
+        <Grid>
+          <Grid.Column width={4}>
+            <Notifications
+              fetchNotifs={this.props.actions.fetchNotifs}
+              newNotif={this.props.actions.newNotif}
+              messageReceived={this.props.actions.messageReceived}
+            />
+          </Grid.Column>
+          <Grid.Column width={1}>
+          </Grid.Column>
+          <Grid.Column width={11}>
+            {this.renderBox()}
+          </Grid.Column>
+        </Grid>
+      </Segment>
+    )
+  }
+
+  renderIncomplete = () => {
+    return (
+      <div>
+  <Dimmer.Dimmable as={Segment} blurring dimmed style={{height: '80vh', marginTop: '3em'}}>
+    <Dimmer active>
+    <Header as='h2' icon inverted>
+      <Icon name='heart' />
+        Complete your profile to find your soulmate!
+    </Header>
+  </Dimmer>
+  </Dimmer.Dimmable>
+  </div>
+    )
+  }
+
   render() {
     return (
       <Container fluid>
@@ -76,47 +140,7 @@ class Homepage extends Component {
           {...this.props}
         />
         <Container fluid>
-        <Segment  style={{minHeight: '94vh'}}>
-            <Grid.Row style={{textAlign: 'right'}}>
-              <Icon.Group style={{cursor: 'pointer', marginLeft: '1em'}}>
-                <Icon
-                  name='venus mars'
-                  size='big'
-                  onClick={() => this.handleAppBox('feed')}
-                />
-              </Icon.Group>
-              <Icon.Group
-                style={{cursor: 'pointer', marginLeft: '1em'}}
-                size='big'
-                onClick={() => this.handleAppBox('chat')}
-              >
-                <Icon name='chat' />
-                {/*<Icon corner name='pointer' />*/}
-              </Icon.Group>
-              <Icon.Group
-                style={{cursor: 'pointer', marginLeft: '1em'}}
-                size='big'
-                onClick={() => this.handleAppBox('visits')}
-              >
-                <Icon name='low vision' />
-              </Icon.Group>
-            </Grid.Row>
-            <Divider />
-            <Grid>
-              <Grid.Column width={4}>
-                <Notifications
-                  fetchNotifs={this.props.actions.fetchNotifs}
-                  newNotif={this.props.actions.newNotif}
-                  messageReceived={this.props.actions.messageReceived}
-                />
-              </Grid.Column>
-              <Grid.Column width={1}>
-              </Grid.Column>
-              <Grid.Column width={11}>
-                {this.renderBox()}
-              </Grid.Column>
-            </Grid>
-          </Segment>
+          {this.props.appUser.completed === 0 ? this.renderApp() : this.renderIncomplete()}
         </Container>
       </Container>
     )
