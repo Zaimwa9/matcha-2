@@ -140,7 +140,7 @@ class Homepage extends Component {
           {...this.props}
         />
         <Container fluid>
-          {this.props.appUser.completed === 0 ? this.renderApp() : this.renderIncomplete()}
+          {this.props.appUser.completed === 1 ? this.renderApp() : this.renderIncomplete()}
         </Container>
       </Container>
     )
