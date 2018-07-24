@@ -14,6 +14,15 @@ const uuidv4 = require('uuid/v4');
 const fs = require('fs');
 const path = require('path');
 
+const nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+ service: 'gmail',
+ auth: {
+   user: 'retalio354@gmail.com',
+   pass: 'loliloulol'
+  }
+});
+
 const pubsub = require('./serverConfig');
 
 const {
@@ -54,6 +63,14 @@ var mutationType = new GraphQLObjectType({
           var data = await psql.query(textQuery);
           data = data.rows[0];
           data.token = jwt.sign({'uuid' : data.uuid}, 'quentinbaltringue');
+
+          const mailOptions = {
+            from: 'retalio354@gmail.com', // sender address
+            to: args.email, // list of receivers
+            subject: 'Welcome on Matcha', // Subject line
+            html: '<h1>Your account has been created!</h1></br><p>Please, visit the link below to validate your account, otherwise it will be deleted in 14 days: http://localhost:3000/validation/' + args.uuid + ' </p></br>'// plain text body
+          };
+
           return data;
         } catch (e) {
           return new Error('Database error: ' + e);

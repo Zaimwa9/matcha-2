@@ -1,4 +1,4 @@
-const express = require('express');
+ const express = require('express');
 const app = express();
 const cors = require('cors');
 const graphqlHTTP = require('express-graphql');
@@ -14,20 +14,60 @@ var upload = multer({ dest: 'uploads/' });
 var fs = require('fs');
 var path = require('path');
 
+var nodemailer = require('nodemailer');
+
 const psql = require('./db/dbconnect');
 
 const jwt = require('jsonwebtoken');
-const {createServer} = require('http');
+const { createServer } = require('http');
 
 const expressPlayground = require('graphql-playground-middleware-express');
 const subscriptionType = require('./mutations/subscription');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
-const {graphiqlExpress, graphqlExpress} = require('graphql-server-express')
+const { graphiqlExpress, graphqlExpress } = require('graphql-server-express')
 
 app.get('/test', (req, res) => {
   console.log('received request on test');
   res.json({name: 'quentin', occupation: 'suceurdebitecoloreesmaispasbasanees'})
 })
+
+app.get('/validation/:uuid', async (req, res) => {
+  var textQuery = `
+    UPDATE users
+    SET validated=1
+    WHERE uuid='${req.params.uuid}'
+  `;
+  try {
+    var data = await psql.query(textQuery);
+    res.redirect('http://localhost:3001');
+  } catch (e) {
+    return new Error('Error validating account ' + e)
+  }
+})
+
+var transporter = nodemailer.createTransport({
+ service: 'gmail',
+ auth: {
+        user: 'retalio354@gmail.com',
+        pass: 'loliloulol'
+    }
+});
+
+app.get('/email', (req, res) => {
+  const mailOptions = {
+    from: 'retalio354@gmail.com', // sender address
+    to: 'B00549848@essec.edu', // list of receivers
+    subject: 'Subject of your email', // Subject line
+    html: '<h1>Your account has been created!</h1></br><p>Please, visit the link below to validate your account, otherwise it will be deleted in 14 days: http://localhost:3000/graphiql' + ' </p></br>'
+  }
+  transporter.sendMail(mailOptions, function (err, info) {
+     if(err)
+       console.log(err)
+     else
+       console.log(info);
+  });
+})
+
 app.use(cors());
 
 app.use(express.static('public'));
@@ -169,7 +209,7 @@ app.get('/setup', async function () {
   var textQuery = "DROP TABLE IF EXISTS users";
   await psql.query(textQuery);
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, orientation TEXT DEFAULT 'Bi', uuid TEXT, address TEXT, description TEXT, age INTEGER DEFAULT 684367200, gender TEXT, lat TEXT, lng TEXT, created_at TIMESTAMP DEFAULT now())";
+  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, orientation TEXT DEFAULT 'Bi', uuid TEXT, address TEXT, description TEXT, age INTEGER DEFAULT 684367200, gender TEXT, lat TEXT, lng TEXT, created_at TIMESTAMP, validated INT, DEFAULT now())";
   await psql.query(textQuery);
 
   var textQuery = "INSERT INTO USERS (email, first_name, last_name, password) VALUES ('diwadoo', 'diwadoo', 'diwadoo', 'diwadoo')";
