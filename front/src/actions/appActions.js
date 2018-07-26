@@ -407,6 +407,7 @@ export function updateDescriptionFailure() {
 
 export function postDescription(uuid, description) {
   description = description.replace(/\n$/, '');
+  description = description.replace("'", "''")
   return dispatch => {
     axios({
       url: 'http://localhost:3000/graphql/',

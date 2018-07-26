@@ -227,7 +227,11 @@ class Notifications extends Component {
 
   render () {
 
-    const myNotifs = _.chunk(this.props.notifs, 30)[0];
+    var myNotifs = _.chunk(this.props.notifs, 30)[0];
+    myNotifs = _.uniqBy(myNotifs, notif => {
+      return notif.id;
+    })
+
     const notifs =
       _.map(myNotifs, notif => {
         if (notif.sender_profile && notif.sender_profile.uuid !== this.props.userIn.uuid) {
