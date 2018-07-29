@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import client from '../ApolloClient';
 import gql from "graphql-tag";
 
-import { Divider, Segment, Grid, Header, Item } from 'semantic-ui-react';
+import { Divider, Segment, Grid, Header, Item, Icon } from 'semantic-ui-react';
 
 class Notifications extends Component {
 
@@ -241,6 +241,7 @@ class Notifications extends Component {
                   {notif.sender_profile.pictures ? <Item.Image size='mini' src={notif.sender_profile.pictures[0].path} /> : '' }
                   <Item.Content>
                     <Item.Description>
+                      {notif.new ? <Icon name='lightbulb outline' color='black' style={{float: 'left'}} /> : ''}
                       {this.generateText(notif.sender_profile.first_name, notif.type, notif.received_at)}
                     </Item.Description>
                   </Item.Content>

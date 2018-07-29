@@ -62,8 +62,8 @@ class Chat extends Component {
       _.map(myMessages, message => {
         if (message.author_uuid === this.props.appUser.uuid) {
           return (
-            <Segment color='black'>
-              <Grid.Column key={message.id} style={{textAlign:'right'}}>
+            <Segment key={message.id} color='black'>
+              <Grid.Column style={{textAlign:'right'}}>
                   <Item.Group>
                     <Item.Content>
                       <p style={{fontSize: 16, marginBottom: 0}}>
@@ -79,7 +79,7 @@ class Chat extends Component {
           )
         } else {
           return (
-            <Segment color='blue'>
+            <Segment key={message.id} color='blue'>
               <Grid.Column key={message.id} style={{textAlign:'left'}}>
                   <Item.Group>
                     <Item.Content>

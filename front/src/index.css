@@ -140,5 +140,5 @@ body {
 }
 
 .newNotif {
-  background-color: red
+  font-style: italic;
 }

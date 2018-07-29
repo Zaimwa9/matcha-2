@@ -10,14 +10,12 @@ class MyAuth extends Component {
 
   componentWillMount() {
     this.isAuthenticated();
-    console.log(this.props.logSign.user.isAuth)
     if (this.props.logSign.user.isAuth) {
       this.props.history.push('/');
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log(nextProps)
     if (nextProps.logSign.user.isAuth) {
       this.props.history.push('/');
     }
@@ -31,7 +29,6 @@ class MyAuth extends Component {
       this.props.actions.isAuth();
       if (this.props.logSign.user.isAuth) {
         this.props.history.push('/');
-        console.log(this.props.history)
       }
       // console.log(this.props.logSign);
     }
