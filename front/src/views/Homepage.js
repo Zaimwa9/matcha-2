@@ -33,6 +33,7 @@ class Homepage extends Component {
     if (this.props.appBox !== 'chat' && this.props.appBox !== 'visits') {
       return (
         <Feed
+          fetchHashtags={this.props.actions.fetchHashtags}
           fetchFeedUsers={this.props.actions.fetchFeedUsers}
           fetched={this.props.appBox ? this.props.feed.fetched : false}
           newVisit={this.props.actions.newVisit}

@@ -140,6 +140,7 @@ export function fetchHashSuccess(data) {
     pictures: data.pictures,
     hashtags: data.hashtags,
     orientation: data.orientation,
+    gender: data.gender,
     lat: data.lat,
     lng: data.lng,
     type: types.FETCH_HASHTAGS_SUCCESS
@@ -170,6 +171,7 @@ export function fetchHashtags(uuid) {
               address,
               lat,
               lng,
+              gender,
               orientation,
               hashtags {
                 id,

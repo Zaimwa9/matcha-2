@@ -14,11 +14,14 @@ import FeedCard from '../components/FeedCard';
 
 class Feed extends Component {
   componentWillMount() {
-    if (this.props.appUser.isFilled && !this.props.feed.fetched) {
-      this.props.fetchFeedUsers(this.props.appUser.uuid)
-    } else if (!this.props.appUser.isFilled) {
+    //if (this.props.appUser.isFilled && !this.props.feed.fetched) {
+    //  this.props.fetchFeedUsers(this.props.appUser.uuid)
+  //  } else if (!this.props.appUser.isFilled) {
       this.props.fetchFeedUsers(this.props.userIn.uuid)
-    }
+      if (this.props.appUser && !this.props.appUser.orientation) {
+        this.props.fetchHashtags(this.props.userIn.uuid);
+      }
+  //  }
   }
 
   handleDropChange = (event, {value}) => {
@@ -49,7 +52,7 @@ class Feed extends Component {
       }
     ]
 
-    const fetchedProfiles = (this.props.feed) ? this.props.feed.profiles : [];
+    var fetchedProfiles = (this.props.feed) ? this.props.feed.profiles : [];
     const sortingBy = this.props.sortBy ? this.props.sortBy.value : sortOptions[0].value;
 
     var profiles = _.filter(fetchedProfiles, profile => {
