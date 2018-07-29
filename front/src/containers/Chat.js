@@ -56,29 +56,39 @@ class Chat extends Component {
     const myMessages = _.orderBy(myPreMessages, ['sent_at'], ['asc']);
     const messages =
       _.map(myMessages, message => {
-        console.log(message.sent_at)
         if (message.author_uuid === this.props.appUser.uuid) {
           return (
-            <Grid.Column key={message.id} style={{backgroundColor: 'green', textAlign:'right'}}>
-              <Divider />
-                <Item.Group>
-                  <Item.Content>
-                    <p style={{fontSize: 14}}>
-                      {message.content}
-                    </p>
-                    <Item.Extra floated='right'>
-                      posted_atr
-                    </Item.Extra>
-                  </Item.Content>
-                </Item.Group>
-              <Divider />
-            </Grid.Column>
+            <Segment color='black'>
+              <Grid.Column key={message.id} style={{textAlign:'right'}}>
+                  <Item.Group>
+                    <Item.Content>
+                      <p style={{fontSize: 16, marginBottom: 0}}>
+                        {message.content}
+                      </p>
+                      <Item.Extra floated='right'>
+                        {moment.unix(message.sent_at).format('DD-MM-YYYY HH:mm')}
+                      </Item.Extra>
+                    </Item.Content>
+                  </Item.Group>
+              </Grid.Column>
+            </Segment>
           )
         } else {
           return (
-            <Grid.Column key={message.id} style={{backgroundColor: 'blue'}}>
-              <p>{message.content}</p>
-            </Grid.Column>
+            <Segment color='blue'>
+              <Grid.Column key={message.id} style={{textAlign:'left'}}>
+                  <Item.Group>
+                    <Item.Content>
+                      <p style={{fontSize: 16, marginBottom: 0}}>
+                        {message.content}
+                      </p>
+                      <Item.Extra floated='left'>
+                        {moment.unix(message.sent_at).format('DD-MM-YYYY HH:mm')}
+                      </Item.Extra>
+                    </Item.Content>
+                  </Item.Group>
+              </Grid.Column>
+            </Segment>
           )
         }
       })
