@@ -18,7 +18,7 @@ class newHashtag extends Component {
       query: sub
     }).subscribe({
       next(data) {
-        console.log(data)
+        // console.log(data)
       }
     })
 
@@ -34,7 +34,7 @@ class newHashtag extends Component {
        }
       `
     })
-    .then(result => console.log(result)); */
+    .then(result => // console.log(result)); */
   }
 
   subscribe() {

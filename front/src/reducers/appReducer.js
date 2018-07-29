@@ -209,12 +209,12 @@ export default function appRed(state = initialState, action) {
       newState = {...state, complete: true, user: {...state.user, popularity: action.popularity, gender: action.gender, age: action.age, lat: action.lat, lng: action.lng, address: action.address, orientation: action.orientation, description: action.description, pictures: [...action.pictures], hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
       return newState;
     case FETCH_HASHTAGS_FAILURE:
-      console.log('ERROR');
+      // console.log('ERROR');
       // newState = {...state, user: {...state.user, ...action.data}}
       return action;
 
     case DELETE_PICTURE_SUCCESS:
-      console.log(action.pictures);
+      // console.log(action.pictures);
       newState = {...state, user: {...state.user, pictures: [...action.pictures]}};
       return newState;
     case DELETE_HASHTAG_FAILURE:

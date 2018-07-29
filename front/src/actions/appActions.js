@@ -123,10 +123,10 @@ export function submitUpdateUser(data) {
     })
     .then(result => {
       if (!result.data.errors) {
-        console.log('success');
+        // console.log('success');
         dispatch(updateUserSuccess(result.data.data.updateUser))
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
         dispatch(updateUserFailure(result.data.errors[0]))
       }
     })
@@ -246,12 +246,12 @@ export function postHashtag(data, currentHashes) {
         if (!result.data.errors) {
           dispatch(hashAdded(result.data.data))
         } else {
-          console.log(result.data.errors);
+//          // console.log(result.data.errors);
           dispatch(hashFailed(result.data.errors[0]))
         }
       })
     } else {
-      console.log('duplicate');
+  //    // console.log('duplicate');
       dispatch(hashFailed('Duplicate hashtag'));
     }
   }
@@ -293,11 +293,11 @@ export function deleteHashtag(key, hashtags) {
       }
     })
     .then(result => {
-      console.log(result)
+    //  // console.log(result)
       if (!result.data.errors) {
         dispatch(deleteHashtagSuccess(key, hashtags))
       } else {
-        console.log(result.data.errors);
+      //  // console.log(result.data.errors);
         dispatch(deleteHashtagFailure(result.data.errors[0]))
       }
     })
@@ -344,7 +344,7 @@ export function postPictureUpload(file, uuid) {
       }
     }).then(data => {
         if (data && data.data) {
-          console.log(data);
+        //  // console.log(data);
           dispatch(uploadPictureSuccess(data.data, file))
         }
     })
@@ -387,11 +387,11 @@ export function deletePicture(key, pictures) {
       }
     })
     .then(result => {
-      console.log(result)
+      // console.log(result)
       if (!result.data.errors) {
         dispatch(deletePictureSuccess(key, pictures))
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
         dispatch(deletePictureFailure(result.data.errors[0]))
       }
     })
@@ -439,7 +439,7 @@ export function postDescription(uuid, description) {
       if (!result.data.errors) {
         dispatch(updateDescriptionSuccess(result.data.data.updateDescription))
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
         dispatch(updateDescriptionFailure(result.data.errors[0]))
       }
     })
@@ -483,7 +483,7 @@ export function submitPwdUpdate(uuid, oldPwd, newPwd) {
       if (!result.data.errors) {
         dispatch(submitPwdSuccess(result.data.data.updatePwd))
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
         dispatch(submitPwdFailure(result.data.errors[0]))
       }
     })
@@ -555,7 +555,7 @@ export function fetchFeedUsers(uuid) {
       if (!result.data.errors) {
         dispatch(fetchUsersSuccess(result.data.data.feedUsers))
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
         dispatch(fetchUsersFailure(result.data.errors[0]))
       }
     })
@@ -606,7 +606,7 @@ export function fetchFeedVisits(uuid) {
       if (!result.data.errors) {
         dispatch(fetchUsersSuccess(result.data.data.visitUsers))
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
         dispatch(fetchUsersFailure(result.data.errors[0]))
       }
     })
@@ -638,9 +638,9 @@ export function newVisit(visited_uuid) {
     })
     .then(result => {
       if (!result.data.errors) {
-        console.log('visit added')
+        // console.log('visit added')
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -671,9 +671,9 @@ export function reportUser(uuid) {
     })
     .then(result => {
       if (!result.data.errors) {
-        console.log('reported')
+        // console.log('reported')
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -716,9 +716,9 @@ export function blockUser(blocked_uuid) {
     .then(result => {
       if (!result.data.errors) {
         dispatch(userBlocked(blocked_uuid, feed));
-        console.log('blocked')
+        // console.log('blocked')
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -761,10 +761,10 @@ export function likeUser(liked_uuid) {
     })
     .then(result => {
       if (!result.data.errors) {
-        console.log('liked')
+        // console.log('liked')
         dispatch(userLiked(liked_uuid, feed));
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -808,9 +808,9 @@ export function unLikeUser(liked_uuid) {
     .then(result => {
       if (!result.data.errors) {
         dispatch(userUnliked(liked_uuid, feed));
-        console.log('unliked')
+        // console.log('unliked')
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -904,7 +904,7 @@ export function fetchNotifs(uuid) {
       if (!result.data.errors) {
         dispatch(fetchNotifsSuccess(result.data.data.getNotifs));
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -963,7 +963,7 @@ export function getMatches(uuid) {
       if (!result.data.errors) {
         dispatch(fetchMatches(result.data.data.getMatches));
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -1033,7 +1033,7 @@ export function postMessage(author_uuid, content, receiver_uuid) {
       if (!result.data.errors) {
         dispatch(addMessage(result.data.data.postMessage));
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -1074,7 +1074,7 @@ export function getMessages(uuid) {
       if (!result.data.errors) {
         dispatch(fetchMessages(result.data.data.getMessages));
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
@@ -1118,7 +1118,7 @@ export function checkCompleted(uuid) {
       if (!result.data.errors) {
         dispatch(isCompleted(result.data.data.user));
       } else {
-        console.log(result.data.errors);
+        // console.log(result.data.errors);
       }
     })
   }
