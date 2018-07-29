@@ -271,12 +271,14 @@ var mutationType = new GraphQLObjectType({
         newPwd: {type: GraphQLString},
       },
       resolve: async function(root, args) {
+        args.newPwd = await bcrypt.hash(args.newPwd, 10);
         textQuery = `
                       UPDATE users SET
                       password='${args.newPwd}'
-                      WHERE uuid='${args.uuid}' and password='${args.oldPwd}'
+                      WHERE uuid='${args.uuid}'
                       RETURNING *
                     `;
+                     //and password='${args.oldPwd}
         try {
           var data = await psql.query(textQuery);
           if (data.rowCount === 0) {
