@@ -581,7 +581,6 @@ var mutationType = new GraphQLObjectType({
             length: 10,
             numbers: true
         });
-        console.log(password);
         var hash = await bcrypt.hash(password, 10);
         var textQuery = `
           UPDATE users

@@ -23,7 +23,7 @@ class LocationSearchInput extends React.Component {
         this.props.updateUserField(this.props.appUser, 'lat', latLng.lat);
         this.props.updateUserField(this.props.appUser, 'lng', latLng.lng);
       })
-      .catch(error => return error) 
+      .catch(error => error) 
         //console.error('Error', error))
   }
 
