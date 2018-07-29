@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import _ from 'lodash';
 import { connect } from "react-redux";
 
-import { graphql } from 'react-apollo';
 import client from '../ApolloClient';
 import gql from "graphql-tag";
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import moment from 'moment';
 
-import { Grid, Divider, Form, TextArea, Button, Segment, Input, Item } from 'semantic-ui-react';
+import { Grid, Divider, Form, TextArea, Button, Segment, Item } from 'semantic-ui-react';
 
 class Chat extends Component {
 
@@ -47,11 +47,17 @@ class Chat extends Component {
         )
       })
 
-    const myPreMessages = this.props.messages;
+    var myPreMessages = this.props.messages;
+    myPreMessages = _.map(myPreMessages, message => {
+      message.sent_at = moment(message.sent_at).unix();
+      return message;
+      //message.sent_at = moment.format()
+    })
     const myMessages = _.orderBy(myPreMessages, ['sent_at'], ['asc']);
     const messages =
       _.map(myMessages, message => {
-        if (message.author_uuid === this.props.userIn.uuid) {
+        console.log(message.sent_at)
+        if (message.author_uuid === this.props.appUser.uuid) {
           return (
             <Grid.Column key={message.id} style={{backgroundColor: 'green', textAlign:'right'}}>
               <Divider />
@@ -112,6 +118,14 @@ class Chat extends Component {
         </Grid.Column>
       </Grid>
     )
+  }
+
+  static propTypes = {
+    getMatches: PropTypes.func.isRequired,
+    writeMessage: PropTypes.func.isRequired,
+    postMessage: PropTypes.func.isRequired,
+    switchChat: PropTypes.func.isRequired,
+    getMessages: PropTypes.func.isRequired,
   }
 }
 

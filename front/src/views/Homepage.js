@@ -121,11 +121,11 @@ class Homepage extends Component {
       <div>
   <Dimmer.Dimmable as={Segment} blurring dimmed style={{height: '80vh', marginTop: '3em'}}>
     <Dimmer active>
-    <Header as='h2' icon inverted>
-      <Icon name='heart' />
-        Complete your profile to find your soulmate!
-    </Header>
-  </Dimmer>
+      <Header as='h2' icon inverted>
+        <Icon name='heart' />
+          Complete your profile to find your soulmate!
+      </Header>
+    </Dimmer>
   </Dimmer.Dimmable>
   </div>
     )
