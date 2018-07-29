@@ -16,7 +16,7 @@ import Chat from '../containers/Chat';
 class Homepage extends Component {
   componentWillMount() {
     if (!this.props.userIn.completed) {
-      this.props.actions.checkComplete(this.props.userIn.uuid);
+      this.props.actions.checkCompleted(this.props.userIn.uuid);
     }
     if (!this.props.appUser.isFilled) {
       this.props.actions.copyUser(this.props.userIn);

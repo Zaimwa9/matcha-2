@@ -8,7 +8,9 @@ FIN) (4h) Gerer les validations Front et back mieux que dans camagru et vérifie
 
 _______________________________EN COURS____________________________
 
+**** Le feed est pas fetch sans refresh à la connexion
 
+**** la popularity est encore en dure sur l'update profil
 ___________________________________________________________________
 
 PENSER A CHECKER POURQUOI IL Y A PAS LES MATCHES/LIKES SUR VISITES
