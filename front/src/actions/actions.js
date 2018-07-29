@@ -6,6 +6,38 @@ import axios from 'axios';
   * Ici de type receive users avec data comme objet
 */
 
+export function resetPassword(email) {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:3000/graphql/',
+      method: 'post',
+      headers: {
+        'Protected': false,
+        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+      },
+      data: {
+        query: `
+          mutation resetPassword {
+            resetPassword(email: "${email}") {
+              email
+            }
+          }
+        `
+      }
+    })
+    .then(result => {
+      return;
+    })
+  }
+}
+
+export function updateEmail(value) {
+  return {
+    value: value,
+    type: types.EMAIL_UPDATE
+  }
+}
+
 export function checkAuthTrue(data) {
   return {
     data: data,

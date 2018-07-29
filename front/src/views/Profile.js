@@ -56,7 +56,7 @@ class Profile extends Component {
         />
         <Container fluid>
           <Grid>
-            <Grid.Column width={6}>
+            <Grid.Column width={6} style={{marginTop: '5em'}}>
               {this.viewMode()}
             </Grid.Column>
             <Grid.Column width={10}>

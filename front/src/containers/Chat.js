@@ -51,9 +51,13 @@ class Chat extends Component {
     myPreMessages = _.map(myPreMessages, message => {
       message.sent_at = moment(message.sent_at).unix();
       return message;
-      //message.sent_at = moment.format()
     })
-    const myMessages = _.orderBy(myPreMessages, ['sent_at'], ['asc']);
+
+    var myMessages = _.orderBy(myPreMessages, ['sent_at'], ['asc']);
+    myMessages = _.uniqBy(myMessages, message => {
+      return message.id;
+    });
+
     const messages =
       _.map(myMessages, message => {
         if (message.author_uuid === this.props.appUser.uuid) {

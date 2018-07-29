@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
 // import _ from 'lodash';
 
-import { Grid, Form, Button, Segment, Icon, Message } from 'semantic-ui-react';
+import { Grid, Modal, Form, Button, Segment, Icon, Message } from 'semantic-ui-react';
 
 class LoginForm extends Component {
 
   handleChange = (event, {name, value}) => {
     this.props.updateField(name, value);
+  }
+
+  handleSubmitReset = () => {
+    this.props.resetPassword(this.props.emailReset);
+    this.props.history.push('/');
+  }
+
+  handleEmail = (event, {name, value}) => {
+    this.props.updateEmail(value);
   }
 
   handleSubmit = (event) => {
@@ -64,6 +74,26 @@ class LoginForm extends Component {
             size='large'>
             Login
           </Button>
+
+          <Modal trigger={<p style={{fontStyle: 'italic', marginTop: '0.5em'}}>Password forgotten?</p>} basic size='small' closeIcon>
+            <Modal.Header>Reset Password</Modal.Header>
+              <Segment>
+              <Modal.Content>
+                <Modal.Description>
+                  <Form size='small' onSubmit={this.handleSubmitReset}>
+                    <Form.Input
+                      type='text'
+                      name='email'
+                      label='Email'
+                      onChange={this.handleEmail}
+                    />
+                    <Button>Reset</Button>
+                  </Form>
+                </Modal.Description>
+              </Modal.Content>
+            </Segment>
+          </Modal>
+
           <Grid>
             <Grid.Row style={{paddingLeft: '1rem'}}>
             </Grid.Row>
@@ -89,4 +119,12 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+function mapStateToProps(state) {
+  return {
+    emailReset: state.logSign.emailReset,
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(LoginForm);

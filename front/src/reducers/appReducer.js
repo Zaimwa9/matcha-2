@@ -71,13 +71,13 @@ const initialState = {
     activeItem: '',
   },
   infoBlock: {
-    updateMode: true,
+    updateMode: false,
   },
   pictureBlock: {
-    manageMode: true,
+    manageMode: false,
   },
   descBlock: {
-    editMode: true,
+    editMode: false,
   },
   requesting: false,
   error: false,
@@ -206,7 +206,7 @@ export default function appRed(state = initialState, action) {
       newState = {...state, error: true, error_message: action.error_message};
       return newState
     case FETCH_HASHTAGS_SUCCESS:
-      newState = {...state, complete: true, user: {...state.user, gender: action.gender, age: action.age, lat: action.lat, lng: action.lng, address: action.address, orientation: action.orientation, description: action.description, pictures: [...action.pictures], hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
+      newState = {...state, complete: true, user: {...state.user, popularity: action.popularity, gender: action.gender, age: action.age, lat: action.lat, lng: action.lng, address: action.address, orientation: action.orientation, description: action.description, pictures: [...action.pictures], hashtags: [...action.hashtags]}, witness: {...state.witness, hashtags: [...action.hashtags]}}
       return newState;
     case FETCH_HASHTAGS_FAILURE:
       console.log('ERROR');

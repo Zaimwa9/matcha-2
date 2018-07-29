@@ -17,8 +17,7 @@ class UserCard extends Component {
 
   render() {
     const hashtags = (this.props.appUser.hashtags ? this.props.appUser.hashtags : [])
-    const popularity = 74;
-    const rating = Math.round((popularity / 100 * 5) * 2) / 2;
+    const rating = Math.round((this.props.appUser.popularity / 100 * 5) * 2) / 2;
     const age = moment().diff(moment.unix(this.props.appUser.age), 'years');
     const gender = this.props.appUser.gender === 'male' ? 'M' : 'F';
 
@@ -79,7 +78,7 @@ class UserCard extends Component {
             </Item>
             <Item>
               <Item.Content>
-                <Item.Header content={`${popularity}%`} />
+                <Item.Header content={`${this.props.appUser.popularity}%`} />
               </Item.Content>
             </Item>
           </Item.Group>

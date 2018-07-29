@@ -12,5 +12,8 @@ export const RESET_FORM = 'RESET_FORM';
 export const AUTH_CHECK_FALSE = 'AUTH_CHECK_FALSE';
 export const AUTH_CHECK_TRUE = 'AUTH_CHECK_TRUE';
 
+export const EMAIL_UPDATE = 'EMAIL_UPDATE';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+
 export const FETCH_USERS = 'FETCH_USERS';
 export const RECEIVE_USERS = 'RECEIVE_USERS';

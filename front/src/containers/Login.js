@@ -19,6 +19,8 @@ class Login extends Component {
   render () {
     return (
       <LoginForm
+        resetPassword={this.props.actions.resetPassword}
+        updateEmail={this.props.actions.updateEmail}
         myHeader={this.props.myHeader}
         logSign={this.props.logSign}
         login={this.props.actions.login}

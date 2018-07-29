@@ -574,7 +574,6 @@ var mutationType = new GraphQLObjectType({
     resetPassword: {
       type: userType,
       args: {
-        uuid: { type: GraphQLString },
         email: { type: GraphQLString },
       },
       resolve: async function(root, args) {
@@ -588,8 +587,6 @@ var mutationType = new GraphQLObjectType({
           UPDATE users
           SET password='${hash}'
           WHERE
-            uuid='${args.uuid}'
-          AND
             email='${args.email}'
           RETURNING *
         `;
@@ -598,15 +595,12 @@ var mutationType = new GraphQLObjectType({
           data = data.rows[0];
           const mailOptions = {
             from: 'retalio354@gmail.com', // sender address
-            to: 'wadii.zaim@essec.edu', // list of receivers
+            to: args.email, // list of receivers
             subject: 'Reset password', // Subject line
             html: '<h1>Your password has been reseted</h1></br><p>Your new password is ' + password + '</p></br>'// plain text body
           };
           transporter.sendMail(mailOptions, function (err, info) {
-            if(err)
-              console.log(err)
-            else
-              console.log(info);
+            return;
           });
           return data;
         } catch (e) {

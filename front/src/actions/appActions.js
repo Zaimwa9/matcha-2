@@ -144,6 +144,7 @@ export function fetchHashSuccess(data) {
     gender: data.gender,
     lat: data.lat,
     lng: data.lng,
+    popularity: data.popularity,
     type: types.FETCH_HASHTAGS_SUCCESS
   }
 }
@@ -175,6 +176,7 @@ export function fetchHashtags(uuid) {
               lng,
               gender,
               orientation,
+              popularity,
               hashtags {
                 id,
                 content
@@ -193,7 +195,6 @@ export function fetchHashtags(uuid) {
       if (!result.data.errors) {
         dispatch(fetchHashSuccess(result.data.data.user))
       } else {
-        console.log(result.data.errors);
         dispatch(fetchHashFailure(result.data.errors[0]))
       }
     })

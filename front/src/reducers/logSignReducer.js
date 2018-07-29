@@ -8,7 +8,8 @@ import {
   LOGIN_FAILURE,
   AUTH_CHECK_TRUE,
   AUTH_CHECK_FALSE,
-  RESET_FORM
+  RESET_FORM,
+  EMAIL_UPDATE
 } from '../actions/actionTypes';
 
 /*
@@ -36,12 +37,16 @@ const initialState = {
     }
   },
   checked: false,
+  emailReset: ''
 }
 
 export default function users(state = initialState, action) {
   let newState;
 
   switch (action.type) {
+    case EMAIL_UPDATE:
+      newState = {...state, emailReset: action.value};
+      return newState;
     case AUTH_CHECK_TRUE:
       newState = {...state};
       newState.user = {...action.data};
