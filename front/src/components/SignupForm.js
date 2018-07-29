@@ -36,12 +36,62 @@ class SignupForm extends Component {
       <Form size='large' onSubmit={this.handleSubmit} error={this.props.logSign.signupForm.error.status}>
         <Segment padded>
           {this.props.myHeader()}
-          <Form.Input required float='left' fluid name='first_name' value={first_name} label='First Name' placeholder='First Name' onChange={this.handleChange} />
-          <Form.Input required float='left' fluid name='last_name' value={last_name} label='Last Name' placeholder='Last Name' onChange={this.handleChange} />
-          <Form.Input required float='left' fluid name='email' value={email} label='Email' error={this.props.logSign.signupForm.error.status} placeholder='Email' onChange={this.handleChange} />
+          <Form.Input
+            required float='left'
+            fluid name='first_name'
+            value={first_name ? first_name : ''}
+            label='First Name' placeholder='First Name'
+            spellCheck='false'
+            onChange={this.handleChange}
+          />
+          <Form.Input
+            required
+            float='left'
+            fluid
+            name='last_name'
+            value={last_name ? last_name : ''}
+            label='Last Name'
+            placeholder='Last Name'
+            spellCheck='false'
+            onChange={this.handleChange}
+          />
+          <Form.Input
+            required
+            float='left'
+            fluid
+            name='email'
+            value={email ? email : ''}
+            label='Email'
+            error={this.props.logSign.signupForm.error.status}
+            placeholder='Email'
+            spellCheck='false'
+            onChange={this.handleChange}
+          />
           {this.errorMessage()}
-          <Form.Input required float='left' fluid type='password' name='password' value={password} label='Password' placeholder='Password' onChange={this.handleChange} />
-          <Form.Input required float='left' fluid type='password' name='cpassword' value={cpassword} label='Confirm Password' placeholder='Confirm Password' onChange={this.handleChange} />
+          <Form.Input
+            required
+            float='left'
+            fluid
+            type='password'
+            name='password'
+            value={password ? password : ''}
+            label='Password'
+            placeholder='Password'
+            spellCheck='false'
+            onChange={this.handleChange}
+          />
+          <Form.Input
+            required
+            float='left'
+            fluid
+            type='password'
+            name='cpassword'
+            value={cpassword ? cpassword : ''}
+            label='Confirm Password'
+            placeholder='Confirm Password'
+            spellCheck='false'
+            onChange={this.handleChange}
+          />
           <Button loading={this.props.logSign.signupForm.submitted} disabled={this.props.logSign.signupForm.submitted} color='blue' fluid size='large'>Confirm account</Button>
           <Grid>
             <Grid.Row style={{paddingLeft: '1rem'}}>

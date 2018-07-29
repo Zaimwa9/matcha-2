@@ -18,6 +18,7 @@ class LoginForm extends Component {
     this.props.login(this.props.logSign.user);
     this.props.history.push('/')
   }
+
   renderError = () => {
     if (this.props.logSign.signupForm.error.status)
       return (
@@ -37,20 +38,22 @@ class LoginForm extends Component {
           <Form.Input
             fluid
             name='email'
-            value={email}
+            value={email ? email : ''}
             icon='user'
             iconPosition='left'
             placeholder='Email'
+            spellCheck="false"
             onChange={this.handleChange}
           />
           <Form.Input
             fluid
             name='password'
-            value={password}
+            value={password ? password : ''}
             icon='lock'
             iconPosition='left'
             placeholder='Password'
             type='password'
+            spellCheck="false"
             onChange={this.handleChange}
           />
           {this.renderError()}
