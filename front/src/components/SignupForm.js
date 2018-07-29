@@ -40,6 +40,9 @@ class SignupForm extends Component {
             required float='left'
             fluid name='first_name'
             value={first_name ? first_name : ''}
+            type='text'
+            pattern="[A-Za-z]{3,12}"
+            title="Firstname must contain only letters (between 3 and 12 characters)"
             label='First Name' placeholder='First Name'
             spellCheck='false'
             onChange={this.handleChange}
@@ -49,6 +52,9 @@ class SignupForm extends Component {
             float='left'
             fluid
             name='last_name'
+            type='text'
+            pattern="[A-Za-z]{3,12}"
+            title="Last must contain only letters (between 3 and 12 characters)"
             value={last_name ? last_name : ''}
             label='Last Name'
             placeholder='Last Name'
@@ -60,6 +66,7 @@ class SignupForm extends Component {
             float='left'
             fluid
             name='email'
+            type='email'
             value={email ? email : ''}
             label='Email'
             error={this.props.logSign.signupForm.error.status}
@@ -74,6 +81,8 @@ class SignupForm extends Component {
             fluid
             type='password'
             name='password'
+            pattern='^(?=.*\d).{6,}$'
+            title="Password must contain at least 6 characters including 1 digit"
             value={password ? password : ''}
             label='Password'
             placeholder='Password'
@@ -86,6 +95,8 @@ class SignupForm extends Component {
             fluid
             type='password'
             name='cpassword'
+            pattern='^(?=.*\d).{6,}$'
+            title="Password must contain at least 6 characters including 1 digit"
             value={cpassword ? cpassword : ''}
             label='Confirm Password'
             placeholder='Confirm Password'

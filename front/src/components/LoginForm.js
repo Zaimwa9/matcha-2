@@ -50,6 +50,7 @@ class LoginForm extends Component {
             name='email'
             value={email ? email : ''}
             icon='user'
+            type='email'
             iconPosition='left'
             placeholder='Email'
             spellCheck="false"
