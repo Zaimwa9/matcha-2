@@ -378,6 +378,10 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
+generate-password@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/generate-password/-/generate-password-1.4.0.tgz#a3f865c666f629c4f2852093466d83e7a0f16ee2"
+
 glob@^7.0.5:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"

@@ -6,6 +6,7 @@ import { Segment, Button, Form, TextArea, Container, Item, Icon } from 'semantic
 import PropTypes from 'prop-types';
 
 class DescCard extends Component {
+
   handleChange = (e, {name, value}) => {
     this.props.updateUserField(this.props.appUser, name, value);
   }

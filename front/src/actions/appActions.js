@@ -66,10 +66,11 @@ export function pictureManageMode(status) {
   }
 }
 
-export function setEditingMode(status) {
+export function setEditingMode(status, reset = null) {
+  var finalStatus = reset !== null ? false : !status;
   return {
     descBlock: {
-      editMode: !status
+      editMode: finalStatus
     },
     type: types.SET_EDITING_MODE,
   }
@@ -101,7 +102,7 @@ export function submitUpdateUser(data) {
       method: 'post',
       headers: {
         'Protected': false,
-        // 'Authorization': 'Bearer '+ localStorage.getItem('token')
+        // 'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       data: {
         query: `
@@ -998,6 +999,7 @@ export function addMessage(message) {
 }
 
 export function postMessage(author_uuid, content, receiver_uuid) {
+  content = content.replace(/\n$/, '');
   content = content.replace(/"/g, '\\"');
   content = content.replace("'", "''");
   return dispatch => {

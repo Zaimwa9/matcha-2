@@ -14,6 +14,8 @@ import { Container, Grid } from 'semantic-ui-react';
 
 class Profile extends Component {
   componentWillMount() {
+    this.props.actions.setEditingMode(this.props.descBlock.editMode, 'reset');
+
     //if (!this.props.complete) {
       this.props.actions.fetchHashtags(this.props.userIn.uuid);
     //}
@@ -90,7 +92,8 @@ function mapStateToProps(state) {
     menu: state.app.menu,
     appUser: state.app.user,
     infoBlock: state.app.infoBlock,
-    complete: state.app.complete
+    complete: state.app.complete,
+    descBlock: state.app.descBlock
   };
 }
 

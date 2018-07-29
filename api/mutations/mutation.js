@@ -14,6 +14,8 @@ const uuidv4 = require('uuid/v4');
 const fs = require('fs');
 const path = require('path');
 
+const generator = require('generate-password');
+
 const nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
  service: 'gmail',
@@ -49,7 +51,7 @@ var mutationType = new GraphQLObjectType({
       },
       resolve: async function(root, args) {
         args.uuid = uuidv4();
-        // args.password = await bcrypt.hash(args.password, 10);
+        args.password = await bcrypt.hash(args.password, 10);
         textQuery = `INSERT INTO users (
                       email,
                       first_name,
@@ -85,13 +87,15 @@ var mutationType = new GraphQLObjectType({
         password: { type: GraphQLString }
       },
       resolve: async function(root, args) {
+        //args.password = await bcrypt.hash(args.password, 10);
         textQuery = `
                       SELECT * FROM users
                       WHERE
                       email='${args.email}'
-                      AND
-                      password='${args.password}'
-                      `;
+                      `
+                      //AND
+                      //password='${args.password}'
+                      ;
         try {
           var data = await psql.query(textQuery);
           if (data.rowCount === 0) {
@@ -100,7 +104,12 @@ var mutationType = new GraphQLObjectType({
             // User existant; delivrement du token
             data = data.rows[0];
             data.token = jwt.sign({'uuid' : data.uuid}, 'quentinbaltringue');
-            return data;
+            var check = await bcrypt.compare(args.password, data.password);
+            if (check === true) {
+              return data;
+            } else {
+              return new Error('Wrong password');
+            }
           }
         } catch (e) {
           return new Error('Error: ' + e);
@@ -556,6 +565,50 @@ var mutationType = new GraphQLObjectType({
           return data;
         } catch (e) {
           return new Error('Error posting message:' + e);
+        }
+      }
+    },
+
+    resetPassword: {
+      type: userType,
+      args: {
+        uuid: { type: GraphQLString },
+        email: { type: GraphQLString },
+      },
+      resolve: async function(root, args) {
+        var password = generator.generate({
+            length: 10,
+            numbers: true
+        });
+        console.log(password);
+        var hash = await bcrypt.hash(password, 10);
+        var textQuery = `
+          UPDATE users
+          SET password='${hash}'
+          WHERE
+            uuid='${args.uuid}'
+          AND
+            email='${args.email}'
+          RETURNING *
+        `;
+        try {
+          var data = await psql.query(textQuery);
+          data = data.rows[0];
+          const mailOptions = {
+            from: 'retalio354@gmail.com', // sender address
+            to: 'wadii.zaim@essec.edu', // list of receivers
+            subject: 'Reset password', // Subject line
+            html: '<h1>Your password has been reseted</h1></br><p>Your new password is ' + password + '</p></br>'// plain text body
+          };
+          transporter.sendMail(mailOptions, function (err, info) {
+            if(err)
+              console.log(err)
+            else
+              console.log(info);
+          });
+          return data;
+        } catch (e) {
+          return new Error('Error reseting message:' + e);
         }
       }
     }
