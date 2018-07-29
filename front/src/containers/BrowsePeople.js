@@ -50,7 +50,7 @@ class BrowsePeople extends Component {
         && moment().diff(moment(this.props.profile.active), 'minutes') < 60) {
           active = `Last seen: ${moment().diff(moment(this.props.profile.active), 'minutes')} minutes ago`;
     } else {
-      active = `Last seen: More than an hour ago`;
+      active = moment(this.props.profile.active).from(moment());
     }
 
     const pictures = _.map(this.props.profile.pictures, picture => {
