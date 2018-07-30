@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#root {
+  height: 100%;
+  background-color: #F7F8FA;
+}
+
+.logBox {
+  background-image: url('/couple.jpg');
+  background-repeat:no-repeat;
+  background-position:left top;
+  background-size: cover;
+  height: 100%;
+}
+
+.rankingIcon {
+  min-width: 28px;
+}
+
+.actionIcon {
+  cursor: pointer
+}
+
+.popup {
+  color: teal;
+}
+
+.ui .selection {
+  font-size: 11.5px;
+  min-width: 6.2em !important;
+  margin-top: 1.5px;
+}
+
+.react-datepicker__input-container {
+  text-align: center;
+  font-size: 12px;
+}
+
+.hashtagsTop {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 30px;
+  width: 70%;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hashItem:hover {
+  font-weight: bold;
+  font-style: italic;
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+.dropzone {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+  width: 90%;
+  height: auto;
+  background-color: light-grey;
+  border-style: dotted;
+  border-width: 1px;
+  border-radius: 15px;
+}
+
+.textDropzone {
+  margin-top: 2em!important;
+  text-align: center;
+  font-size: 14px;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.contentDropzone  {
+  justify-content: center;
+  border-radius: 30px;
+  min-height: 150px;
+  width: 100%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.active-dropzone {
+  background-color: green;
+  border-style: solid;
+  border-radius: 30px;
+}
+
+.pictureIcon {
+  position: absolute;
+  z-index: 2
+}
+
+/*.picManageMode:hover > * {
+  border-style: solid!important;
+  border-radius: 50px!important;
+  opacity: 0%!important;
+  position: relative!important;
+}*/
+
+.search-input {
+  padding: 10px 10px;
+  height: 52px;
+  position: relative;
+}
+
+.search-input::before {
+  content: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAQJJREFUKBWVkr2uQUEUhf3ET6GRaC5aFRoJKrf1BKpb8SwqovYGXkCj00k0QnRKEYkILYobvpUYmeMMyVnJl7P3mjN7Zu9zwiGv2qRFyMMSRrAFp6JPN8XzBj+wgDkUYAg7WINTYdwpDECxrRLJHeq2accdkgm8bzTvNAg2EDOGeUYI1KNO1gkuzTA1g8T7ojbn4ONQWPuHPWgeHmnzCqoe15tkSNPgPEAn68oVcOmA2XMtGK9FoE/VhOTTVNExqLCGZnxCv2pYauEC6lF0oQxX6IOvb7yX9NPEQafan+aPXDdQC18LsO6Tip5BBY6gIQaSbnMCFRCBZRcIvFkbsvCr4AFGOCxQy+JdGQAAAABJRU5ErkJggg==');
+  display: block;
+  position: absolute;
+  width: 15px;
+  z-index: 3;
+  height: 15px;
+  font-size: 20px;
+  top: 11px;
+  left: 16px;
+  line-height: 32px;
+  opacity: 0.6;
+}
+
+.search-input > input {
+  width: 100%;
+  font-size: 18px;
+  border: none;
+  line-height: 22px;
+  padding: 5px 10px 5px 25px;
+  height: 32px;
+  position: relative;
+}
+
+.search-input > input:focus {
+  outline: none;
+}
+
+.newNotif {
+  font-style: italic;
+}
