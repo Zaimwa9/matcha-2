@@ -14,7 +14,7 @@ class SignupForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.signup(this.props.logSign.user);
-    this.props.history.push('/');
+    this.props.history.push('/signup');
   }
 
   errorMessage = () => {

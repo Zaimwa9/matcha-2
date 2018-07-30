@@ -206,6 +206,9 @@ app.listen(3000, function () {
 })
 */
 app.get('/setup', async function () {
+  var seed_users = path.join(__dirname, '../userscleaned.csv');
+  var seed_hashtags = path.join(__dirname, '../hashtags.csv');
+
   var textQuery = "DROP TABLE IF EXISTS users";
   try {
     await psql.query(textQuery);
@@ -262,14 +265,14 @@ app.get('/setup', async function () {
     console.log('Error ' + e);
   }
 
-  var textQuery = "COPY users(email, first_name, last_name, password, uuid, gender, description, address, lat, lng) from '/home/wadii/Desktop/matcha/userscleaned.csv' delimiter ',';"
+  var textQuery = `COPY users(email, first_name, last_name, password, uuid, gender, description, address, lat, lng) from '${seed_users}' delimiter ',';`
   try {
     await psql.query(textQuery);
   } catch (e) {
     console.log('Error ' + e);
   }
 
-  var textQuery = "COPY hashtags(uuid, content) from '/home/wadii/Desktop/matcha/hashtags.csv' delimiter ','"
+  var textQuery = `COPY hashtags(uuid, content) from '${seed_hashtags}' delimiter ','`
   try {
     await psql.query(textQuery);
   } catch (e) {
