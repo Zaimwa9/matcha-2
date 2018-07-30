@@ -207,55 +207,123 @@ app.listen(3000, function () {
 */
 app.get('/setup', async function () {
   var textQuery = "DROP TABLE IF EXISTS users";
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, orientation TEXT DEFAULT 'Bi', uuid TEXT, address TEXT, description TEXT, age INTEGER DEFAULT 684367200, gender TEXT, lat TEXT, lng TEXT, created_at TIMESTAMP, validated INT, DEFAULT now())";
-  await psql.query(textQuery);
+  var textQuery = "CREATE TABLE IF NOT EXISTS Users(id SERIAL PRIMARY KEY, email TEXT NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, password TEXT NOT NULL, orientation TEXT DEFAULT 'Bi', uuid TEXT, address TEXT, description TEXT, age INTEGER DEFAULT 684367200, gender TEXT, lat TEXT, lng TEXT, created_at TIMESTAMP DEFAULT now(), validated INT)";
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "INSERT INTO USERS (email, first_name, last_name, password) VALUES ('diwadoo', 'diwadoo', 'diwadoo', 'diwadoo')";
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "INSERT INTO USERS (email, first_name, last_name, password) VALUES ('wadii', 'wadii', 'wadii', 'wadii')";
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "INSERT INTO USERS (email, first_name, last_name, password) VALUES ('tidus', 'tidus', 'tidus', 'tidus')";
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "DROP TABLE IF EXISTS hashtags";
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "CREATE TABLE IF NOT EXISTS hashtags(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, content TEXT NOT NULL)";
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS pictures(id SERIAL PRIMARY KEY, author_uuid TEXT NOT NULL, path TEXT NOT NULL, mimetype TEXT, name TEXT, size INT, db_name TEXT posted_at TIMESTAMP DEFAULT now())";
-  await psql.query(textQuery);
+  var textQuery = "CREATE TABLE IF NOT EXISTS pictures(id SERIAL PRIMARY KEY, author_uuid TEXT NOT NULL, path TEXT NOT NULL, mimetype TEXT, name TEXT, size INT, db_name TEXT, posted_at TIMESTAMP DEFAULT now())";
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "COPY users(email, first_name, last_name, password, uuid, gender, description, address, lat, lng) from '/home/wadii/Desktop/matcha/userscleaned.csv' delimiter ',';"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "COPY hashtags(uuid, content) from '/home/wadii/Desktop/matcha/hashtags.csv' delimiter ','"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "CREATE TABLE IF NOT EXISTS visits(id SERIAL PRIMARY KEY, visitor_uuid TEXT NOT NULL, visited_uuid TEXT NOT NULL, visited_at TIMESTAMP DEFAULT now(), unique (visitor_uuid, visited_uuid), visit_count NUMERIC DEFAULT 0)"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "CREATE TABLE IF NOT EXISTS fakes(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, reporter_uuid TEXT NOT NULL, reported_at TIMESTAMP DEFAULT now(), unique(uuid, reporter_uuid))"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "CREATE TABLE IF NOT EXISTS blocked(id SERIAL PRIMARY KEY, uuid TEXT NOT NULL, blocked_uuid TEXT NOT NULL, blocked_at TIMESTAMP DEFAULT now(), unique(uuid, blocked_uuid))"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "CREATE TABLE IF NOT EXISTS likes(id SERIAL PRIMARY KEY, liker_uuid TEXT NOT NULL, liked_uuid TEXT NOT NULL, liked_at TIMESTAMP DEFAULT now(), unique(liker_uuid, liked_uuid))"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
-  var textQuery = "CREATE TABLE IF NOT EXISTS matches(id SERIAL PRIMARY KEY, match_uuid TEXT NOT NULL, match_bis_uuid TEXT NOT NULL, matched_at TIMESTAMP DEFAULT now(), unique(match_uuid, matched_uuid))"
-  await psql.query(textQuery);
+  var textQuery = "CREATE TABLE IF NOT EXISTS matches(id SERIAL PRIMARY KEY, match_uuid TEXT NOT NULL, match_bis_uuid TEXT NOT NULL, matched_at TIMESTAMP DEFAULT now(), unique(match_uuid, match_bis_uuid))"
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "CREATE TABLE IF NOT EXISTS notifs(id SERIAL PRIMARY KEY, receiver_uuid TEXT NOT NULL, sender_uuid TEXT NOT NULL, type TEXT NOT NULL, received_at TIMESTAMP DEFAULT now())"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 
   var textQuery = "CREATE TABLE IF NOT EXISTS messages(id SERIAL PRIMARY KEY, author_uuid TEXT NOT NULL, receiver_uuid TEXT NOT NULL, content TEXT NOT NULL, sent_at TIMESTAMP DEFAULT now ())"
-  await psql.query(textQuery);
+  try {
+    await psql.query(textQuery);
+  } catch (e) {
+    console.log('Error ' + e);
+  }
 })
 //  copy pictures(author_uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
 //copy pictures(uuid, path, name) from '/home/wadii/Desktop/matcha/pictures.csv' delimiter ',';
