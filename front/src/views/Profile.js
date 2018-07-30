@@ -59,8 +59,8 @@ class Profile extends Component {
             <Grid.Column width={6} style={{marginTop: '5em'}}>
               {this.viewMode()}
             </Grid.Column>
-            <Grid.Column width={10}>
-              <Grid.Row>
+            <Grid.Column width={10} style={{marginTop: '3em'}}>
+              <Grid.Row style={{marginBottom: '2em'}}>
                 <PicturesZone
                   postPictureUpload={this.props.actions.postPictureUpload}
                   pictureManageMode={this.props.actions.pictureManageMode}

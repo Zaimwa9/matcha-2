@@ -47,7 +47,7 @@ class UserCard extends Component {
           </Item>
           <Item>
             <Item.Content>
-              {`${this.props.appUser.email}@hotmail.fr`}
+              {`${this.props.appUser.email}`}
             </Item.Content>
             <Item.Content>
               {`${age} ans - ${gender}`}

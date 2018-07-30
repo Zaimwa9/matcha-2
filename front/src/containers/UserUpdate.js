@@ -93,6 +93,7 @@ class UserUpdate extends Component {
                 <Form.Input
                   width={6}
                   style={{maxHeight: 30}}
+                  required
                   label='First Name'
                   value={this.props.appUser.first_name}
                   name='first_name'
@@ -101,6 +102,7 @@ class UserUpdate extends Component {
                 <Form.Input
                   width={6}
                   style={{maxHeight: 30}}
+                  required
                   label='Last Name'
                   value={this.props.appUser.last_name}
                   name='last_name'
@@ -122,12 +124,14 @@ class UserUpdate extends Component {
                 <Form.Input
                   width={6}
                   style={{maxHeight: 30}}
+                  required
                   label='Email'
                   value={this.props.appUser.email}
                   name='email'
                   onChange={this.handleChange}
                 />
                 <Form.Field
+                  required
                   onChange={this.handleChange}
                   width={4}
                   style={{maxHeight: 30}}>
@@ -136,6 +140,7 @@ class UserUpdate extends Component {
                       width={2}
                       label='Orientation'
                       name='orientation'
+                      required
                       options={orientation}
                       value={this.props.appUser.orientation}
                       placeholder={this.props.appUser.orientation}
@@ -144,9 +149,12 @@ class UserUpdate extends Component {
                 </Form.Field>
               </Form.Group>
               <Form.Group style={{justifyContent:'center'}}>
-                <Form.Field>
+                <Form.Field
+                  required
+                >
                   <label>Address</label>
                   <LocationSearchInput
+                    required
                     updateUserField={this.props.updateUserField}
                   />
               </Form.Field>
@@ -155,9 +163,11 @@ class UserUpdate extends Component {
                 <Form.Field
                   onChange={this.handleChange}
                   width={4}
+                  required
                   style={{maxHeight: 30}}>
                     <label>Gender</label>
                     <Select
+                      required
                       width={2}
                       label='Gender'
                       name='gender'
@@ -167,7 +177,10 @@ class UserUpdate extends Component {
                       onChange={this.handleChange}
                   />
                 </Form.Field>
-                <Form.Field width={5}>
+                <Form.Field
+                  width={5}
+                  required
+                >
                   <label>Birthday</label>
                   <DatePicker
                     selected={moment.unix(this.props.appUser.age)}
@@ -185,12 +198,18 @@ class UserUpdate extends Component {
                     <Form size='small' onSubmit={this.handleSubmitUpdatePwd}>
                       <Form.Input
                         type='password'
+                        required
+                        pattern='^(?=.*\d).{6,}$'
+                        title="Password must contain at least 6 characters including 1 digit"
                         name='oldPwd'
                         label='Current password'
                         onChange={this.handleUpdatePwd}
                       />
                       <Form.Input
+                        required
                         type='password'
+                        pattern='^(?=.*\d).{6,}$'
+                        title="Password must contain at least 6 characters including 1 digit"
                         name='newPwd'
                         label='New password'
                         onChange={this.handleUpdatePwd}
