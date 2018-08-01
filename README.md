@@ -2,4 +2,4 @@
 
 Front: React/Redux
 
-Back: Node/Express/GraphQL
+Back: Node/Express/GraphQL/Dockerized Postgres-Postgis
